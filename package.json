@@ -1,0 +1,52 @@
+{
+  "name": "febby",
+  "version": "0.1.0",
+  "description": "Configuration based REST framework for nodejs , on top of express to leverage speed, stability and huge number of node modules.",
+  "main": "app.js",
+  "keywords": [
+    "rest",
+    "api",
+    "febby",
+    "configuration",
+    "json",
+    "middleware"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "compression": "~1.7.1",
+    "cors": "~2.8.4",
+    "express": "~4.16.2",
+    "helmet": "~3.9.0",
+    "lodash": "~4.17.4",
+    "mongoose": "~4.12.3",
+    "pluralize": "~7.0.0"
+  },
+  "devDependencies": {
+    "eslint": "~4.9.0"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "lib/"
+  ],
+  "engines": {
+    "node": ">= 6.11.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/febbyjs/febby.git"
+  },
+  "author": "Vasu Vanka <vanka.vasu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/febbyjs/febby/issues"
+  },
+  "homepage": "https://github.com/febbyjs/febby#readme"
+}
