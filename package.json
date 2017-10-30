@@ -1,8 +1,8 @@
 {
   "name": "febby",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Configuration based REST framework for nodejs , on top of express to leverage speed, stability and huge number of node modules.",
-  "main": "app.js",
+  "main": "index.js",
   "keywords": [
     "rest",
     "api",
