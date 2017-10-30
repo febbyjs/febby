@@ -138,7 +138,9 @@ let ValidateUser = (req, res, models) => {
 // middlewares are configured in middlewares folder
 // Remember app specific middleware functions are different and method specific middleware functions are different
 // App specific middlewares can't be used in method specific and vice versa.
-// method specific middleware has three arguments Request , Response, Models there is no next function, these will run route and method specific
+// method specific middleware has four arguments Request , Response, Models, Cb there is no next function, these will run route and method specific
+// don't forget to pass empty callback once your validation run in middleware.
+// if you didn't pass it will be in block state so careful and pass the Cb 
 // App specific midlleware has three arguments Request , Response , Next there is no models , these will run for every request
 |- middlewares/
              / hasPermission.js
@@ -257,7 +259,7 @@ const loginHandler = require('./handlers/login');
  let ValidateUser = require('./middlewares/validateUser');
  let routes =  {
      '/login': {
-         'method': 'POST', // ['GET','POST','PUT']
+         'method': 'POST',
          'middlewares': [ ValidateUser ],
          'handler': loginHandler
      }
