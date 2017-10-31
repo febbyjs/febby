@@ -106,7 +106,9 @@ let config = {
    'url': 'mongodb://localhost:27017/test'
  },
  // body-parser maximum body object size 
- 'jsonParserSize': '100kb'
+ 'jsonParserSize': '100kb',
+ // Enabling custom 404 and 500 error Handling, by deafult value is false
+ 'userDefinedErrorHandling': false
 };
 module.exports = config;
 //config/index.js
