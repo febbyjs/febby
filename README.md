@@ -30,6 +30,9 @@ Configuration based REST with custom Route support and Method specific Middlewar
     -   [remove](#remove)
     -   [count](#count)
 
+**Febby usage Example**
+
+**[Click Here](https://github.com/febbyjs/febby-example)**
 
 **Examples**
 
@@ -129,11 +132,11 @@ Set Model Object
 
 ```javascript
 let hasPermission = require('./middlewares/hasPermission');
-let ValidateUser = (req, res, models) => {
+let ValidateUser = (req, res, models, cb) => {
      if(!req.query.user_id){
-         return res.json({'status':false,'data':{},'errors':['missing user_id in query']});
+         return cb(new Error('missing user_id in query'))
       }
-     return;
+     return cb()
     }
 // middlewares are configured in middlewares folder
 // Remember app specific middleware functions are different and method specific middleware functions are different
