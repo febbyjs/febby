@@ -6,6 +6,7 @@ Create Production Ready REST API's in minutes.
 
 Configuration based REST with custom Route support and Method specific Middleware configuration
 
+
 ### Table of Contents
 
 -   [Febby](#febby)
@@ -30,9 +31,6 @@ Configuration based REST with custom Route support and Method specific Middlewar
     -   [remove](#remove)
     -   [count](#count)
 
-**Febby usage Example**
-
-**[Click Here](https://github.com/febbyjs/febby-example)**
 
 **Examples**
 
@@ -72,6 +70,8 @@ febby.setModels(models);
 febby.setRoutes(routes);
 
 febby.createApp();
+
+find usage examples @host {{https://github.com/febbyjs/}} in repo
 ```
 
 ### setConfig
@@ -106,7 +106,9 @@ let config = {
    'url': 'mongodb://localhost:27017/test'
  },
  // body-parser maximum body object size 
- 'jsonParserSize': '100kb'
+ 'jsonParserSize': '100kb',
+// Enabling custom 404 and 500 error Handling, by deafult value is false
+ userDefinedErrorHandling: true
 };
 module.exports = config;
 //config/index.js
@@ -351,6 +353,24 @@ app.use((req, res, next) => {
      console.info(req.method+' : '+req.url);
      next();
 })
+// to handle 404  by user you must define userDefinedErrorHandling = true in config object
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+ // render the error page
+ res.status(err.status || 500);
+ res.render('error');
+});
 ```
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** App Obejct
