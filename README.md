@@ -2,7 +2,10 @@
 ## Febby
 
 Febby - A Configuration based NodeJs Framework on top of ExpressJs.
+
 Create Production Ready REST API's in minutes.
+
+Build For JSON APIs.
 
 Configuration based REST with custom Route support and Method specific Middleware configuration
 
@@ -79,9 +82,7 @@ let config = {
    'url': 'mongodb://localhost:27017/test'
  },
  // body-parser maximum body object size 
- 'jsonParserSize': '100kb',
-// Enabling custom 404 and 500 error Handling, by deafult value is false
- 'userDefinedErrorHandling': true
+ 'jsonParserSize': '100kb'
 };
 module.exports = config;
 //config/index.js
@@ -326,24 +327,7 @@ app.use((req, res, next) => {
      console.info(req.method+' : '+req.url);
      next();
 })
-// to handle 404  by user you must define userDefinedErrorHandling = true in config object
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
- // render the error page
- res.status(err.status || 500);
- res.render('error');
-});
+// already 404 handled inside of framework so dont handle 404 here, after getting app object.
 ```
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** App Obejct
