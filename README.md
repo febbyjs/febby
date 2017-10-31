@@ -2,9 +2,13 @@
 ## Febby
 
 Febby - A Configuration based NodeJs Framework on top of ExpressJs.
+
 Create Production Ready REST API's in minutes.
+
 Build For JSON APIs.
+
 Configuration based REST with custom Route support and Method specific Middleware configuration
+
 ### Table of Contents
 
 -   [Febby](#febby)
