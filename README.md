@@ -6,11 +6,9 @@ Create Production Ready REST API's in minutes.
 
 Configuration based REST with custom Route support and Method specific Middleware configuration
 
-
 ### Table of Contents
 
 -   [Febby](#febby)
-    -   [createApp](#createapp)
     -   [setConfig](#setconfig)
     -   [setModels](#setmodels)
     -   [setRoutes](#setroutes)
@@ -19,6 +17,7 @@ Configuration based REST with custom Route support and Method specific Middlewar
     -   [runMiddleware](#runmiddleware)
     -   [getModels](#getmodels)
     -   [getApp](#getapp)
+-   [{{https://github.com/febbyjs/}} -find examples here](#httpsgithubcomfebbyjs--find-examples-here)
 -   [Query](#query)
     -   [findById](#findbyid)
     -   [findOne](#findone)
@@ -47,32 +46,6 @@ const febby = new Febby();
 ```
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Returns Febby Object
-
-### createApp
-
-creates An Express App
-
-**Examples**
-
-```javascript
-// make sure you configured models and config object before calling this method
-
-const Febby = require('febby');
-
-const config= require('./config');
-const models = require('./models');
-const routes = require('./routes');
-
- const febby = new Febby();
-
-febby.setConfig(config);
-febby.setModels(models);
-febby.setRoutes(routes);
-
-febby.createApp();
-
-find usage examples @host {{https://github.com/febbyjs/}} in repo
-```
 
 ### setConfig
 
@@ -108,7 +81,7 @@ let config = {
  // body-parser maximum body object size 
  'jsonParserSize': '100kb',
 // Enabling custom 404 and 500 error Handling, by deafult value is false
- userDefinedErrorHandling: true
+ 'userDefinedErrorHandling': true
 };
 module.exports = config;
 //config/index.js
@@ -134,12 +107,12 @@ Set Model Object
 
 ```javascript
 let hasPermission = require('./middlewares/hasPermission');
-let ValidateUser = (req, res, models, cb) => {
+let ValidateUser = (req, res, next, models) => {
      if(!req.query.user_id){
-         return cb(new Error('missing user_id in query'))
+         return next(new Error('missing user_id in query'))
       }
-     return cb()
-    }
+     return next();
+  }
 // middlewares are configured in middlewares folder
 // Remember app specific middleware functions are different and method specific middleware functions are different
 // App specific middlewares can't be used in method specific and vice versa.
@@ -374,6 +347,30 @@ app.use(function(err, req, res, next) {
 ```
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** App Obejct
+
+## {{https&#x3A;//github.com/febbyjs/}} -find examples here
+
+creates An Express App
+
+**Examples**
+
+```javascript
+// make sure you configured models and config object before calling this method
+
+const Febby = require('febby');
+
+const config= require('./config');
+const models = require('./models');
+const routes = require('./routes');
+
+ const febby = new Febby();
+
+febby.setConfig(config);
+febby.setModels(models);
+febby.setRoutes(routes);
+
+febby.createApp();
+```
 
 ## Query
 
