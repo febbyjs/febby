@@ -10,7 +10,7 @@ yarn-error.log*
 
 #example - ignore example
 example
-
+app.js
 #html-docs - ignore html docs
 html-docs
 
