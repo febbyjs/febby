@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Configuration based REST framework for nodejs , on top of express to leverage speed, stability and huge number of node modules.",
   "main": "index.js",
   "keywords": [
@@ -9,7 +9,9 @@
     "febby",
     "configuration",
     "json",
-    "middleware"
+    "middleware",
+    "express",
+    "mongodb"
   ],
   "directories": {
     "lib": "lib"
