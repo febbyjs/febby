@@ -11,7 +11,8 @@
     "json",
     "middleware",
     "express",
-    "mongodb"
+    "mongodb",
+    "router"
   ],
   "directories": {
     "lib": "lib"
@@ -27,10 +28,14 @@
     "pluralize": "~7.0.0"
   },
   "devDependencies": {
-    "eslint": "~4.9.0"
+    "eslint": "~4.9.0",
+    "mocha": "^4.0.1",
+    "should": "^13.1.3",
+    "supertest": "^3.0.0"
   },
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "mocha test"
   },
   "files": [
     "LICENSE",
