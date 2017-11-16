@@ -63,7 +63,7 @@ febby.setRoutes({
 });
 
 febby.createApp();
-let mod = febby.getModels();
+let dbModel = febby.getModels();
 // This agent refers to PORT where program is runninng.
 
 const server = supertest.agent('http://localhost:3000');
@@ -74,9 +74,22 @@ const server = supertest.agent('http://localhost:3000');
 
 describe('testing basic crud', () => {
     let recId;
-    before('inserting single record', (done) => {
-        console.log('......');
+    it('should return welcome text', (done) => {
+        server
+            .get('/api/r/')
+            .expect('Content-type', 'application/json; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                res.status.should.equal(200);
+                let error = JSON.stringify(res.body.errors);
+                error.should.equal('[]');
+                res.body.data.should.equal('welcome to febby');
+                res.body.success.should.equal(true);
+                done();
+            });
+    });
 
+    it('insert a user document', (done) => {
         server
             .post('/api/m/users')
             .send({
@@ -91,125 +104,166 @@ describe('testing basic crud', () => {
                 let error = JSON.stringify(res.body.errors);
                 error.should.equal('[]');
                 res.body.success.should.equal(true);
-                console.log(res.body, '');
-                recId = res.body._id;
+                recId = res.body.data._id;
                 done();
             });
     });
-    describe('unit test cases for febby server', () => {
-        // unit test for default / url
-        it('should return welcome text', (done) => {
-            server
-                .get('/api/r/')
-                .expect('Content-type', 'application/json; charset=utf-8')
-                .expect(200)
-                .end((err, res) => {
-                    res.status.should.equal(200);
-                    let error = JSON.stringify(res.body.errors);
-                    error.should.equal('[]');
-                    res.body.data.should.equal('welcome to febby');
-                    res.body.success.should.equal(true);
-                    setTimeout(function () {
-                        done();
-                    }, 10);
-                });
-        });
-
-        it('insert a user document', (done) => {
-            server
-                .post('/api/m/users')
-                .send({
-                    'username': 'vasuvanka',
-                    'firstname': 'vasu',
-                    'lastname': 'vanka'
-                })
-                .expect('Content-type', 'application/json; charset=utf-8')
-                .expect(200)
-                .end((err, res) => {
-                    res.status.should.equal(200);
-                    let error = JSON.stringify(res.body.errors);
-                    error.should.equal('[]');
-                    res.body.success.should.equal(true);
-                    setTimeout(function () {
-                        done();
-                    }, 10);
-                });
-        });
-        it('should return single document with id : ', (done) => {
-            console.log(recId);
-
-            server
-                .get('/api/m/users/' + recId)
-                .expect(200)
-                .end((err, res) => {
-                    // response should equal to 200
-                    res.status.should.equal(200);
-                    // checking the error for success case
-                    let error = JSON.stringify(res.body.errors);
-                    error.should.equal('[]');
-                    // response status is true if success ,on error it will return false
-                    res.body.success.should.equal(true);
-                    return done();
-                });
-        });
-        it('should update document with id : ', (done) => {
-            console.log(recId);
-            server
-                .put('/api/m/users/' + recId)
-                .data({
-                    'firstname': 'vicky',
-                    'lastname': 'martin'
-                })
-                .expect(200)
-                .end((err, res) => {
-                    // response should equal to 200
-                    res.status.should.equal(200);
-                    // checking the error for success case
-                    let error = JSON.stringify(res.body.errors);
-                    error.should.equal('[]');
-                    // response status is true if success ,on error it will return false
-                    res.body.success.should.equal(true);
-                    return done();
-                });
-        });
-        it('should delete document with id : ' + recId, (done) => {
-            server
-                .delete('/api/m/users/' + recId)
-                .expect(200)
-                .end((err, res) => {
-                    // response should equal to 200
-                    res.status.should.equal(200);
-                    // checking the error for success case
-                    let error = JSON.stringify(res.body.errors);
-                    error.should.equal('[]');
-                    // response status is true if success ,on error it will return false
-                    res.body.success.should.equal(true);
-                    return done();
-                });
-        });
-        it('should return 404', (done) => {
-            server
-                .get('/random')
-                .expect(404)
-                .end((err, res) => {
-                    // response should equal to 200
-                    res.status.should.equal(404);
-                    // checking the error for success case
-                    let error = JSON.stringify(res.body.errors);
-                    error.should.equal('["NOT FOUND"]');
-                    // response data should match welcome text
-                    let data = JSON.stringify(res.body.data);
-                    data.should.equal('{}');
-                    // response status is true if success ,on error it will return false
-                    res.body.success.should.equal(false);
-                    return done();
-                });
-        });
-        // Tear down core after all tests are run
-        after(function () {
-            process.exit(0);
-        });
-
+    it('should return single document with id ', (done) => {
+        server
+            .get('/api/m/users/' + recId)
+            .expect(200)
+            .end((err, res) => {
+                // response should equal to 200
+                res.status.should.equal(200);
+                // checking the error for success case
+                let error = JSON.stringify(res.body.errors);
+                error.should.equal('[]');
+                // response status is true if success ,on error it will return false
+                res.body.success.should.equal(true);
+                done();
+            });
     });
+    it('should update document with id ', (done) => {
+        server
+            .put('/api/m/users/' + recId)
+            .send({
+                'firstname': 'vicky',
+                'lastname': 'martin'
+            })
+            .expect(200)
+            .end((err, res) => {
+                // response should equal to 200
+                res.status.should.equal(200);
+                // checking the error for success case
+                let error = JSON.stringify(res.body.errors);
+                error.should.equal('[]');
+                // response status is true if success ,on error it will return false
+                res.body.success.should.equal(true);
+                done();
+            });
+    });
+    it('should delete document with id ', (done) => {
+        server
+            .delete('/api/m/users/' + recId)
+            .expect(200)
+            .end((err, res) => {
+                // response should equal to 200
+                res.status.should.equal(200);
+                // checking the error for success case
+                let error = JSON.stringify(res.body.errors);
+                error.should.equal('[]');
+                // response status is true if success ,on error it will return false
+                res.body.success.should.equal(true);
+                done();
+            });
+    });
+    it('should return 404', (done) => {
+        server
+            .get('/random')
+            .expect(404)
+            .end((err, res) => {
+                // response should equal to 200
+                res.status.should.equal(404);
+                // checking the error for success case
+                let error = JSON.stringify(res.body.errors);
+                error.should.equal('["NOT FOUND"]');
+                // response data should match welcome text
+                let data = JSON.stringify(res.body.data);
+                data.should.equal('{}');
+                // response status is true if success ,on error it will return false
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should insert a user document with username vasuvanka', (done) => {
+        dbModel['users'].save({
+            'username': 'vasuvanka',
+            'firstname': 'vasu',
+            'lastname': 'vanka'
+        }).then((user) => {
+            user.username.should.equal('vasuvanka');
+            user.firstname.should.equal('vasu');
+            user.lastname.should.equal('vanka');
+            done();
+        }).catch((err) => {
+            console.log(err);
+            throw err;
+        });
+    });
+    it('should fail while insert a user document with username vasuvanka', (done) => {
+        dbModel['users'].save({
+            'firstname': 'vasu',
+            'lastname': 'vanka'
+        }).then((user) => {
+            throw 'username is required';
+        }).catch((err) => {
+            err.message.should.equal('users validation failed: username: Path `username` is required.');
+            done();
+        });
+    });
+
+    it('should return a user document with username vasuvanka', (done) => {
+        dbModel['users'].findOne({
+            'username': 'vasuvanka'
+        }, {}).then((user) => {
+            user.username.should.equal('vasuvanka');
+            user.firstname.should.equal('vasu');
+            user.lastname.should.equal('vanka');
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+
+    it('should return all user documents', (done) => {
+        dbModel['users'].find({}, {}, {}, 0, 0).then((users) => {
+            users.length.should.not.equal(0);
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+
+    it('should return all distinct usernames', (done) => {
+        dbModel['users'].distinct({}, 'username').then((usernames) => {
+            usernames[0].should.equal('vasuvanka');
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+
+    it('should return count of all users with username as vasuvanka', (done) => {
+        dbModel['users'].count({
+            'username': 'vasuvanka'
+        }).then((count) => {
+            console.log(count);
+
+
+            count.should.equal(1);
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+
+    it('should return count of all users with username as vasuvanka', (done) => {
+        dbModel['users'].remove({
+            'username': 'vasuvanka'
+        }).then(status => {
+            console.log(status);
+            status.n.should.equal(1);
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+
+
+    // Tear down core after all tests are run
+    after(function () {
+        process.exit(0);
+    });
+
 });
 // UNIT test end
