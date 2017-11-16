@@ -7,5 +7,4 @@ node_js:
 
 services: mongodb
 
-script: 
- - "./node_modules/mocha/bin/mocha test"
+after_success: 'npm run coveralls'
