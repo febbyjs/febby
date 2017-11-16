@@ -35,7 +35,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha test"
+    "test": "./node_modules/mocha/bin/mocha test"
   },
   "files": [
     "LICENSE",

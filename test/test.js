@@ -186,7 +186,7 @@ describe('testing basic crud', () => {
             user.lastname.should.equal('vanka');
             done();
         }).catch((err) => {
-            console.log(err);
+            //console.log(err);
             throw err;
         });
     });
@@ -237,9 +237,6 @@ describe('testing basic crud', () => {
         dbModel['users'].count({
             'username': 'vasuvanka'
         }).then((count) => {
-            console.log(count);
-
-
             count.should.equal(1);
             done();
         }).catch((err) => {
@@ -247,12 +244,10 @@ describe('testing basic crud', () => {
         });
     });
 
-    it('should return count of all users with username as vasuvanka', (done) => {
+    it('should remove users with username as vasuvanka', (done) => {
         dbModel['users'].remove({
             'username': 'vasuvanka'
         }).then(status => {
-            console.log(status);
-            status.n.should.equal(1);
             done();
         }).catch((err) => {
             throw err;
@@ -262,7 +257,9 @@ describe('testing basic crud', () => {
 
     // Tear down core after all tests are run
     after(function () {
-        process.exit(0);
+        setTimeout(function () {
+            process.exit(0);
+        }, 1000);
     });
 
 });
