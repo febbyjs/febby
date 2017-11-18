@@ -41,6 +41,28 @@ let models = {
                 type: String
             }
         }
+    },
+    book: {
+        methods: {
+            all: true,
+            middlewares: []
+        },
+        schema: {
+            name: {
+                type: String,
+                required: true
+            },
+            author: {
+                type: String
+            },
+            cost: {
+                type: Number
+            },
+            username: {
+                type: require('mongoose').Schema.Types.ObjectId,
+                ref: 'users'
+            }
+        }
     }
 };
 
@@ -72,9 +94,10 @@ const server = supertest.agent('http://localhost:3000');
 
 // unit test description
 
-describe('testing basic crud', () => {
-    let recId;
-    it('should return welcome text', (done) => {
+describe('unit testing febby framework', () => {
+    let recId, userId, bookId;
+    // unit test cases for basic routes
+    it('should return welcome text', done => {
         server
             .get('/api/r/')
             .expect('Content-type', 'application/json; charset=utf-8')
@@ -88,8 +111,8 @@ describe('testing basic crud', () => {
                 done();
             });
     });
-
-    it('insert a user document', (done) => {
+    // POST 
+    it('insert a user document', done => {
         server
             .post('/api/m/users')
             .send({
@@ -108,7 +131,23 @@ describe('testing basic crud', () => {
                 done();
             });
     });
-    it('should return single document with id ', (done) => {
+    // POST fail with empty body
+    it('insert a empty object into user', done => {
+        server
+            .post('/api/m/users')
+            .send({})
+            .expect('Content-type', 'application/json; charset=utf-8')
+            .expect(400)
+            .end((err, res) => {
+                res.status.should.equal(400);
+                let error = res.body.errors[0];
+                error.should.equal('INVALID CONTENT');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    // GET doc with Id
+    it('should return single document with id ', done => {
         server
             .get('/api/m/users/' + recId)
             .expect(200)
@@ -123,7 +162,8 @@ describe('testing basic crud', () => {
                 done();
             });
     });
-    it('should update document with id ', (done) => {
+    // PUT
+    it('should update document with id ', done => {
         server
             .put('/api/m/users/' + recId)
             .send({
@@ -142,7 +182,39 @@ describe('testing basic crud', () => {
                 done();
             });
     });
-    it('should delete document with id ', (done) => {
+    // PUT fail
+    it('should update fail without id ', done => {
+        server
+            .put('/api/m/users/')
+            .send({
+                'firstname': 'vicky',
+                'lastname': 'martin'
+            })
+            .expect(400)
+            .end((err, res) => {
+                res.status.should.equal(400);
+                let error = res.body.errors[0];
+                error.should.equal('MISSING ID');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    //PUT fail by id
+    it('should fail update document with id ', done => {
+        server
+            .put('/api/m/users/' + recId)
+            .send({})
+            .expect(200)
+            .end((err, res) => {
+                res.status.should.equal(400);
+                let error = res.body.errors[0];
+                error.should.equal('INVALID CONTENT');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    // DELETE
+    it('should delete document with id ', done => {
         server
             .delete('/api/m/users/' + recId)
             .expect(200)
@@ -157,7 +229,24 @@ describe('testing basic crud', () => {
                 done();
             });
     });
-    it('should return 404', (done) => {
+    // DELETE fail
+    it('should delete fail without id ', done => {
+        server
+            .delete('/api/m/users/')
+            .send({
+                'firstname': 'vicky',
+                'lastname': 'martin'
+            })
+            .expect(400)
+            .end((err, res) => {
+                res.status.should.equal(400);
+                let error = res.body.errors[0];
+                error.should.equal('MISSING ID');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 404', done => {
         server
             .get('/random')
             .expect(404)
@@ -175,7 +264,10 @@ describe('testing basic crud', () => {
                 done();
             });
     });
-    it('should insert a user document with username vasuvanka', (done) => {
+
+    // Unit test cases for queries
+    // save
+    it('should insert a user document with username vasuvanka', done => {
         dbModel['users'].save({
             'username': 'vasuvanka',
             'firstname': 'vasu',
@@ -184,13 +276,32 @@ describe('testing basic crud', () => {
             user.username.should.equal('vasuvanka');
             user.firstname.should.equal('vasu');
             user.lastname.should.equal('vanka');
+            userId = user._id;
             done();
         }).catch((err) => {
             //console.log(err);
             throw err;
         });
     });
-    it('should fail while insert a user document with username vasuvanka', (done) => {
+    it('should insert a book document with autor vasu vanka', done => {
+        dbModel['books'].save({
+            'name': 'febby framework',
+            'author': 'vasu vanka',
+            'cost': 0,
+            'username': userId
+        }).then((books) => {
+            books.name.should.equal('febby framework');
+            books.author.should.equal('vasu vanka');
+            books.cost.should.equal(0);
+            books.username.should.equal(userId);
+            bookId = books._id;
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+    // save fail
+    it('should fail while insert a user document with username vasuvanka', done => {
         dbModel['users'].save({
             'firstname': 'vasu',
             'lastname': 'vanka'
@@ -201,8 +312,8 @@ describe('testing basic crud', () => {
             done();
         });
     });
-
-    it('should return a user document with username vasuvanka', (done) => {
+    // findOne 
+    it('should return a user document with username vasuvanka using findOne', done => {
         dbModel['users'].findOne({
             'username': 'vasuvanka'
         }, {}).then((user) => {
@@ -214,8 +325,19 @@ describe('testing basic crud', () => {
             throw err;
         });
     });
-
-    it('should return all user documents', (done) => {
+    // findOne fail
+    it('should fail to get document by findOne ', done => {
+        dbModel['users'].findOne({
+            'username': 'vasu'
+        }, {}).then((user) => {
+            throw 'test passes , it should fail';
+        }).catch((err) => {
+            err.message.should.equal('No documents found with query {"username":"vasu"}');
+            done();
+        });
+    });
+    // find
+    it('should return all user documents', done => {
         dbModel['users'].find({}, {}, {}, 0, 0).then((users) => {
             users.length.should.not.equal(0);
             done();
@@ -223,8 +345,73 @@ describe('testing basic crud', () => {
             throw err;
         });
     });
-
-    it('should return all distinct usernames', (done) => {
+    // findRef
+    it('should return all books with user object', done => {
+        dbModel['books'].findRef({}, {}, {
+            'username': ['firstname']
+        }, {}, 0, 0).then((books) => {
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+    // update 
+    it('should update firstname as vicky where username is vasuvanka', done => {
+        dbModel['users'].update({
+            'username': 'vasuvanka'
+        }, {
+            'firstname': 'vicky'
+        }, false, false).then((user) => {
+            user.username.should.equal('vasuvanka');
+            user.firstname.should.equal('vicky');
+            user.lastname.should.equal('vanka');
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
+    // update fail
+    it('should fail to  update firstname as vicky where username is vasu', done => {
+        dbModel['users'].update({
+            'username': 'vasu'
+        }, {
+            'firstname': 'vicky'
+        }, false, false).then((user) => {
+            throw 'should throw error';
+        }).catch((err) => {
+            err.message.should.equal('No documents found with query {"username":"vasu"}');
+            done();
+        });
+    });
+    // increment
+    it('should increment count by 1 where username is vasuvanka', done => {
+        dbModel['books'].increment({
+            '_id': bookId
+        }, {
+            'cost': 1
+        }, false, false).then((book) => {
+            book.n.should.equal(1);
+            book.nModified.should.equal(1);
+            book.ok.should.equal(1);
+            done();
+        }).catch((err) => {
+            throw err.message;
+        });
+    });
+    // increment fail
+    it('should increment count by 1 where username is vasuvanka', done => {
+        dbModel['books'].increment({
+            '_id': bookId
+        }, {
+            'costs': 1
+        }, false, false).then((book) => {
+            throw 'it should fail';
+        }).catch((err) => {
+            done();
+        });
+    });
+    // distinct
+    it('should return all distinct usernames', done => {
         dbModel['users'].distinct({}, 'username').then((usernames) => {
             usernames[0].should.equal('vasuvanka');
             done();
@@ -232,8 +419,8 @@ describe('testing basic crud', () => {
             throw err;
         });
     });
-
-    it('should return count of all users with username as vasuvanka', (done) => {
+    //count
+    it('should return count of all users with username as vasuvanka', done => {
         dbModel['users'].count({
             'username': 'vasuvanka'
         }).then((count) => {
@@ -243,8 +430,8 @@ describe('testing basic crud', () => {
             throw err;
         });
     });
-
-    it('should remove users with username as vasuvanka', (done) => {
+    // remove
+    it('should remove users with username as vasuvanka', done => {
         dbModel['users'].remove({
             'username': 'vasuvanka'
         }).then(status => {
@@ -256,11 +443,7 @@ describe('testing basic crud', () => {
 
 
     // Tear down core after all tests are run
-    after(function () {
-        setTimeout(function () {
-            process.exit(0);
-        }, 1000);
-    });
+    after(() => process.exit(0));
 
 });
 // UNIT test end
