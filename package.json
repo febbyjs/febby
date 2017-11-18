@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Configuration based REST framework for nodejs , on top of express to leverage speed, stability and huge number of node modules.",
   "main": "index.js",
   "keywords": [
@@ -39,7 +39,6 @@
     "lint": "eslint .",
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
-
   },
   "files": [
     "LICENSE",
