@@ -2,8 +2,11 @@
 
 [![Build Status](https://travis-ci.org/febbyjs/febby.svg?branch=master)](https://travis-ci.org/febbyjs/febby)
 
+<br />
+
 [![Coverage Status](https://coveralls.io/repos/github/febbyjs/febby/badge.svg?branch=master)]
 (https://coveralls.io/github/febbyjs/febby?branch=master)
+
 <br />
 
 ## Febby
