@@ -54,6 +54,8 @@ Create Production Ready REST API's in minutes.
 
 Configuration based REST with custom Route support and Method specific Middleware configuration
 
+## Documentation 
+[https://febbyjs.github.io/febby/] Documentation
 **Examples**
 
 ```javascript
