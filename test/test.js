@@ -264,7 +264,18 @@ describe('unit testing febby framework', () => {
                 done();
             });
     });
-
+    it('should return 405', done => {
+        server
+            .patch('/api/m/users/')
+            .expect(405)
+            .end((err, res) => {
+                // response should equal to 200
+                res.status.should.equal(405);
+                res.body.errors[0].should.equal('METHOD NOT ALLOWED');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
     // Unit test cases for queries
     // save
     it('should insert a user document with username vasuvanka', done => {
