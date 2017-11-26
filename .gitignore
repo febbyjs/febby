@@ -11,6 +11,7 @@ yarn-error.log*
 #example - ignore example
 example
 app.js
+package-lock.json
 #html-docs - ignore html docs
 html-docs
 
