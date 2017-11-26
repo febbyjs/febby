@@ -9,6 +9,9 @@ Note: Febby development is in jet speed, docs may be out of date.
 | Master    |[![Build Status](https://travis-ci.org/febbyjs/febby.svg?branch=master)](https://travis-ci.org/febbyjs/febby)  | [![Coverage Status](https://coveralls.io/repos/github/febbyjs/febby/badge.svg?branch=master)](https://coveralls.io/github/febbyjs/febby?branch=master)|[![npm version](https://badge.fury.io/js/febby.svg?branch=master)](https://badge.fury.io/js/febby)|[![dependencies Status](https://david-dm.org/febbyjs/febby/status.svg?branch=master)](https://david-dm.org/febbyjs/febby)|
 | Develop   |[![Build Status](https://travis-ci.org/febbyjs/febby.svg?branch=develop)](https://travis-ci.org/febbyjs/febby) |[![Coverage Status](https://coveralls.io/repos/github/febbyjs/febby/badge.svg?branch=develop)](https://coveralls.io/github/febbyjs/febby?branch=develop)|[![npm version](https://badge.fury.io/js/febby.svg?branch=develop)](https://badge.fury.io/js/febby)|[![dependencies Status](https://david-dm.org/febbyjs/febby/status.svg?branch=develop)](https://david-dm.org/febbyjs/febby)|
 
+## API Documentation
+
+API Documentation: https://febbyjs.github.io/febby
 
 ## Febby
 
