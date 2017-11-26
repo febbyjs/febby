@@ -24,7 +24,7 @@
     "express": "~4.16.2",
     "helmet": "~3.9.0",
     "lodash": "~4.17.4",
-    "mongoose": "~4.12.3",
+    "mongoose": "~4.13.4",
     "pluralize": "~7.0.0"
   },
   "devDependencies": {
