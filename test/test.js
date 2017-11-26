@@ -2,6 +2,10 @@ const supertest = require('supertest');
 const should = require('should');
 const Febby = require('..');
 var obj = {};
+const log = (req, res, next, models) => {
+    console.log(req.url + '-' + req.method);
+    next();
+};
 let config = {
     'port': 3000,
     // hostname of app 
@@ -44,8 +48,11 @@ let models = {
     },
     book: {
         methods: {
-            all: true,
-            middlewares: []
+            all: false,
+            middlewares: [log],
+            GET: {
+                middlewares: [{}]
+            }
         },
         schema: {
             name: {
@@ -63,7 +70,20 @@ let models = {
                 ref: 'users'
             }
         }
+    },
+    author: {
+        methods: {
+            all: true,
+            middlewares: [{}],
+        },
+        schema: {
+            name: {
+                type: String,
+                required: true
+            }
+        }
     }
+
 };
 
 const febby = new Febby();
@@ -73,7 +93,23 @@ febby.setModels(models);
 febby.setRoutes({
     '/': {
         'method': 'GET',
+        'middlewares': [log],
+        'handler': (req, res, next, models) => {
+            res.json({
+                'success': true,
+                'data': 'welcome to febby',
+                'errors': []
+            });
+        }
+    },
+    '/test': {
+        'method': 'GET',
         'middlewares': [],
+        'handler': {}
+    },
+    '/test1': {
+        'method': 'GET',
+        'middlewares': [{}],
         'handler': (req, res, next, models) => {
             res.json({
                 'success': true,
@@ -272,6 +308,83 @@ describe('unit testing febby framework', () => {
                 // response should equal to 200
                 res.status.should.equal(405);
                 res.body.errors[0].should.equal('METHOD NOT ALLOWED');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 409', done => {
+        server
+            .get('/api/r/test1')
+            .expect(409)
+            .end((err, res) => {
+                res.status.should.equal(409);
+                res.body.errors[0].should.equal('INVALID METHOD MIDDLEWARE DECLARATION');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 404 for custom route', done => {
+        server
+            .get('/api/r/test/test/a')
+            .expect(404)
+            .end((err, res) => {
+                res.status.should.equal(404);
+                res.body.errors[0].should.equal('NOT FOUND');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 409 for rest route', done => {
+        server
+            .get('/api/m/authors')
+            .expect(409)
+            .end((err, res) => {
+                res.status.should.equal(409);
+                res.body.errors[0].should.equal('INVALID MIDDLEWARE DECLARATION');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 409 for rest route', done => {
+        server
+            .get('/api/m/authors')
+            .expect(409)
+            .end((err, res) => {
+                res.status.should.equal(409);
+                res.body.errors[0].should.equal('INVALID MIDDLEWARE DECLARATION');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 409 for rest route', done => {
+        server
+            .get('/api/m/books')
+            .expect(409)
+            .end((err, res) => {
+                res.status.should.equal(409);
+                res.body.errors[0].should.equal('INVALID METHOD MIDDLEWARE DECLARATION');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 403', done => {
+        server
+            .get('/api/r/test')
+            .expect(403)
+            .end((err, res) => {
+                res.status.should.equal(403);
+                res.body.errors[0].should.equal('NOT A VALID REQ. HANDLER');
+                res.body.success.should.equal(false);
+                done();
+            });
+    });
+    it('should return 400', done => {
+        server
+            .get('/api/m/vasu')
+            .expect(400)
+            .end((err, res) => {
+                res.status.should.equal(400);
+                res.body.errors[0].should.equal('\'VASU\' NOT CONFIGURED');
                 res.body.success.should.equal(false);
                 done();
             });
