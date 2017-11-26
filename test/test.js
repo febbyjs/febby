@@ -564,8 +564,21 @@ describe('unit testing febby framework', () => {
             throw err;
         });
     });
-
-
+    it('it should use app ', done => {
+        let app = febby.getApp();
+        app.use((req, res, next) => {
+            console.log('added middleware');
+            next();
+        });
+        done();
+    });
+    it('it should use runMiddleware ', done => {
+        febby.runMiddleware((req, res, next) => {
+            console.log('runMiddleware used');
+            next();
+        });
+        done();
+    });
     // Tear down core after all tests are run
     after(() => process.exit(0));
 

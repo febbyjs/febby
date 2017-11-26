@@ -13,22 +13,10 @@ Note: Febby development is in jet speed, docs may be out of date.
 
 API Documentation: https://febbyjs.github.io/febby
 
-## Febby
-
-Febby - A Configuration based NodeJs Framework on top of Express.
-Create Production Ready REST API's in minutes.
-
-Configuration based REST with custom Route support and Method specific Middleware configuration
-
-**Examples**
-
-```javascript
-npm install febby --save
-```
-
 ### Table of Contents
 
 -   [Febby](#febby)
+    -   [createApp](#createapp)
     -   [setConfig](#setconfig)
     -   [setModels](#setmodels)
     -   [setRoutes](#setroutes)
@@ -37,7 +25,6 @@ npm install febby --save
     -   [runMiddleware](#runmiddleware)
     -   [getModels](#getmodels)
     -   [getApp](#getapp)
--   [{{https://github.com/febbyjs/}} -find examples here](#httpsgithubcomfebbyjs--find-examples-here)
 -   [Query](#query)
     -   [findById](#findbyid)
     -   [findOne](#findone)
@@ -73,288 +60,7 @@ const febby = new Febby();
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Returns Febby Object
 
-### setConfig
-
-set Config Object before calling febby.createApp()
-
-**Parameters**
-
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-**Examples**
-
-```javascript
-let config = {
- // Port number on which your app going to listen, default PORT number is 5678
- // You can set PORT via Commandline while starting app `PORT=8000 node app.js `
- // it will take process.env.PORT by default if not found then it will take Port from config object
- 'port': 3000,
- // hostname of app 
- 'host': '127.0.0.1',
- // application environment
- 'env': 'development',
- // Base path for models
- 'restBasePath': '/api/v1/model',
- // Route Path for user defined Routes
- 'routeBasePath': '/api/v1/route',
- // MongoDB configuration
- 'db': {
-     // Default maximum number of records while querying , if limit doesn't pass.
-   'limit': 30,
-     // mongodb url
-   'url': 'mongodb://localhost:27017/test'
- },
- // body-parser maximum body object size 
- 'jsonParserSize': '100kb'
-};
-module.exports = config;
-
-//config/index.js
-```
-
-```javascript
-let config = require('./config');
- //set configuration before calling createApp method.
-febby.setConfig(config);
-```
-
-### setModels
-
-Set Model Object
-
-**Parameters**
-
--   `models` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-**Examples**
-
-```javascript
-let hasPermission = require('./middlewares/hasPermission');
-let ValidateUser = (req, res, next, models) => {
-     if(!req.query.user_id){
-         return next(new Error('missing user_id in query'))
-      }
-     return next();
-  }
-// middlewares are configured in middlewares folder
-// Remember app specific middleware functions are different and method specific middleware functions are different
-// App specific middlewares can't be used in method specific and vice versa.
-// method specific middleware has four arguments Request , Response, Models, Cb there is no next function, these will run route and method specific
-// don't forget to pass empty callback once your validation run in middleware.
-// if you didn't pass it will be in block state so careful and pass the Cb 
-// App specific midlleware has three arguments Request , Response , Next there is no models , these will run for every request
-|- middlewares/
-             / hasPermission.js
-             
-let user = {
-    methods: {
-        all: true,
-         //if all set to true CRUD Operations enabled on this Model.
-         // if all set false then it will enable user to define which methods need to be enabled
-        middlewares: [ ValidateUser ],
-         // Array of functions whcih will execute before your CRUD methods , make sure midllewares config properly.
-         //below is method name and method configuration
-        get: {
-            isEnabled: true,
-             // GET method will be enabled if you made isEnabled =  true, if false then GET method is disabled on this model
-            middlewares: []
-             // Here Array of Functions specific to GET method , these methods will exexute before Making Database call
-        },
-        post: {
-            isEnabled: true,
-            //empty array or make sure remove the midddleware key 
-            // if you don't want to apply
-            middlewares: [ hasPermission ]
-        },
-        put: {
-            isEnabled: true,
-        },
-        delete: {
-            //if you wish to block delete method you can make isEnabled = false or just remove delete key and object
-            isEnabled: false
-        }
-    },
-     // it is mongoose schema,
-     // we are using mongoose internally so we just use mongoose schema to validate input data
-     // by default created_at , updated_at keys of type Date is enabled to each and every model
-     // date and time of document creation and updations are automatically updated  
-    schema: {
-        username: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        firstname: {
-            type: String
-        },
-        lastname: {
-            type: String
-        },
-        email: {
-            type: String,
-            unique: true
-        }
-    }
-};
-module.exports = user;
-// Export User Object
-|- models/user.js
-```
-
-```javascript
-const user = require('./user');
-  module.exports = {
-     'user': user
-};
-// Export all models configuration as single Object
-|- models/index.js
-```
-
-```javascript
-let models = require('./models');
-
-febby.setModels(models);
-// set models before calling febby.createApp()
-```
-
-### setRoutes
-
-Set Routes Object
-
-**Parameters**
-
--   `routes` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-**Examples**
-
-```javascript
-For Every Route Handler will have following arguments
- {Request} request - Express Request Object
- {Response} response - Express Response Object
- {NextFunction} next - Express next function
- {Models} models - configured models     
- Below is just a sample example. 
-
-|- routes/
-         /handlers/
-                 /login.js        
-let loginHandler = (request, response, next, models) => { 
-     let username = request.body.username
-     let password = request.body.password
-     // will handle user login logic here
-     models.user.findOne({'username':username},{}).
-         then((doc)=>{
-         // validate the user and respond
-         }).catch((error)=>{
-             next(error);
-         })
-     };
-
-module.exports = loginHandler;
-// Export loginHandler Function
-|- routes/handlers/user.js
-```
-
-```javascript
-const loginHandler = require('./handlers/login');
- let ValidateUser = require('./middlewares/validateUser');
- let routes =  {
-     '/login': {
-         'method': 'POST',
-         'middlewares': [ ValidateUser ],
-         'handler': loginHandler
-     }
- };
-module.exports = routes;
-// Export all Route configuration as single Object
-|- routes/index.js
-```
-
-```javascript
-let routes = require('./routes');
-
-febby.setRoutes(routes);
-// set routes before calling febby.createApp()
-```
-
-### getPort
-
-Returns App port
-
-Returns **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** port number
-
-### getEnv
-
-Returns App Environment
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** environment
-
-### runMiddleware
-
-Provides ability to run configure middleware functions .
-Its is same as ExpressJs Middleware Processing.
-
-**Parameters**
-
--   `middlewareFunc` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
-
-**Examples**
-
-```javascript
-Simple Logger
-
-const logger = (req, res, next) => {
-     console.info(req.method+' : '+req.url);
-     next();
-}
-
-febby.runMiddleware(logger);
-
-** Make Sure You must pass request object to next by calling next callback
-```
-
-### getModels
-
-Returns Defined Models as an Object
-
-**Examples**
-
-```javascript
-Getting Models of an Application , Model names are always Plural
-
-let models = febby.getModels();
-
-models.users.findOne({'username':'vanku'},{}).then((user)=>{
-//Handle user logic
-}).catch((err)=>{
-//handle error
-})
-
-now you can use models obejct throught application
-```
-
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** returns Object of models
-
-### getApp
-
-Returns Express App Object so that user can do what ever things he want
-
-**Examples**
-
-```javascript
-// Returns Express App Object
-let app = febby.getApp();
-
-app.use((req, res, next) => {
-     console.info(req.method+' : '+req.url);
-     next();
-})
-// already 404 handled inside of framework so dont handle 404 here, after getting app object.
-```
-
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** App Obejct
-
-## {{https&#x3A;//github.com/febbyjs/}} -find examples here
+### createApp
 
 creates An Express App
 
@@ -376,29 +82,214 @@ febby.setModels(models);
 febby.setRoutes(routes);
 
 febby.createApp();
-
-*********** Recomended Folder Structure *************
-// start
-
-config/
-     /index.js
-models/
-     /users/index.js
-     /books/index.js
-     /index.js
-routes/
-      / Handlers
-                 /loginHandler.js
-                 /signupHandler.js
-                 /logoutHandler.js
-      / index.js
-middlewares/
-           / appSpecific
-           / methodSpecific
-app.js
-
-// end
 ```
+
+### setConfig
+
+set Config Object before calling febby.createApp()
+
+**Parameters**
+
+-   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+**Examples**
+
+```javascript
+let config = {
+ 'port': 3000,
+ // application environment
+ 'env': 'development',
+ // Base path for models
+ 'restBasePath': '/api/v1/model',
+ // Route Path for user defined Routes
+ 'routeBasePath': '/api/v1/route',
+ // MongoDB configuration
+ 'db': {
+     // mongodb url
+   'url': 'mongodb://localhost:27017/test'
+ },
+ // app will run cluter mode if set true , default value is true
+ 'clusterMode': false
+};
+
+febby.setConfig(config);
+```
+
+### setModels
+
+Set Model Object
+
+**Parameters**
+
+-   `models` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+**Examples**
+
+```javascript
+let user = {
+    methods: {
+        all: false,
+         //if all set to true CRUD Operations enabled on this Model.
+         // if all set false then it will enable user to define which methods need to be enabled
+        middlewares: [ ValidateUser ],
+         // Array of functions whcih will execute before your CRUD methods , make sure midllewares config properly.
+         //below is method name and method configuration
+        get: {
+          middlewares: []
+        },
+        post: {
+            middlewares: [ hasPermission ]
+        },
+        put: {}
+    },
+     // it is mongoose schema,
+     // we are using mongoose internally so we just use mongoose schema to validate input data
+     // by default createdAt , updatedAt keys of type Date is enabled to each and every model
+     // date and time of document creation and updations are automatically updated  
+    schema: {
+        username: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        firstname: {
+            type: String
+        },
+        lastname: {
+            type: String
+        },
+        email: {
+            type: String,
+            unique: true
+        }
+    }
+};
+
+let models = {
+     'user': user
+};
+
+febby.setModels(models);
+
+// set models before calling febby.createApp()
+```
+
+### setRoutes
+
+Set Routes Object
+
+**Parameters**
+
+-   `routes` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+**Examples**
+
+```javascript
+For Every Route Handler will have following arguments
+ {Object} request - Express Request Object
+ {Object} response - Express Response Object
+ {Function} next - Express next function
+ {Object} models - configured models
+
+let loginHandler = (request, response, next, models) => { 
+     let username = request.body.username
+     let password = request.body.password
+     // will handle user login logic here
+     models.user.findOne({'username':username},{}).
+         then((doc)=>{
+         // validate the user and respond
+         }).catch((error)=>{
+             next(error);
+         })
+     };
+
+ let routes =  {
+     '/login': {
+         'method': 'POST',
+         'middlewares': [],
+         'handler': loginHandler
+     }
+ };
+
+febby.setRoutes(routes);
+
+// set routes before calling febby.createApp()
+```
+
+### getPort
+
+Returns App port
+
+Returns **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** port number
+
+### getEnv
+
+Returns App Environment
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** environment
+
+### runMiddleware
+
+Provides ability to run configure middleware functions .
+
+**Parameters**
+
+-   `middlewareFunc` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+**Examples**
+
+```javascript
+//Simple Logger
+
+const logger = (req, res, next) => {
+     console.info(req.method+' : '+req.url);
+     next();
+}
+
+febby.runMiddleware(logger);
+
+** Make Sure You must pass request object to next by calling next callback
+```
+
+### getModels
+
+Returns Defined Models as an Object
+
+**Examples**
+
+```javascript
+// Getting Models of an Application , Model names are always Plural
+
+let models = febby.getModels();
+
+models.users.findOne({'username':'vanku'},{}).then((user)=>{
+ //Handle user logic
+ }).catch((err)=>{
+ //handle error
+})
+
+//now you can use models obejct throught application
+```
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** returns Object of models
+
+### getApp
+
+Returns Express App Object
+
+**Examples**
+
+```javascript
+// Returns Express App Object
+let app = febby.getApp();
+
+app.use((req, res, next) => {
+     console.info(req.method+' : '+req.url);
+     next();
+})
+```
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** App Obejct
 
 ## Query
 
@@ -420,12 +311,12 @@ findById query to get a document based on id field
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let id  = '59f5edd03849b92e40fadf7c';
 let selectedFieldsObj = {'username':1,'lastname':0};
-// key with value 0 is omitted 
-// key with value 1 is fetched 
+// key with value 0 is omitted
+// key with value 1 is fetched
 models.users.findById(id,selectedFieldsObj).then((doc)=>{
      log(doc);
 }).catch((err)=>{
@@ -448,12 +339,12 @@ findOne query to get a document based given query
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
 let selectedFieldsObj = {'username':1,'lastname':0};
-// key with value 0 is omitted 
-// key with value 1 is fetched 
+// key with value 0 is omitted
+// key with value 1 is fetched
 models.users.findOne(query,selectedFieldsObj).then((doc)=>{
      log(doc);
 }).catch((err)=>{
@@ -479,15 +370,15 @@ find query to get the records of a collection by given mongodb query
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
 let selectedFieldsObj = {'username':1,'lastname':0};
 let skip = 0;  // skip number of records
 let limit = 10; //0 to get all queried records
 let sortBy = {'firstname':1}; // -1 for descending order
-// key with value 0 is omitted 
-// key with value 1 is fetched 
+// key with value 0 is omitted
+// key with value 1 is fetched
 models.users.find(query, selectedFieldsObj, sortBy, skip, limit).then((doc)=>{
      log(doc);
 }).catch((err)=>{
@@ -515,19 +406,19 @@ findRef query to get refrenced documents from Other collection
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
 let selectedFieldsObj = {'username':1,'lastname':0};
 let skip = 0;  // skip number of records
 let limit = 10; //0 to get all queried records
 let sortBy = {'firstname':1}; // -1 for descending order
-// key with value 0 is omitted 
-// key with value 1 is fetched 
+// key with value 0 is omitted
+// key with value 1 is fetched
 let refObj = {'user_id':['username','firstname']}
 // needed full document of other collection then just pass empty array
 // refObj = {'user_id':[]}
-// if i need two documents from different collections then 
+// if i need two documents from different collections then
 // refObj = {'user_id':[],'username':[]}
 // ref mongoose for schema configuration
 models.users.findRef(query, selectedFieldsObj, refObj, sortBy, skip, limit).then((doc)=>{
@@ -551,7 +442,7 @@ Save the data.
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// model name is pluralized
 // when ever you are using models , model names are always plurals.
 let data  = {'username':'vasuvanka','firstname':'vasu','lastname':'vanka'};
 models.users.save(data).then((doc)=>{
@@ -578,7 +469,7 @@ Update matched Document(s);
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
 let data = {'firstname':'vicky','lastname':'martin'};
@@ -608,7 +499,7 @@ Increment/Decrement a number by +/- any number. ex: 10 or -10
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
 let data = {'amount':1};
@@ -637,7 +528,7 @@ Return all distnict field values
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
 let field = "firstname";
@@ -662,7 +553,7 @@ Remove all matched documents
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
  models.users.remove(query).then((doc)=>{
@@ -686,7 +577,7 @@ Count matched documents
 **Examples**
 
 ```javascript
-// modelname is pluralized 
+// modelname is pluralized
 // when ever you are using models , model names are always plurals.
 let query  = {'username':'vasuvanka'};
  models.users.count(query).then((doc)=>{
