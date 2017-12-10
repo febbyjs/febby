@@ -6,32 +6,29 @@ const log = (req, res, next, models) => {
     console.log(req.url + '-' + req.method);
     next();
 };
+const log1 = log;
 let config = {
     'port': 3000,
     // hostname of app 
-    'host': '127.0.0.1',
-    // application environment
-    'env': 'development',
+    'basePath': '/api',
     // Base path for models
-    'restBasePath': '/api/m',
+    'restBasePath': '/m',
     // Route Path for user defined Routes
-    'routeBasePath': '/api/r',
+    'routeBasePath': '/r',
     // MongoDB configuration
     'db': {
-        // Default maximum number of records while querying , if limit doesn't pass.
-        'limit': 30,
         // mongodb url
-        'url': 'mongodb://localhost:27017/test1'
+        'url': 'mongodb://localhost:27017/test'
     },
-    // body-parser maximum body object size 
-    'jsonParserSize': '100kb'
+    'clusterMode': false
 };
 
 let models = {
     user: {
         methods: {
-            all: true,
-            middlewares: []
+            crud: true,
+            middlewares: [log],
+            post: [log1]
         },
         schema: {
             username: {
@@ -48,11 +45,9 @@ let models = {
     },
     book: {
         methods: {
-            all: false,
+            crud: false,
             middlewares: [log],
-            GET: {
-                middlewares: [{}]
-            }
+            GET: [log]
         },
         schema: {
             name: {
@@ -73,8 +68,8 @@ let models = {
     },
     author: {
         methods: {
-            all: true,
-            middlewares: [{}],
+            crud: true,
+            middlewares: [],
         },
         schema: {
             name: {
@@ -92,30 +87,15 @@ febby.setConfig(config);
 febby.setModels(models);
 febby.setRoutes({
     '/': {
-        'method': 'GET',
-        'middlewares': [log],
-        'handler': (req, res, next, models) => {
-            res.json({
-                'success': true,
-                'data': 'welcome to febby',
-                'errors': []
-            });
-        }
-    },
-    '/test': {
-        'method': 'GET',
-        'middlewares': [],
-        'handler': {}
-    },
-    '/test1': {
-        'method': 'GET',
-        'middlewares': [{}],
-        'handler': (req, res, next, models) => {
-            res.json({
-                'success': true,
-                'data': 'welcome to febby',
-                'errors': []
-            });
+        'get': {
+            'middlewares': [log],
+            'handler': (req, res, next, models) => {
+                res.json({
+                    'success': true,
+                    'data': 'welcome to febby',
+                    'errors': []
+                });
+            }
         }
     }
 });
@@ -312,17 +292,6 @@ describe('unit testing febby framework', () => {
                 done();
             });
     });
-    it('should return 409', done => {
-        server
-            .get('/api/r/test1')
-            .expect(409)
-            .end((err, res) => {
-                res.status.should.equal(409);
-                res.body.errors[0].should.equal('INVALID METHOD MIDDLEWARE DECLARATION');
-                res.body.success.should.equal(false);
-                done();
-            });
-    });
     it('should return 404 for custom route', done => {
         server
             .get('/api/r/test/test/a')
@@ -330,61 +299,6 @@ describe('unit testing febby framework', () => {
             .end((err, res) => {
                 res.status.should.equal(404);
                 res.body.errors[0].should.equal('NOT FOUND');
-                res.body.success.should.equal(false);
-                done();
-            });
-    });
-    it('should return 409 for rest route', done => {
-        server
-            .get('/api/m/authors')
-            .expect(409)
-            .end((err, res) => {
-                res.status.should.equal(409);
-                res.body.errors[0].should.equal('INVALID MIDDLEWARE DECLARATION');
-                res.body.success.should.equal(false);
-                done();
-            });
-    });
-    it('should return 409 for rest route', done => {
-        server
-            .get('/api/m/authors')
-            .expect(409)
-            .end((err, res) => {
-                res.status.should.equal(409);
-                res.body.errors[0].should.equal('INVALID MIDDLEWARE DECLARATION');
-                res.body.success.should.equal(false);
-                done();
-            });
-    });
-    it('should return 409 for rest route', done => {
-        server
-            .get('/api/m/books')
-            .expect(409)
-            .end((err, res) => {
-                res.status.should.equal(409);
-                res.body.errors[0].should.equal('INVALID METHOD MIDDLEWARE DECLARATION');
-                res.body.success.should.equal(false);
-                done();
-            });
-    });
-    it('should return 403', done => {
-        server
-            .get('/api/r/test')
-            .expect(403)
-            .end((err, res) => {
-                res.status.should.equal(403);
-                res.body.errors[0].should.equal('NOT A VALID REQ. HANDLER');
-                res.body.success.should.equal(false);
-                done();
-            });
-    });
-    it('should return 400', done => {
-        server
-            .get('/api/m/vasu')
-            .expect(400)
-            .end((err, res) => {
-                res.status.should.equal(400);
-                res.body.errors[0].should.equal('\'VASU\' NOT CONFIGURED');
                 res.body.success.should.equal(false);
                 done();
             });
@@ -449,17 +363,6 @@ describe('unit testing febby framework', () => {
             throw err;
         });
     });
-    // findOne fail
-    it('should fail to get document by findOne ', done => {
-        dbModel['users'].findOne({
-            'username': 'vasu'
-        }, {}).then((user) => {
-            throw 'test passes , it should fail';
-        }).catch((err) => {
-            err.message.should.equal('No documents found with query {"username":"vasu"}');
-            done();
-        });
-    });
     // find
     it('should return all user documents', done => {
         dbModel['users'].find({}, {}, {}, 0, 0).then((users) => {
@@ -495,18 +398,18 @@ describe('unit testing febby framework', () => {
         });
     });
     // update fail
-    it('should fail to  update firstname as vicky where username is vasu', done => {
-        dbModel['users'].update({
-            'username': 'vasu'
-        }, {
-            'firstname': 'vicky'
-        }, false, false).then((user) => {
-            throw 'should throw error';
-        }).catch((err) => {
-            err.message.should.equal('No documents found with query {"username":"vasu"}');
-            done();
-        });
-    });
+    // it('should fail to  update firstname as vicky where username is vasu', done => {
+    //     dbModel['users'].update({
+    //         'username': 'vasu'
+    //     }, {
+    //         'firstname': 'vicky'
+    //     }, false, false).then((user) => {
+    //         throw 'should throw error';
+    //     }).catch((err) => {
+    //         err.message.should.equal('No documents found with query {"username":"vasu"}');
+    //         done();
+    //     });
+    // });
     // increment
     it('should increment count by 1 where username is vasuvanka', done => {
         dbModel['books'].increment({
@@ -534,15 +437,15 @@ describe('unit testing febby framework', () => {
             done();
         });
     });
-    // distinct
-    it('should return all distinct usernames', done => {
-        dbModel['users'].distinct({}, 'username').then((usernames) => {
-            usernames[0].should.equal('vasuvanka');
-            done();
-        }).catch((err) => {
-            throw err;
-        });
-    });
+    // // distinct
+    // it('should return all distinct usernames', done => {
+    //     dbModel['users'].distinct({}, 'username').then((usernames) => {
+    //         usernames[0].should.equal('vasuvanka');
+    //         done();
+    //     }).catch((err) => {
+    //         throw err;
+    //     });
+    // });
     //count
     it('should return count of all users with username as vasuvanka', done => {
         dbModel['users'].count({
