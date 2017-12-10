@@ -2,6 +2,11 @@
 ## NOTE :
 Note: Febby development is in jet speed, docs may be out of date.
 
+## Febby
+
+Febby - Configuration based NodeJs Framework.
+
+Configuration based REST with custom Route support and Method specific Middleware configuration
 
 # Status
 |Branch     |Build Status|Coverage  |Npm        |Dependencies|
@@ -13,6 +18,7 @@ Note: Febby development is in jet speed, docs may be out of date.
 
 API Documentation: https://febbyjs.github.io/febby
 
+
 ### Table of Contents
 
 -   [Febby](#febby)
@@ -20,8 +26,6 @@ API Documentation: https://febbyjs.github.io/febby
     -   [setConfig](#setconfig)
     -   [setModels](#setmodels)
     -   [setRoutes](#setroutes)
-    -   [getPort](#getport)
-    -   [getEnv](#getenv)
     -   [runMiddleware](#runmiddleware)
     -   [getModels](#getmodels)
     -   [getApp](#getapp)
@@ -37,12 +41,6 @@ API Documentation: https://febbyjs.github.io/febby
     -   [remove](#remove)
     -   [count](#count)
 
-## Febby
-
-Febby - A Configuration based NodeJs Framework on top of Express.
-Create Production Ready REST API's in minutes.
-
-Configuration based REST with custom Route support and Method specific Middleware configuration
 
 **Examples**
 
@@ -97,12 +95,12 @@ set Config Object before calling febby.createApp()
 ```javascript
 let config = {
  'port': 3000,
- // application environment
- 'env': 'development',
- // Base path for models
- 'restBasePath': '/api/v1/model',
+ // Application base path
+ 'basePath': '/api/v1',
+ // REST Path for models
+ 'restBasePath': '/model', // /api/v1/model
  // Route Path for user defined Routes
- 'routeBasePath': '/api/v1/route',
+ 'routeBasePath': '/route', // /api/v1/route
  // MongoDB configuration
  'db': {
      // mongodb url
@@ -128,19 +126,15 @@ Set Model Object
 ```javascript
 let user = {
     methods: {
-        all: false,
+        crud: false,
          //if all set to true CRUD Operations enabled on this Model.
          // if all set false then it will enable user to define which methods need to be enabled
         middlewares: [ ValidateUser ],
          // Array of functions whcih will execute before your CRUD methods , make sure midllewares config properly.
-         //below is method name and method configuration
-        get: {
-          middlewares: []
-        },
-        post: {
-            middlewares: [ hasPermission ]
-        },
-        put: {}
+         //below is method name and method middleware configuration
+        get: [],
+        post: [ hasPermission ],
+        put: []
     },
      // it is mongoose schema,
      // we are using mongoose internally so we just use mongoose schema to validate input data
@@ -202,12 +196,14 @@ let loginHandler = (request, response, next, models) => {
              next(error);
          })
      };
+ }
 
  let routes =  {
      '/login': {
-         'method': 'POST',
-         'middlewares': [],
-         'handler': loginHandler
+         'post': {
+             'middlewares': [],
+             'handler': loginHandler
+         }
      }
  };
 
@@ -215,18 +211,6 @@ febby.setRoutes(routes);
 
 // set routes before calling febby.createApp()
 ```
-
-### getPort
-
-Returns App port
-
-Returns **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** port number
-
-### getEnv
-
-Returns App Environment
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** environment
 
 ### runMiddleware
 
