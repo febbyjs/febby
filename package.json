@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Configuration based nodejs framework",
   "main": "index.js",
   "keywords": [
