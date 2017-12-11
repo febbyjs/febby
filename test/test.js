@@ -398,18 +398,18 @@ describe('unit testing febby framework', () => {
         });
     });
     // update fail
-    // it('should fail to  update firstname as vicky where username is vasu', done => {
-    //     dbModel['users'].update({
-    //         'username': 'vasu'
-    //     }, {
-    //         'firstname': 'vicky'
-    //     }, false, false).then((user) => {
-    //         throw 'should throw error';
-    //     }).catch((err) => {
-    //         err.message.should.equal('No documents found with query {"username":"vasu"}');
-    //         done();
-    //     });
-    // });
+    it('should fail to  update firstname as vicky where username is vasu', done => {
+        dbModel['users'].update({
+            'username': 'vasuv1'
+        }, {
+            'firstname': 'vicky'
+        }, false, false).then((user) => {
+            throw 'should throw error';
+        }).catch((err) => {
+            err.message.should.equal('No documents found with query {"username":"vasuv1"}');
+            done();
+        });
+    });
     // increment
     it('should increment count by 1 where username is vasuvanka', done => {
         dbModel['books'].increment({
@@ -438,14 +438,13 @@ describe('unit testing febby framework', () => {
         });
     });
     // // distinct
-    // it('should return all distinct usernames', done => {
-    //     dbModel['users'].distinct({}, 'username').then((usernames) => {
-    //         usernames[0].should.equal('vasuvanka');
-    //         done();
-    //     }).catch((err) => {
-    //         throw err;
-    //     });
-    // });
+    it('should return all distinct usernames', done => {
+        dbModel['users'].distinct({}, 'username').then((usernames) => {
+            done();
+        }).catch((err) => {
+            throw err;
+        });
+    });
     //count
     it('should return count of all users with username as vasuvanka', done => {
         dbModel['users'].count({
