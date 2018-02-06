@@ -2,7 +2,7 @@
 
 Febby - Configuration based NodeJs Framework With Swagger Document Generation
 
-REST with custom Route support and Method specific Middleware configuration and
+REST with custom Route support , Method specific Middleware configuration and
 Automatically generates swagger documentation in Development environment
 
 # Status
