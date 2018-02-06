@@ -1,7 +1,7 @@
 {
   "name": "febby",
-  "version": "0.1.11",
-  "description": "Configuration based nodejs framework",
+  "version": "0.2.0",
+  "description": "Framework for building application services",
   "main": "index.js",
   "keywords": [
     "rest",
@@ -12,7 +12,9 @@
     "middleware",
     "express",
     "mongodb",
-    "router"
+    "router",
+    "swagger",
+    "http"
   ],
   "directories": {
     "lib": "lib"
@@ -25,7 +27,8 @@
     "helmet": "~3.9.0",
     "lodash": "~4.17.4",
     "mongoose": "~4.13.4",
-    "pluralize": "~7.0.0"
+    "pluralize": "~7.0.0",
+    "swagger-ui-express": "^2.0.15"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
@@ -47,7 +50,7 @@
     "lib/"
   ],
   "engines": {
-    "node": ">= 6.11.5"
+    "node": ">= 8.9.4"
   },
   "repository": {
     "type": "git",

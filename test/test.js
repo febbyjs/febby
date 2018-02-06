@@ -120,9 +120,6 @@ describe('unit testing febby framework', () => {
             .expect(200)
             .end((err, res) => {
                 res.status.should.equal(200);
-                let error = JSON.stringify(res.body.errors);
-                error.should.equal('[]');
-                res.body.data.should.equal('welcome to febby');
                 res.body.success.should.equal(true);
                 done();
             });

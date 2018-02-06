@@ -1,6 +1,8 @@
 # vscode
 .vscode
-
+package-lock.*
+#swagger
+.swagger.*
 # Logs
 logs
 *.log
