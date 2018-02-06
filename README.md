@@ -1,8 +1,9 @@
 ## Febby
 
-Febby - Configuration based NodeJs Framework
+Febby - Configuration based NodeJs Framework With Swagger Document Generation
 
 REST with custom Route support and Method specific Middleware configuration
+Automatically generates swagger documentation in Development environment
 
 # Status
 |Branch     |Build Status|Coverage  |Npm        |Dependencies|
