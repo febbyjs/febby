@@ -1,7 +1,7 @@
 {
   "name": "febby",
   "version": "0.2.0",
-  "description": "Framework for NodeJS",
+  "description": "Framework for building application services",
   "main": "index.js",
   "keywords": [
     "rest",
