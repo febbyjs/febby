@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
   <meta charset='utf-8' />
   <title>febby 0.2.1 | Documentation</title>
@@ -10,345 +9,280 @@
   <link href='assets/github.css' type='text/css' rel='stylesheet' />
   <link href='assets/split.css' type='text/css' rel='stylesheet' />
 </head>
-
 <body class='documentation m0'>
-  <div class='flex'>
-    <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
-      <div class='py1 px2'>
-        <h3 class='mb0 no-anchor'>febby</h3>
-        <div class='mb1'>
-          <code>0.2.1</code>
-        </div>
-        <input placeholder='Filter' id='filter-input' class='col12 block input' type='text' />
-        <div id='toc'>
-          <ul class='list-reset h5 py1-ul'>
-
-
-            <li>
-              <a href='#febby' class=" toggle-sibling">
-                Febby
-                <span class='icon'>▸</span>
-              </a>
-
-              <div class='toggle-target display-none'>
-
-
-                <ul class='list-reset py1-ul pl1'>
-                  <li class='h5'>
-                    <span>Instance members</span>
-                  </li>
-
-                  <li>
-                    <a href='#febbycreateapp' class='regular pre-open'>
-                      #createApp
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#febbysetconfig' class='regular pre-open'>
-                      #setConfig
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#febbysetmodels' class='regular pre-open'>
-                      #setModels
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#febbysetroutes' class='regular pre-open'>
-                      #setRoutes
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#febbyrunmiddleware' class='regular pre-open'>
-                      #runMiddleware
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#febbygetmodels' class='regular pre-open'>
-                      #getModels
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#febbygetapp' class='regular pre-open'>
-                      #getApp
-                    </a>
-                  </li>
-
-                </ul>
-
-
-
-              </div>
-
-            </li>
-
-
-            <li>
-              <a href='#query' class=" toggle-sibling">
-                Query
-                <span class='icon'>▸</span>
-              </a>
-
-              <div class='toggle-target display-none'>
-
-
-                <ul class='list-reset py1-ul pl1'>
-                  <li class='h5'>
-                    <span>Instance members</span>
-                  </li>
-
-                  <li>
-                    <a href='#queryfindbyid' class='regular pre-open'>
-                      #findById
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#queryfindone' class='regular pre-open'>
-                      #findOne
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#queryfind' class='regular pre-open'>
-                      #find
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#queryfindref' class='regular pre-open'>
-                      #findRef
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#querysave' class='regular pre-open'>
-                      #save
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#queryupdate' class='regular pre-open'>
-                      #update
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#queryincrement' class='regular pre-open'>
-                      #increment
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#querydistinct' class='regular pre-open'>
-                      #distinct
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#queryremove' class='regular pre-open'>
-                      #remove
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href='#querycount' class='regular pre-open'>
-                      #count
-                    </a>
-                  </li>
-
-                </ul>
-
-
-
-              </div>
-
-            </li>
-
-          </ul>
-        </div>
-        <div class='mt1 h6 quiet'>
-          <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>febby</h3>
+          <div class='mb1'><code>0.2.1</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#febby'
+                  class=" toggle-sibling">
+                  Febby
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#febbycreateapp'
+                        class='regular pre-open'>
+                        #createApp
+                      </a></li>
+                      
+                      <li><a
+                        href='#febbysetconfig'
+                        class='regular pre-open'>
+                        #setConfig
+                      </a></li>
+                      
+                      <li><a
+                        href='#febbysetmodels'
+                        class='regular pre-open'>
+                        #setModels
+                      </a></li>
+                      
+                      <li><a
+                        href='#febbysetroutes'
+                        class='regular pre-open'>
+                        #setRoutes
+                      </a></li>
+                      
+                      <li><a
+                        href='#febbyrunmiddleware'
+                        class='regular pre-open'>
+                        #runMiddleware
+                      </a></li>
+                      
+                      <li><a
+                        href='#febbygetmodels'
+                        class='regular pre-open'>
+                        #getModels
+                      </a></li>
+                      
+                      <li><a
+                        href='#febbygetapp'
+                        class='regular pre-open'>
+                        #getApp
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#query'
+                  class=" toggle-sibling">
+                  Query
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#queryfindbyid'
+                        class='regular pre-open'>
+                        #findById
+                      </a></li>
+                      
+                      <li><a
+                        href='#queryfindone'
+                        class='regular pre-open'>
+                        #findOne
+                      </a></li>
+                      
+                      <li><a
+                        href='#queryfind'
+                        class='regular pre-open'>
+                        #find
+                      </a></li>
+                      
+                      <li><a
+                        href='#queryfindref'
+                        class='regular pre-open'>
+                        #findRef
+                      </a></li>
+                      
+                      <li><a
+                        href='#querysave'
+                        class='regular pre-open'>
+                        #save
+                      </a></li>
+                      
+                      <li><a
+                        href='#queryupdate'
+                        class='regular pre-open'>
+                        #update
+                      </a></li>
+                      
+                      <li><a
+                        href='#queryincrement'
+                        class='regular pre-open'>
+                        #increment
+                      </a></li>
+                      
+                      <li><a
+                        href='#querydistinct'
+                        class='regular pre-open'>
+                        #distinct
+                      </a></li>
+                      
+                      <li><a
+                        href='#queryremove'
+                        class='regular pre-open'>
+                        #remove
+                      </a></li>
+                      
+                      <li><a
+                        href='#querycount'
+                        class='regular pre-open'>
+                        #count
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
         </div>
       </div>
-    </div>
-    <div id='split-right' class='relative overflow-auto height-viewport-100'>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='febby'>
+      Febby
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>febby - framework for building application services.</p>
+<p>Easy to configure,run and deploy.</p>
+<p>Auto generates swagger documentation.</p>
+<table>
+<thead>
+<tr>
+<th>Branch</th>
+<th>Build Status</th>
+<th>Coverage</th>
+<th>Npm</th>
+<th>Dependencies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Master</td>
+<td><a href="https://travis-ci.org/febbyjs/febby"><img src="https://travis-ci.org/febbyjs/febby.svg?branch=master" alt="Build Status"></a></td>
+<td><a href="https://coveralls.io/github/febbyjs/febby?branch=master"><img src="https://coveralls.io/repos/github/febbyjs/febby/badge.svg?branch=master" alt="Coverage Status"></a></td>
+<td><a href="https://badge.fury.io/js/febby"><img src="https://badge.fury.io/js/febby.svg?branch=master" alt="npm version"></a></td>
+<td><a href="https://david-dm.org/febbyjs/febby"><img src="https://david-dm.org/febbyjs/febby/status.svg?branch=master" alt="dependencies Status"></a></td>
+</tr>
+</tbody>
+</table>
 
 
-      <section class='p2 mb2 clearfix bg-white minishadow'>
+  <div class='pre p1 fill-light mt0'>new Febby()</div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
-        <div class='clearfix'>
+  
 
-          <h3 class='fl m0' id='febby'>
-            Febby
-          </h3>
+  
 
+  
 
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='febbycreateapp'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>createApp()</span>
         </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
 
+  
 
-        <p>Febby - Configuration based NodeJs Framework With Swagger Document Generation.</p>
+  <p>Creates service application</p>
 
-        <p>REST with custom Route support , Method specific Middleware configuration and</p>
-        <p>Automatically generates swagger documentation</p>
 
+  <div class='pre p1 fill-light mt0'>createApp()</div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Branch</th>
-              <th>Build Status</th>
-              <th>Coverage</th>
-              <th>Npm</th>
-              <th>Dependencies</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Master</td>
-              <td>
-                <a href="https://travis-ci.org/febbyjs/febby">
-                  <img src="https://travis-ci.org/febbyjs/febby.svg?branch=master" alt="Build Status">
-                </a>
-              </td>
-              <td>
-                <a href="https://coveralls.io/github/febbyjs/febby?branch=master">
-                  <img src="https://coveralls.io/repos/github/febbyjs/febby/badge.svg?branch=master" alt="Coverage Status">
-                </a>
-              </td>
-              <td>
-                <a href="https://badge.fury.io/js/febby">
-                  <img src="https://badge.fury.io/js/febby.svg?branch=master" alt="npm version">
-                </a>
-              </td>
-              <td>
-                <a href="https://david-dm.org/febbyjs/febby">
-                  <img src="https://david-dm.org/febbyjs/febby/status.svg?branch=master" alt="dependencies Status">
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>Develop</td>
-              <td>
-                <a href="https://travis-ci.org/febbyjs/febby">
-                  <img src="https://travis-ci.org/febbyjs/febby.svg?branch=develop" alt="Build Status">
-                </a>
-              </td>
-              <td>
-                <a href="https://coveralls.io/github/febbyjs/febby?branch=develop">
-                  <img src="https://coveralls.io/repos/github/febbyjs/febby/badge.svg?branch=develop" alt="Coverage Status">
-                </a>
-              </td>
-              <td>
-                <a href="https://badge.fury.io/js/febby">
-                  <img src="https://badge.fury.io/js/febby.svg?branch=develop" alt="npm version">
-                </a>
-              </td>
-              <td>
-                <a href="https://david-dm.org/febbyjs/febby">
-                  <img src="https://david-dm.org/febbyjs/febby/status.svg?branch=develop" alt="dependencies Status">
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class='pre p1 fill-light mt0'>new Febby():
-          <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-        </div>
+  
 
+  
 
+  
 
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class='py1 quiet mt1 prose-big'>Returns</div>
-        <code>
-          <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-        </code>: Returns Febby Object
-
-
-
-
-
-
-
-
-        <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-        <pre class='p1 overflow-auto round fill-light'>npm install febby --save</pre>
-
-
-        <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> Febby = <span class="hljs-built_in">require</span>(<span class="hljs-string">'febby'</span>);</pre>
-
-
-        <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby();</pre>
-
-
-
-
-
-
-        <div class='py1 quiet mt1 prose-big'>Instance Members</div>
-        <div class="clearfix">
-
-          <div class='border-bottom' id='febbycreateapp'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>createApp()</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
-
-
-
-                <p>creates An Express App</p>
-
-
-                <div class='pre p1 fill-light mt0'>createApp()</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// make sure you configured models and config object before calling this method</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// make sure you configured models and config object before calling this method</span>
 
 <span class="hljs-keyword">const</span> Febby = <span class="hljs-built_in">require</span>(<span class="hljs-string">'febby'</span>);
 
@@ -363,74 +297,71 @@ febby.setModels(models);
 febby.setRoutes(routes);
 
 febby.createApp();</pre>
+    
+  
 
+  
 
+  
 
+  
+</section>
 
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='febbysetconfig'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setConfig(config)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
 
+  
 
+  
 
+  <div class='pre p1 fill-light mt0'>setConfig(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
 
-              </section>
+  
+  
+  
+  
+  
+  
 
-            </div>
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>config</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    configuration object for application
+
           </div>
+          
+        </div>
+      
+    </div>
+  
 
-          <div class='border-bottom' id='febbysetconfig'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>setConfig(config)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+  
 
+  
 
+  
 
-                <p>set Config Object before calling febby.createApp()</p>
-
-
-                <div class='pre p1 fill-light mt0'>setConfig(config:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>config</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">let</span> config = {
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">let</span> config = {
  <span class="hljs-string">'port'</span>: <span class="hljs-number">3000</span>,
  <span class="hljs-comment">// Application base path</span>
  <span class="hljs-string">'basePath'</span>: <span class="hljs-string">'/api/v1'</span>,
@@ -443,83 +374,94 @@ febby.createApp();</pre>
      <span class="hljs-comment">// mongodb url</span>
    <span class="hljs-string">'url'</span>: <span class="hljs-string">'mongodb://localhost:27017/test'</span>
  },
- <span class="hljs-comment">// app will run cluter mode if set true , default value is true</span>
+ <span class="hljs-comment">// app will run in cluster mode if true , default value is false</span>
  <span class="hljs-string">'clusterMode'</span>: <span class="hljs-literal">false</span>
 };
 
 febby.setConfig(config);</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='febbysetmodels'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setModels(models)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set Model Object</p>
 
 
+  <div class='pre p1 fill-light mt0'>setModels(models: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>models</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    models definition and method configurations
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+    </div>
+  
 
-          <div class='border-bottom' id='febbysetmodels'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>setModels(models)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+  
 
+  
 
+  
 
-                <p>Set Model Object</p>
-
-
-                <div class='pre p1 fill-light mt0'>setModels(models:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>models</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">let</span> user = {
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">let</span> hasPermission = <span class="hljs-function">(<span class="hljs-params">request, response, next, models</span>) =&gt;</span> {
+     <span class="hljs-keyword">let</span> username = request.body.username
+     <span class="hljs-keyword">let</span> password = request.body.password
+     <span class="hljs-comment">// will handle user login logic here</span>
+     models.users.findOne({<span class="hljs-string">'username'</span>:username},{}).
+         then(<span class="hljs-function">(<span class="hljs-params">doc</span>)=&gt;</span>{
+         <span class="hljs-comment">// validate the user and respond</span>
+             next();
+         }).catch(<span class="hljs-function">(<span class="hljs-params">error</span>)=&gt;</span>{
+             next(error);
+         })
+     };
+ }
+<span class="hljs-keyword">let</span> user = {
     <span class="hljs-attr">methods</span>: {
-        <span class="hljs-attr">crud</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// false enables user to define specific method , default value is true makes crud enable on the modal</span>
+        <span class="hljs-attr">crud</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// false enables user to define specific method, default value is false.</span>
         middlewares: [ ValidateUser ], <span class="hljs-comment">//  will run for all enabled methods. array may contain list of functions</span>
-        get: [], <span class="hljs-comment">// get value array represents middleware function</span>
+        get: [ hasPermission ], <span class="hljs-comment">//middleware function will run before get call</span>
         post: [ hasPermission ],
         <span class="hljs-attr">put</span>: []
     },
@@ -530,7 +472,8 @@ febby.setConfig(config);</pre>
         <span class="hljs-attr">username</span>: {
             <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
             <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,
-            <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span>
+            <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">index</span>: <span class="hljs-literal">true</span>
         },
         <span class="hljs-attr">firstname</span>: {
             <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>
@@ -552,74 +495,71 @@ febby.setConfig(config);</pre>
 febby.setModels(models);
 
 <span class="hljs-comment">// set models before calling febby.createApp()</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='febbysetroutes'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setRoutes(routes)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set Routes Object</p>
 
 
+  <div class='pre p1 fill-light mt0'>setRoutes(routes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-              </section>
-
-            </div>
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>routes</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
           </div>
+          
+        </div>
+      
+    </div>
+  
 
-          <div class='border-bottom' id='febbysetroutes'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>setRoutes(routes)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+  
 
+  
 
+  
 
-                <p>Set Routes Object</p>
-
-
-                <div class='pre p1 fill-light mt0'>setRoutes(routes:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>routes</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">//For Every Route Handler will have following arguments</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">//For Every Route Handler will have following arguments</span>
 <span class="hljs-comment">//models contain all database collection modals </span>
 <span class="hljs-keyword">let</span> loginHandler = <span class="hljs-function">(<span class="hljs-params">request, response, next, models</span>) =&gt;</span> { 
      <span class="hljs-keyword">let</span> username = request.body.username
@@ -646,80 +586,85 @@ febby.setModels(models);
                  res.json({<span class="hljs-string">'data'</span>:<span class="hljs-string">'hello world'</span>});
              }
          }
-     }
+     },
+     <span class="hljs-string">'/user/:name'</span>: {
+         <span class="hljs-string">'get'</span>: {
+             <span class="hljs-string">'middlewares'</span>: [],
+             <span class="hljs-string">'handler'</span>: <span class="hljs-function">(<span class="hljs-params">req,res,next,models</span>)=&gt;</span>{
+                 res.json({<span class="hljs-string">'data'</span>:req.params.name});
+             }
+         }
+     },
  };
 
 febby.setRoutes(routes);
 
 <span class="hljs-comment">// set routes before calling febby.createApp()</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='febbyrunmiddleware'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>runMiddleware(middlewareFunc)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Provides ability to run configure middleware functions .</p>
 
 
+  <div class='pre p1 fill-light mt0'>runMiddleware(middlewareFunc: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-              </section>
-
-            </div>
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>middlewareFunc</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    
           </div>
+          
+        </div>
+      
+    </div>
+  
 
-          <div class='border-bottom' id='febbyrunmiddleware'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>runMiddleware(middlewareFunc)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+  
 
+  
 
+  
 
-                <p>Provides ability to run configure middleware functions .</p>
-
-
-                <div class='pre p1 fill-light mt0'>runMiddleware(middlewareFunc:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>middlewareFunc</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">//Simple Logger</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">//Simple Logger</span>
 
 <span class="hljs-keyword">const</span> logger = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
      <span class="hljs-built_in">console</span>.info(req.method+<span class="hljs-string">' : '</span>+req.url);
@@ -729,69 +674,66 @@ febby.setRoutes(routes);
 febby.runMiddleware(logger);
 
 ** Make Sure You must pass request object to next by calling next callback</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='febbygetmodels'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getModels()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns defined models as an object</p>
 
 
+  <div class='pre p1 fill-light mt0'>getModels(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
 
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Object of models.
 
+      
+    
+  
 
-              </section>
+  
 
-            </div>
-          </div>
-
-          <div class='border-bottom' id='febbygetmodels'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>getModels()</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
-
-
-
-                <p>Returns Defined Models as an Object</p>
-
-
-                <div class='pre p1 fill-light mt0'>getModels():
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-                </code>: returns Object of models
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Getting Models of an Application , Model names are always Plural</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Getting Models of an Application , Model names are always Plural</span>
 
 <span class="hljs-keyword">let</span> models = febby.getModels();
 
@@ -802,237 +744,228 @@ models.users.findOne({<span class="hljs-string">'username'</span>:<span class="h
 })
 
 <span class="hljs-comment">//now you can use models obejct throught application</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='febbygetapp'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getApp()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns express app object</p>
 
 
+  <div class='pre p1 fill-light mt0'>getApp(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
 
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        app object
 
+      
+    
+  
 
-              </section>
+  
 
-            </div>
-          </div>
-
-          <div class='border-bottom' id='febbygetapp'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>getApp()</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
-
-
-
-                <p>Returns Express App Object</p>
-
-
-                <div class='pre p1 fill-light mt0'>getApp():
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-                </code>: App Obejct
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Returns Express App Object</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Returns Express App Object</span>
 <span class="hljs-keyword">let</span> app = febby.getApp();
 
 app.use(<span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
      <span class="hljs-built_in">console</span>.info(req.method+<span class="hljs-string">' : '</span>+req.url);
      next();
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='query'>
+      Query
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Here is the supported methods findById, findOne, find, findRef, save, update, increment, distinct, count, remove</p>
 
 
+  <div class='pre p1 fill-light mt0'>new Query(collection: any)</div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
-
-
-
-
-              </section>
-
-            </div>
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>(any)</code>
+	    
           </div>
-
+          
         </div>
+      
+    </div>
+  
 
+  
 
+  
 
+  
 
-      </section>
+  
 
+  
 
-
-
-      <section class='p2 mb2 clearfix bg-white minishadow'>
-
-
-        <div class='clearfix'>
-
-          <h3 class='fl m0' id='query'>
-            Query
-          </h3>
-
-
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='queryfindbyid'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>findById(id, selectionFields)</span>
         </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>findById query to get a document based on id field</p>
 
 
-        <p>Here is the supported methods findById, findOne, find, findRef, save, update, increment, distinct, count, remove</p>
+  <div class='pre p1 fill-light mt0'>findById(id: ObjectId, selectionFields: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
-        <div class='pre p1 fill-light mt0'>new Query(collection: any)</div>
-
-
-
-
-
-
-
-
-
-
-
-        <div class='py1 quiet mt1 prose-big'>Parameters</div>
-        <div class='prose'>
-
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>collection</span>
-              <code class='quiet'>(any)</code>
-
-            </div>
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>id</span> <code class='quiet'>(ObjectId)</code>
+	    mongodb ObjectId
 
           </div>
-
+          
         </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>selectionFields</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object represents required fields and non required fields .ex: {firstname:1,lastname:0}
 
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        Collection document if found,
+or an error if rejected.
 
+      
+    
+  
 
+  
 
-
-
-
-
-
-
-
-        <div class='py1 quiet mt1 prose-big'>Instance Members</div>
-        <div class="clearfix">
-
-          <div class='border-bottom' id='queryfindbyid'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>findById(id, selectionFields)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
-
-
-
-                <p>findById query to get a document based on id field</p>
-
-
-                <div class='pre p1 fill-light mt0'>findById(id: ObjectId, selectionFields:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>id</span>
-                      <code class='quiet'>(ObjectId)</code>
-                      mongodb ObjectId
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>selectionFields</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      Object represents required fields and non required fields .ex: {firstname:1,lastname:0}
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: Collection document if found, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> id  = <span class="hljs-string">'59f5edd03849b92e40fadf7c'</span>;
-<span class="hljs-keyword">let</span> selectedFieldsObj = {<span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,<span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>};
+<span class="hljs-keyword">let</span> selectedFieldsObj = {
+ <span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,
+ <span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>
+};
 <span class="hljs-comment">// key with value 0 is omitted</span>
 <span class="hljs-comment">// key with value 1 is fetched</span>
 models.users.findById(id,selectedFieldsObj).then(<span class="hljs-function">(<span class="hljs-params">doc</span>)=&gt;</span>{
@@ -1040,404 +973,364 @@ models.users.findById(id,selectedFieldsObj).then(<span class="hljs-function">(<s
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='queryfindone'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>findOne(query, selectionFields)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>findOne query to get a document based given query</p>
 
 
+  <div class='pre p1 fill-light mt0'>findOne(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, selectionFields: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    query object conatins user mongodb query object. ex: {'firstname':'vasu'}
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>selectionFields</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object represents required fields and non required fields .ex: {firstname:1,lastname:0}
 
-          <div class='border-bottom' id='queryfindone'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>findOne(query, selectionFields)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        Collection document if found,
+or an error if rejected.
 
-                <p>findOne query to get a document based given query</p>
+      
+    
+  
 
+  
 
-                <div class='pre p1 fill-light mt0'>findOne(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, selectionFields:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      query object conatins user mongodb query object. ex: {'firstname':'vasu'}
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>selectionFields</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      Object represents required fields and non required fields .ex: {firstname:1,lastname:0}
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: Collection document if found, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
-<span class="hljs-keyword">let</span> selectedFieldsObj = {<span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,<span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>};
-<span class="hljs-comment">// key with value 0 is omitted</span>
-<span class="hljs-comment">// key with value 1 is fetched</span>
+<span class="hljs-keyword">let</span> selectedFieldsObj = {
+ <span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,
+ <span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>
+};
 models.users.findOne(query,selectedFieldsObj).then(<span class="hljs-function">(<span class="hljs-params">doc</span>)=&gt;</span>{
      log(doc);
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='queryfind'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>find(query, selectionFields, sortBy, skip, limit)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>find query to get the records of a collection by given mongodb query</p>
 
 
+  <div class='pre p1 fill-light mt0'>find(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, selectionFields: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, sortBy: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, skip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, limit: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    mongodb query
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>selectionFields</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    selection object
 
-          <div class='border-bottom' id='queryfind'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>find(query, selectionFields, sortBy, skip, limit)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>sortBy</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    sort object. ex: {createdAt:-1}
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>skip</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    skip number of records , default value is 0
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>limit</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    limit the result of your query by default limit is set to 30
 
-                <p>find query to get the records of a collection by given mongodb query</p>
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
+  
 
-                <div class='pre p1 fill-light mt0'>find(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, selectionFields:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, sortBy:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, skip:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, limit:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        Collection documents if found,
+or an error if rejected.
 
+      
+    
+  
 
+  
 
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      mongodb query
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>selectionFields</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      selection object
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>sortBy</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      sort object. ex: {createdAt:-1}
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>skip</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-                      skip number of records , default value is 0
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>limit</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-                      limit the result of your query by default limit is set to 30
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: Collection documents if found, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
-<span class="hljs-keyword">let</span> selectedFieldsObj = {<span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,<span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>};
+<span class="hljs-keyword">let</span> selectedFieldsObj = {
+ <span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,
+ <span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>
+};
 <span class="hljs-keyword">let</span> skip = <span class="hljs-number">0</span>;  <span class="hljs-comment">// skip number of records</span>
 <span class="hljs-keyword">let</span> limit = <span class="hljs-number">10</span>; <span class="hljs-comment">//0 to get all queried records</span>
 <span class="hljs-keyword">let</span> sortBy = {<span class="hljs-string">'firstname'</span>:<span class="hljs-number">1</span>}; <span class="hljs-comment">// -1 for descending order</span>
-<span class="hljs-comment">// key with value 0 is omitted</span>
-<span class="hljs-comment">// key with value 1 is fetched</span>
 models.users.find(query, selectedFieldsObj, sortBy, skip, limit).then(<span class="hljs-function">(<span class="hljs-params">doc</span>)=&gt;</span>{
      log(doc);
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='queryfindref'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>findRef(query, selectionFields, refObj, sortBy, skip, limit)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>findRef query to get refrenced documents from Other collection</p>
 
 
+  <div class='pre p1 fill-light mt0'>findRef(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, selectionFields: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, refObj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, sortBy: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, skip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, limit: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    query object
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>selectionFields</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    selection object for query
 
-          <div class='border-bottom' id='queryfindref'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>findRef(query, selectionFields, refObj, sortBy, skip, limit)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>refObj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    ref object contains an array of selected fields of Other collection .
+ex: refObj = {'collection_key1':
+[
+'name','email'
+]
+,'collection_key2':
+[
+'name','email'
+]
+...}
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>sortBy</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    sortby Object to filter result
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>skip</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    skip number of records , by deafult it is 0
 
-                <p>findRef query to get refrenced documents from Other collection</p>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>limit</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    limit the result of your query by default limit is set to 30
 
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
-                <div class='pre p1 fill-light mt0'>findRef(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, selectionFields:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, refObj:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, sortBy:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, skip:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, limit:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        Collection documents if found,
+or an error if rejected.
 
+      
+    
+  
 
+  
 
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      query object
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>selectionFields</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      selection object for query
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>refObj</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      ref object contains an array of selected fields of Other collection . ex: refObj = {'collection_key1': [ 'name','email' ]
-                      ,'collection_key2': [ 'name','email' ] ...}
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>sortBy</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      sortby Object to filter result
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>skip</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-                      skip number of records , by deafult it is 0
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>limit</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-                      limit the result of your query by default limit is set to 30
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: Collection documents if found, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
-<span class="hljs-keyword">let</span> selectedFieldsObj = {<span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,<span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>};
+<span class="hljs-keyword">let</span> selectedFieldsObj = {
+ <span class="hljs-string">'username'</span>:<span class="hljs-number">1</span>,
+ <span class="hljs-string">'lastname'</span>:<span class="hljs-number">0</span>
+};
 <span class="hljs-keyword">let</span> skip = <span class="hljs-number">0</span>;  <span class="hljs-comment">// skip number of records</span>
 <span class="hljs-keyword">let</span> limit = <span class="hljs-number">10</span>; <span class="hljs-comment">//0 to get all queried records</span>
 <span class="hljs-keyword">let</span> sortBy = {<span class="hljs-string">'firstname'</span>:<span class="hljs-number">1</span>}; <span class="hljs-comment">// -1 for descending order</span>
-<span class="hljs-comment">// key with value 0 is omitted</span>
-<span class="hljs-comment">// key with value 1 is fetched</span>
 <span class="hljs-keyword">let</span> refObj = {<span class="hljs-string">'user_id'</span>:[<span class="hljs-string">'username'</span>,<span class="hljs-string">'firstname'</span>]}
 <span class="hljs-comment">// needed full document of other collection then just pass empty array</span>
 <span class="hljs-comment">// refObj = {'user_id':[]}</span>
@@ -1449,213 +1342,192 @@ models.users.findRef(query, selectedFieldsObj, refObj, sortBy, skip, limit).then
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='querysave'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>save(data)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Save the data.</p>
 
 
+  <div class='pre p1 fill-light mt0'>save(data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    json object
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+    </div>
+  
 
-          <div class='border-bottom' id='querysave'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>save(data)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        document if saved,
+or an error if rejected.
 
+      
+    
+  
 
-                <p>Save the data.</p>
+  
 
-
-                <div class='pre p1 fill-light mt0'>save(data:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>data</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      json object
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: document if saved, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// model name is pluralized</span>
-<span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
-<span class="hljs-keyword">let</span> data  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>,<span class="hljs-string">'firstname'</span>:<span class="hljs-string">'vasu'</span>,<span class="hljs-string">'lastname'</span>:<span class="hljs-string">'vanka'</span>};
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">let</span> data  = {
+ <span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>,
+ <span class="hljs-string">'firstname'</span>:<span class="hljs-string">'vasu'</span>,
+ <span class="hljs-string">'lastname'</span>:<span class="hljs-string">'vanka'</span>
+};
 models.users.save(data).then(<span class="hljs-function">(<span class="hljs-params">doc</span>)=&gt;</span>{
      log(doc);
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='queryupdate'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>update(query, data, isMultiple, isUpsert)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Update matched Document(s);</p>
 
 
+  <div class='pre p1 fill-light mt0'>update(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, isMultiple: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>, isUpsert: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    query object
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    data object
 
-          <div class='border-bottom' id='queryupdate'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>update(query, data, isMultiple, isUpsert)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>isMultiple</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
+	    if true it will update to all matched documents, if false only update to first matched document, default value is false
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>isUpsert</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
+	    if true it will create new record if none of the records matched .default value is false
 
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
-                <p>Update matched Document(s);</p>
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        document status if updated,
+or an error if rejected.
 
-                <div class='pre p1 fill-light mt0'>update(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, data:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, isMultiple:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>, isUpsert:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+      
+    
+  
 
+  
 
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      query object
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>data</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      data object
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>isMultiple</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
-                      if true it will update to all matched documents, if false only update to first matched document, default value is false
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>isUpsert</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
-                      if true it will create new record if none of the records matched .default value is false
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: document status if updated, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
 <span class="hljs-keyword">let</span> data = {<span class="hljs-string">'firstname'</span>:<span class="hljs-string">'vicky'</span>,<span class="hljs-string">'lastname'</span>:<span class="hljs-string">'martin'</span>};
@@ -1666,124 +1538,108 @@ models.users.save(data).then(<span class="hljs-function">(<span class="hljs-para
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='queryincrement'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>increment(query, data, isMultiple, isUpsert)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Increment/Decrement a number by +/- any number. ex: 10 or -10</p>
 
 
+  <div class='pre p1 fill-light mt0'>increment(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, isMultiple: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>, isUpsert: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    query object
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    data object
 
-          <div class='border-bottom' id='queryincrement'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>increment(query, data, isMultiple, isUpsert)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>isMultiple</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
+	    if true it will update to all matched documents, if false only update to first matched document, default value is false
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>isUpsert</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
+	    if true it will create new record if none of the records matched .default value is false
 
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
-                <p>Increment/Decrement a number by +/- any number. ex: 10 or -10</p>
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        document status if updated,
+or an error if rejected.
 
-                <div class='pre p1 fill-light mt0'>increment(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, data:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, isMultiple:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>, isUpsert:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+      
+    
+  
 
+  
 
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      query object
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>data</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      data object
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>isMultiple</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
-                      if true it will update to all matched documents, if false only update to first matched document, default value is false
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>isUpsert</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
-                      if true it will create new record if none of the records matched .default value is false
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: document status if updated, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
 <span class="hljs-keyword">let</span> data = {<span class="hljs-string">'amount'</span>:<span class="hljs-number">1</span>};
@@ -1795,100 +1651,90 @@ models.users.save(data).then(<span class="hljs-function">(<span class="hljs-para
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='querydistinct'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>distinct(query, field)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Return all distnict field values</p>
 
 
+  <div class='pre p1 fill-light mt0'>distinct(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, field: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    query object
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>field</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    field or key name
 
-          <div class='border-bottom' id='querydistinct'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>distinct(query, field)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+          </div>
+          
+        </div>
+      
+    </div>
+  
 
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        documents if found,
+or an error if rejected.
 
-                <p>Return all distnict field values</p>
+      
+    
+  
 
+  
 
-                <div class='pre p1 fill-light mt0'>distinct(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, field:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      query object
-
-                    </div>
-
-                  </div>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>field</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-                      field or key name
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: documents if found, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
 <span class="hljs-keyword">let</span> field = <span class="hljs-string">"firstname"</span>;
@@ -1897,88 +1743,81 @@ models.users.save(data).then(<span class="hljs-function">(<span class="hljs-para
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='queryremove'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>remove(query)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Remove all matched documents</p>
 
 
+  <div class='pre p1 fill-light mt0'>remove(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    query object
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+    </div>
+  
 
-          <div class='border-bottom' id='queryremove'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>remove(query)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        document status if removed,
+or an error if rejected.
 
+      
+    
+  
 
-                <p>Remove all matched documents</p>
+  
 
-
-                <div class='pre p1 fill-light mt0'>remove(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      query object
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: document status if removed, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
  models.users.remove(query).then(<span class="hljs-function">(<span class="hljs-params">doc</span>)=&gt;</span>{
@@ -1986,88 +1825,81 @@ models.users.save(data).then(<span class="hljs-function">(<span class="hljs-para
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='querycount'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>count(query)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Count matched documents</p>
 
 
+  <div class='pre p1 fill-light mt0'>count(query: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
+  
+  
 
+  
+  
+  
+  
+  
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>query</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    query object
 
-
-
-
-              </section>
-
-            </div>
           </div>
+          
+        </div>
+      
+    </div>
+  
 
-          <div class='border-bottom' id='querycount'>
-            <div class="clearfix small pointer toggle-sibling">
-              <div class="py1 contain">
-                <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-                <span class='code strong strong truncate'>count(query)</span>
-              </div>
-            </div>
-            <div class="clearfix display-none toggle-target">
-              <section class='p2 mb2 clearfix bg-white minishadow'>
+  
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>:
+        count of matched record query,
+or an error if rejected.
 
+      
+    
+  
 
-                <p>Count matched documents</p>
+  
 
-
-                <div class='pre p1 fill-light mt0'>count(query:
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>):
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></div>
-
-
-
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Parameters</div>
-                <div class='prose'>
-
-                  <div class='space-bottom0'>
-                    <div>
-                      <span class='code bold'>query</span>
-                      <code class='quiet'>(
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-                      query object
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Returns</div>
-                <code>
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;(
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> |
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>)></code>: count of matched record query, or an error if rejected.
-
-
-
-
-
-
-
-
-                <div class='py1 quiet mt1 prose-big'>Example</div>
-
-
-                <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// modelname is pluralized</span>
 <span class="hljs-comment">// when ever you are using models , model names are always plurals.</span>
 <span class="hljs-keyword">let</span> query  = {<span class="hljs-string">'username'</span>:<span class="hljs-string">'vasuvanka'</span>};
  models.users.count(query).then(<span class="hljs-function">(<span class="hljs-params">doc</span>)=&gt;</span>{
@@ -2075,44 +1907,32 @@ models.users.save(data).then(<span class="hljs-function">(<span class="hljs-para
 }).catch(<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>{
      log(err);
 })</pre>
+    
+  
 
+  
 
+  
 
+  
+</section>
 
-
-
-
-
-              </section>
-
-            </div>
-          </div>
-
-        </div>
-
-
-
-
-      </section>
-
-
-
+      </div>
     </div>
-  </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
   <script src='assets/anchor.js'></script>
   <script src='assets/split.js'></script>
   <script src='assets/site.js'></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109934840-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'UA-109934840-1');
-
-  </script>
 </body>
-
 </html>

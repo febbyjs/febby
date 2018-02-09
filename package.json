@@ -20,13 +20,13 @@
     "lib": "lib"
   },
   "dependencies": {
-    "body-parser": "~1.18.2",
-    "compression": "~1.7.1",
-    "cors": "~2.8.4",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "cors": "^2.8.4",
     "express": "~4.16.2",
-    "helmet": "~3.9.0",
+    "helmet": "^3.11.0",
     "lodash": "~4.17.4",
-    "mongoose": "~4.13.4",
+    "mongoose": "~5.0.4",
     "pluralize": "~7.0.0",
     "swagger-ui-express": "^2.0.15"
   },
