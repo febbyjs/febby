@@ -36,7 +36,7 @@ Auto generates swagger documentation.
 
 ### createApp
 
-Creates services application
+Creates service application
 
 **Examples**
 
