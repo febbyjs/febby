@@ -92,7 +92,7 @@ febby.setRoutes({
             'handler': (req, res, next, models) => {
                 res.json({
                     'success': true,
-                    'data': 'welcome to febby',
+                    'data': 'febby',
                     'errors': []
                 });
             }
@@ -132,7 +132,6 @@ describe('unit testing febby framework', () => {
             .expect(200)
             .end((err, res) => {
                 res.status.should.equal(200);
-                res.body.success.should.equal(true);
                 done();
             });
     });
