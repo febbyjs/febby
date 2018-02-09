@@ -97,6 +97,18 @@ febby.setRoutes({
                 });
             }
         }
+    },
+    '/:name': {
+        'get': {
+            'middlewares': [log],
+            'handler': (req, res, next, models) => {
+                res.json({
+                    'success': true,
+                    'data': req.params,
+                    'errors': []
+                });
+            }
+        }
     }
 });
 
@@ -116,6 +128,18 @@ describe('unit testing febby framework', () => {
     it('should return welcome text', done => {
         server
             .get('/api/r/')
+            .expect('Content-type', 'application/json; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                res.status.should.equal(200);
+                res.body.success.should.equal(true);
+                done();
+            });
+    });
+    // params
+    it('should return vasu name from url', done => {
+        server
+            .get('/api/r/vasu')
             .expect('Content-type', 'application/json; charset=utf-8')
             .expect(200)
             .end((err, res) => {
