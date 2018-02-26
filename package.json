@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "framework for building applications & microservices",
   "main": "index.js",
   "keywords": [
