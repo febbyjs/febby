@@ -1,6 +1,6 @@
 {
-  "name": "febby",
-  "version": "0.2.2",
+  "name": "@febbyjs/febby",
+  "version": "0.2.4",
   "description": "Framework for building application services",
   "main": "index.js",
   "keywords": [
