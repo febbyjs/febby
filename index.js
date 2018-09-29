@@ -1,7 +1,7 @@
 /*!
  * febby
- * Copyright(c) 2017 Vasu Vanka
+ * Copyright(c) 2018 Vasu Vanka
  * MIT Licensed
  */
 'use strict';
-exports = module.exports = require('./lib');
+module.exports = require('./lib');
