@@ -1,65 +1,39 @@
 {
-  "name": "@febbyjs/febby",
-  "version": "0.2.4",
-  "description": "Framework for building application services",
+  "name": "febby",
+  "version": "0.2.8",
+  "description": "microservice framework for building application services",
   "main": "index.js",
-  "keywords": [
-    "rest",
-    "api",
-    "febby",
-    "configuration",
-    "json",
-    "middleware",
-    "express",
-    "mongodb",
-    "router",
-    "swagger",
-    "http"
-  ],
   "directories": {
+    "doc": "docs",
     "lib": "lib"
   },
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "compression": "^1.7.1",
-    "cors": "^2.8.4",
-    "express": "~4.16.2",
-    "helmet": "^3.11.0",
-    "lodash": "~4.17.4",
-    "mongoose": "~5.0.4",
-    "pluralize": "~7.0.0",
-    "swagger-ui-express": "^2.0.15"
-  },
-  "devDependencies": {
-    "coveralls": "^3.0.0",
-    "eslint": "~4.9.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^4.0.1",
-    "should": "^13.1.3",
-    "supertest": "^3.0.0"
-  },
   "scripts": {
-    "lint": "eslint .",
-    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
-  },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "index.js",
-    "lib/"
-  ],
-  "engines": {
-    "node": ">= 8.9.4"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/febbyjs/febby.git"
   },
+  "keywords": [
+    "rest",
+    "febby",
+    "configuration",
+    "minimalistic"
+  ],
   "author": "Vasu Vanka <vanka.vasu@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/febbyjs/febby/issues"
   },
-  "homepage": "https://github.com/febbyjs/febby#readme"
+  "homepage": "https://github.com/febbyjs/febby#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "mongoose": "^5.2.17"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
 }
