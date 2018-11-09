@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "microservice framework for building application services",
   "main": "index.js",
   "directories": {
@@ -8,7 +8,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "docs": "documentation build index.js -f md > README.md && documentation build index.js -f html -o docs"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,6 @@
   },
   "keywords": [
     "rest",
-    "febby",
     "configuration",
     "minimalistic"
   ],

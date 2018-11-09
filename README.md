@@ -36,10 +36,16 @@
         -   [Examples][32]
     -   [expressApp][33]
         -   [Examples][34]
-    -   [shutdown][35]
-        -   [Examples][36]
-    -   [closeConnection][37]
-        -   [Examples][38]
+    -   [finalMiddlewares][35]
+        -   [Parameters][36]
+        -   [Examples][37]
+    -   [finalHandler][38]
+        -   [Parameters][39]
+        -   [Examples][40]
+    -   [shutdown][41]
+        -   [Examples][42]
+    -   [closeConnection][43]
+        -   [Examples][44]
 
 ## Febby
 
@@ -47,7 +53,7 @@ Febby
 
 ### Parameters
 
--   `config` **[Object][39]** Represents basic app setup. (optional, default `{}`)
+-   `config` **[Object][45]** Represents basic app setup.
 
 ### Examples
 
@@ -75,7 +81,7 @@ Register Route
 
 #### Parameters
 
--   `routeConfig` **[Object][39]** the route object used to create route configuration.
+-   `routeConfig` **[Object][45]** the route object used to create route configuration.
 
 #### Examples
 
@@ -105,7 +111,7 @@ Register Route list
 
 #### Parameters
 
--   `routes` **[Array][40]** list of route objects
+-   `routes` **[Array][46]** list of route objects
 
 #### Examples
 
@@ -146,8 +152,8 @@ Register middleware.
 
 #### Parameters
 
--   `middleware` **[Function][41]** Represents middleware function.
--   `router` **[Object][39]** Represents Express Router object by default it is app router object.
+-   `middleware` **[Function][47]** Represents middleware function.
+-   `router` **[Object][45]** Represents Express Router object by default it is app router object.
 
 #### Examples
 
@@ -176,8 +182,8 @@ Register Middlewares.
 
 #### Parameters
 
--   `middlewares` **[Array][40]&lt;[Object][39]>** Represents list of middlewares.
--   `router` **[Object][39]** Represents Express Router Object, default to app router.
+-   `middlewares` **[Array][46]&lt;[Object][45]>** Represents list of middlewares.
+-   `router` **[Object][45]** Represents Express Router Object, default to app router.
 
 #### Examples
 
@@ -203,9 +209,9 @@ Register a Router.
 
 #### Parameters
 
--   `url` **[string][42]** Represents url.
--   `router` **[Object][39]** Represents Express Router object, default to app router object.
--   `options` **[Object][39]** Represents Express Router config options.
+-   `url` **[string][48]** Represents url.
+-   `router` **[Object][45]** Represents Express Router object, default to app router object.
+-   `options` **[Object][45]** Represents Express Router config options.
 
 #### Examples
 
@@ -251,8 +257,8 @@ Establish Connection between app and database.
 
 #### Parameters
 
--   `url` **[string][42]** Represents database url.
--   `options` **[Object][39]** Represents mongoose connect optional object.
+-   `url` **[string][48]** Represents database url.
+-   `options` **[Object][45]** Represents mongoose connect optional object.
 
 #### Examples
 
@@ -318,10 +324,10 @@ Creates CRUD on given route object with specific config.
 
 #### Parameters
 
--   `path` **[string][42]** Represents url path.
--   `config` **[Object][39]** Represents CRUD configuration.
--   `model` **[Object][39]** Represents Model config object.
--   `router` **[Object][39]** Represents Express Router object. it is optional.
+-   `path` **[string][48]** Represents url path.
+-   `config` **[Object][45]** Represents CRUD configuration.
+-   `model` **[Object][45]** Represents Model config object.
+-   `router` **[Object][45]** Represents Express Router object. it is optional.
 
 #### Examples
 
@@ -385,7 +391,7 @@ const febby = new Febby(config);
  })
 ```
 
-Returns **[Object][39]** Returns mongoose models object.
+Returns **[Object][45]** Returns mongoose models object.
 
 ### model
 
@@ -393,8 +399,8 @@ Rigister and Returns model object.
 
 #### Parameters
 
--   `name` **[string][42]** Represents name of model.
--   `schema` **[Object][39]** Represents mongoose schema object.
+-   `name` **[string][48]** Represents name of model.
+-   `schema` **[Object][45]** Represents mongoose schema object.
 
 #### Examples
 
@@ -441,7 +447,7 @@ if database "db" object specified in config then febby will try to connect datab
 
 #### Parameters
 
--   `fn` **[Function][41]** Represents callback function which will called after app start up.
+-   `fn` **[Function][47]** Represents callback function which will called after app start up.
 
 #### Examples
 
@@ -490,7 +496,58 @@ Get Express App object
 #### Examples
 
 ```javascript
-febby.shutdown();
+febby.expressApp();
+```
+
+### finalMiddlewares
+
+Register final middlewares after bootstrap
+
+#### Parameters
+
+-   `functions` **[Array][46]** List of final middlewares
+
+#### Examples
+
+```javascript
+febby.bootstrap( () => {
+ console.log('app started');
+});
+const finalMiddlewares = [ (req,res,next) => {
+ const err = new Error('Not found');
+ err.status = 404;
+ next(err);
+}]
+febby.finalMiddlewares(finalMiddlewares);
+febby.finalHandler( (err,req,res,next) => {
+ // add final business logic
+ // respond with proper http status code
+ const message = err.message || 'unkown error';
+ res.status(err.status || 500).send({message});
+})
+```
+
+### finalHandler
+
+Register Final Handler after bootstrap
+
+#### Parameters
+
+-   `fn` **[Function][47]** Represents final Hnadler of application
+
+#### Examples
+
+```javascript
+febby.bootstrap( () => {
+ console.log('app started');
+});
+// register any last middlewares
+febby.finalHandler( (err,req,res,next) => {
+ // add final business logic
+ // respond with proper http status code
+ const message = 'unkown error';
+ res.status(500).send({message});
+})
 ```
 
 ### shutdown
@@ -581,18 +638,30 @@ febby.closeConnection();
 
 [34]: #examples-11
 
-[35]: #shutdown
+[35]: #finalmiddlewares
 
-[36]: #examples-12
+[36]: #parameters-10
 
-[37]: #closeconnection
+[37]: #examples-12
 
-[38]: #examples-13
+[38]: #finalhandler
 
-[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[39]: #parameters-11
 
-[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[40]: #examples-13
 
-[41]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[41]: #shutdown
 
-[42]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[42]: #examples-14
+
+[43]: #closeconnection
+
+[44]: #examples-15
+
+[45]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[46]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[47]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[48]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
