@@ -1,4 +1,6 @@
-const Febby = require('..');
+const {
+  Febby
+} = require('../dist');
 
 const config = {
   port: 3000,
@@ -19,12 +21,13 @@ const users = febby.model('users', {
   }
 });
 
-febby.middleware(logActionOnUserCrud, api);
 
 const logActionOnUserCrud = (req, res, next) => {
   console.log(`${req.method}:${req.url}`);
   next()
 }
+febby.middleware(logActionOnUserCrud, api);
+
 
 febby.crud('/users', {
   crud: true,
@@ -42,4 +45,6 @@ febby.route({
   }
 })
 
-febby.bootstrap();
+febby.bootstrap(() => {
+  console.log(`Server started`)
+});
