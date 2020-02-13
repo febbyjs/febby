@@ -13,13 +13,17 @@ const febbyDebug = debugUtil('febby:Febby')
 
 
 export class Febby implements IFebby {
+    private static instance: Febby;
     expressApp: any
-    appConfig: IAppConfig
+    private appConfig: IAppConfig | undefined
     server: Server | undefined
-    mainRouter: Router
-    constructor(config: IAppConfig) {
+    private mainRouter!: Router
+    constructor(config?: IAppConfig) {
         febbyDebug('Febby init started')
-        this.appConfig = validateAppConfig(config)
+        if (Febby.instance) {
+            return Febby.instance;    
+        }
+        this.appConfig = validateAppConfig(config || {} as IAppConfig)
         febbyDebug('app config set')
         mongoose.set('useNewUrlParser', true);
         mongoose.set('useFindAndModify', false);
@@ -30,7 +34,7 @@ export class Febby implements IFebby {
         febbyDebug('express app created')
         const self = this;
         (async () => {
-            if (self.appConfig.db) {
+            if (self.appConfig?.db) {
                 await this.connection(self.appConfig.db.url, self.appConfig.db.options || {});
                 febbyDebug('db connection created created')
             }
@@ -53,12 +57,13 @@ export class Febby implements IFebby {
         febbyDebug('app main router created')
         this.expressApp.use(this.appConfig.appBaseUrl, this.mainRouter)
         febbyDebug('app main router set')
+        Febby.instance =  this
     }
 
     bootstrap(cb?: Function): void {
         febbyDebug('bootstrap init')
         this.server = createServer(this.expressApp)
-        this.server.listen(this.appConfig.port, () => {
+        this.server.listen(this.appConfig?.port, () => {
             febbyDebug('app port set and listening')
             console.log(`Server started on PORT ${JSON.stringify(this.server?.address())}`)
             if (cb) {

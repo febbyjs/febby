@@ -121,12 +121,11 @@ export async function getHandler(req: Request, res: Response, next: NextFunction
             skip,
             limit
         }) || [];
+        res.status(200).send({ docs, count });
     } catch (error) {
-        const code = 400;
-        err = {
-            error,
-            code
-        };
+        res.status(400).send({
+            error : (error || {}).message,
+            code : 400
+        });
     }
-    res.status(docs.length > 0 ? 200 : 400).send({ docs, count } || err);
 }
