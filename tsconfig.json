@@ -70,6 +70,6 @@
     "./lib",
     "./node_modules",
     "./example",
-    "docs"
+    "./docs"
   ]
 }

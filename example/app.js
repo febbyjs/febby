@@ -6,11 +6,12 @@ const config = {
   port: 3000,
   db: {
     url: 'mongodb://localhost:27017/test'
-  }
+  },
+  appBaseUrl: '/hello'
 }
 const febby = new Febby(config);
 
-const api = febby.router('/');
+const api = febby.router('/api');
 
 const users = febby.model('users', {
   name: {
@@ -35,9 +36,10 @@ febby.crud('/users', {
 }, users, api);
 
 febby.route({
+  router: api,
   path: '/',
   method: 'get',
-  handler: (req, res, next) => {
+  handler: (req, res) => {
     const message = 'welcome to febby.!';
     res.json({
       message

@@ -1,7 +1,7 @@
 # vscode
 .vscode
 .DS_Store
-dist/
+# dist/
 package-lock.*
 #swagger
 .swagger.*
