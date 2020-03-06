@@ -1,7 +1,8 @@
 const {
   Febby
 } = require('../dist');
-
+var debug = require('debug')('http')
+debug('booting %o', "test");
 const config = {
   port: 3000,
   db: {
@@ -22,6 +23,15 @@ const users = febby.model('users', {
   }
 });
 
+const books = febby.model('books', {
+  name: {
+    type: String
+  },
+  author: {
+    type: String
+  }
+});
+
 
 const logActionOnUserCrud = (req, res, next) => {
   console.log(`${req.method}:${req.url}`);
@@ -34,6 +44,13 @@ febby.crud('/users', {
   crud: true,
   middlewares: [logActionOnUserCrud]
 }, users, api);
+
+febby.crud('/books', {
+  crud: false,
+  get:[],
+  post:[],
+  middlewares: [logActionOnUserCrud]
+}, books, api);
 
 febby.route({
   router: api,
