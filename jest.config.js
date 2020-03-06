@@ -34,9 +34,9 @@ module.exports = {
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: [
     'json',
-    // "text",
-    // "lcov",
-    // "clover"
+    "text",
+    "lcov",
+    "clover"
   ],
 
   // An object that configures minimum threshold enforcement for coverage results
@@ -159,7 +159,9 @@ module.exports = {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: null,
+  transform: {
+    '^.+\\.ts?$': 'ts-jest',
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [

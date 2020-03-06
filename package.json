@@ -7,9 +7,11 @@
     "lib": "dist"
   },
   "scripts": {
-    "test": "jest",
     "build": "tsc",
-    "docs": "typedoc --out docs src --theme default"
+    "docs": "typedoc --out docs src --theme default",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "test:watch": "jest --coverage --watchAll"
   },
   "repository": {
     "type": "git",
@@ -49,7 +51,7 @@
     "@types/morgan": "^1.7.37",
     "@types/node": "^13.1.0",
     "babel-jest": "^24.9.0",
-    "jest": "^25.0.0",
+    "jest": "^25.1.0",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.4"

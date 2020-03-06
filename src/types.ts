@@ -36,9 +36,9 @@ export interface IAppConfig {
     cors?: any
     db?: {
         url: string,
-        options: mongoose.ConnectionOptions
+        options?: mongoose.ConnectionOptions
     }
-    cluster?: boolean
+    clusterMode?: boolean
     appBaseUrl?: PathParams
 }
 
