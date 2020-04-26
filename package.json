@@ -13,7 +13,7 @@
     "start": "./node_modules/.bin/tsc",
     "test": "./node_modules/.bin/jest --coverage",
     "docs": "./node_modules/.bin/typedoc --out docs --mode modules ./index.ts",
-    "build": "npm test && npm start && npm run docs"
+    "generate": "npm test && npm start && npm run docs"
   },
   "repository": {
     "type": "git",
