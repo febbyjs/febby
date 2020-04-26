@@ -35,6 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /*!
  * febby
@@ -42,6 +49,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * MIT Licensed
  */
 var types_1 = require("./types");
+var debug = __importStar(require("debug"));
+var log = debug.debug('febby:helper');
 /**
  * @private
  * @param config Validates application configuration
@@ -61,11 +70,18 @@ exports.validateAppConfig = validateAppConfig;
  * @param handler request handler
  */
 function register(router, method, path, middlewares, handler) {
-    router[method](path, middlewares, handler);
+    log("Register route :: " + method + " :: " + path);
+    try {
+        router[method](path, middlewares, handler);
+    }
+    catch (error) {
+        // give more context of error
+        throw error;
+    }
 }
 exports.register = register;
 /**
- * getByIdHandler - Get document by id
+ * getByIdHandler - Get document by id, supports projection now. just pass projection in query params. ex: projection=name+mobile+email
  * @param req Request
  * @param res Response
  * @param next NextFunction
@@ -77,7 +93,7 @@ function getByIdHandler(req, res, next) {
             switch (_a.label) {
                 case 0:
                     id = req.params.id;
-                    projection = buildProjection(req.query.projection);
+                    projection = (req.query.projection || "").length > 0 ? buildProjection(req.query.projection) : {};
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
@@ -263,7 +279,7 @@ function patchHandler(req, res, next) {
 }
 exports.patchHandler = patchHandler;
 /**
- * getHandler - Get Documents
+ * getHandler - Get Documents, supports projection , skip and limit. skip defaulted to 0 and limit defaulted to 10
  * @param req Request
  * @param res Response
  * @param next NextFunction
@@ -276,7 +292,7 @@ function getHandler(req, res, next) {
                 case 0:
                     skip = req.query.skip ? parseInt(req.query.skip, 10) : 0;
                     limit = req.query.limit ? parseInt(req.query.limit, 10) : 10;
-                    projection = buildProjection(req.query.projection);
+                    projection = (req.query.projection || "").length > 0 ? buildProjection(req.query.projection) : {};
                     _d.label = 1;
                 case 1:
                     _d.trys.push([1, 4, , 5]);
@@ -314,4 +330,4 @@ function buildProjection(projection) {
     if (projection === void 0) { projection = ''; }
     return projection.replace('+', ' ');
 }
-//# sourceMappingURL=helper.js.map
+exports.buildProjection = buildProjection;

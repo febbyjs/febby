@@ -1,8 +1,7 @@
 const {
   Febby
 } = require('../dist');
-var debug = require('debug')('http')
-debug('booting %o', "test");
+
 const config = {
   port: 3000,
   db: {
@@ -12,7 +11,7 @@ const config = {
 }
 const febby = new Febby(config);
 
-const api = febby.router('/api');
+const api = febby.router('/api'); 
 
 const users = febby.model('users', {
   name: {
@@ -65,5 +64,5 @@ febby.route({
 })
 
 febby.bootstrap(() => {
-  console.log(`Server started`)
+  console.log(`Server started on port : ${config.port}`)
 });

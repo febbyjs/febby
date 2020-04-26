@@ -1,11 +1,11 @@
 # Febby
 
-Microservice framework built for Node.js with MongoDB to build application services.
+Microservice framework to build application services using Node.js and MongoDB.
 
 ## Install
 
 ```
-npm install febby
+npm install febby --save
 ```
 # Build Status
 
@@ -19,7 +19,7 @@ npm install febby
 
 ## Examples
 
-The example projects and some of the documentation has fallen behind, so the following is a quick sample of what a project utilizing SakuraApi looks like. Updated documentation and a getting started guide is coming.
+Sample project using febby to create crud on two collections
 
 ```js
 const {
@@ -31,17 +31,26 @@ const config = {
   db: {
     url: 'mongodb://localhost:27017/test'
   },
-  appBaseUrl: '/hello-world'
+  appBaseUrl: '/hello'
 }
 const febby = new Febby(config);
 
-const api = febby.router('/api');
+const api = febby.router('/api'); 
 
 const users = febby.model('users', {
   name: {
     type: String
   },
   firstname: {
+    type: String
+  }
+});
+
+const books = febby.model('books', {
+  name: {
+    type: String
+  },
+  author: {
     type: String
   }
 });
@@ -59,6 +68,13 @@ febby.crud('/users', {
   middlewares: [logActionOnUserCrud]
 }, users, api);
 
+febby.crud('/books', {
+  crud: false,
+  get:[],
+  post:[],
+  middlewares: [logActionOnUserCrud]
+}, books, api);
+
 febby.route({
   router: api,
   path: '/',
@@ -72,15 +88,21 @@ febby.route({
 })
 
 febby.bootstrap(() => {
-  console.log(`Server started`)
+  console.log(`Server started on port : ${config.port}`)
 });
 ```
-Creates CRUD routes on `hello-world/api/users/`.
+Creates CRUD routes on `hello/api/[users | books]`.
 
 ## Dependencies
 To build this project you must have:
 * Node
+* Npm
 * MongoDB
 
 ## Testing
 * `npm test`: runs the full suite of tests
+
+## Licence 
+MIT
+
+## Free software, hell ya.

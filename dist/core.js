@@ -73,16 +73,13 @@ var express_1 = __importStar(require("express"));
 var helper_1 = require("./helper");
 var types_1 = require("./types");
 var http_1 = require("http");
-var debug = __importStar(require("debug"));
+var debug_1 = require("debug");
 var morgan_1 = __importDefault(require("morgan"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var cors_1 = __importDefault(require("cors"));
 var helmet_1 = __importDefault(require("helmet"));
 var mongoose_1 = __importDefault(require("mongoose"));
-/**
- * @private
- */
-var log = debug.debug('febby');
+var log = debug_1.debug('febby:core');
 /**
  * Febby implements IFebby interface
  * See the [[IFebby]] interface for more details.
@@ -92,10 +89,7 @@ var Febby = /** @class */ (function () {
      * @param config Application configuration
      */
     function Febby(config) {
-        var _this = this;
-        /**
-         * expressApp holds express application object
-         */
+        // expressApp holds express application object
         this.expressApp = express_1.default();
         this.mainRouter = express_1.Router();
         log('Febby init started');
@@ -104,30 +98,10 @@ var Febby = /** @class */ (function () {
         }
         this.appConfig = helper_1.validateAppConfig(config || {});
         log('app config set');
-        mongoose_1.default.set('useNewUrlParser', true);
-        mongoose_1.default.set('useFindAndModify', false);
-        mongoose_1.default.set('useCreateIndex', true);
-        mongoose_1.default.set('useUnifiedTopology', true);
         log('mongoose set default values for useNewUrlParser,useFindAndModify,useCreateIndex,useUnifiedTopology');
         log('express app created');
-        var self = this;
-        (function () { return __awaiter(_this, void 0, void 0, function () {
-            var _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        if (!((_a = self.appConfig) === null || _a === void 0 ? void 0 : _a.db)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.connection(self.appConfig.db.url, self.appConfig.db.options || {})];
-                    case 1:
-                        _b.sent();
-                        log('db connection created');
-                        _b.label = 2;
-                    case 2: return [2 /*return*/];
-                }
-            });
-        }); })();
         log('app default middlewares init started');
-        this.expressApp.use(morgan_1.default('combined'));
+        this.expressApp.use(morgan_1.default(this.appConfig.morgan || 'combined'));
         log('express app added morgan logger');
         this.expressApp.use(body_parser_1.default.urlencoded({
             extended: false
@@ -135,19 +109,52 @@ var Febby = /** @class */ (function () {
         log('express app added bodyParser');
         this.expressApp.use(body_parser_1.default.json());
         log('express app added bodyParser.json');
-        this.expressApp.use(helmet_1.default());
+        this.expressApp.use(helmet_1.default(this.appConfig.helmet || {}));
         log('express app added helmet');
-        this.expressApp.use(cors_1.default());
+        this.expressApp.use(cors_1.default(this.appConfig.cors || {}));
         log('express app added cors');
         log('app main router created');
         this.expressApp.use(this.appConfig.appBaseUrl, this.mainRouter);
         log('final middlewares');
         log('app main router set');
         Febby.instance = this;
+        this.connectToDb().then(log).catch(console.error);
     }
+    /**
+     * @private
+     */
+    Febby.prototype.connectToDb = function () {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function () {
+            var options, error_1;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        log('db connection init');
+                        if (!((_a = this.appConfig) === null || _a === void 0 ? void 0 : _a.db)) return [3 /*break*/, 5];
+                        options = __assign({}, ((_b = this.appConfig.db) === null || _b === void 0 ? void 0 : _b.options) || { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: true });
+                        _d.label = 1;
+                    case 1:
+                        _d.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, mongoose_1.default.connect((_c = this.appConfig.db) === null || _c === void 0 ? void 0 : _c.url, __assign({}, options))];
+                    case 2:
+                        _d.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _d.sent();
+                        throw error_1;
+                    case 4:
+                        log('db connection created');
+                        _d.label = 5;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
     /**
      * bootstrap will start the application
      * @param cb Callback function which will execute after application bootstrap
+     * @returns None
      */
     Febby.prototype.bootstrap = function (cb) {
         var _this = this;
@@ -166,6 +173,7 @@ var Febby = /** @class */ (function () {
     /**
      * route will register an url with handler and middlewares
      * @param routeConfig Route configuration
+     * @returns None
      */
     Febby.prototype.route = function (routeConfig) {
         log('route registartion start');
@@ -175,6 +183,7 @@ var Febby = /** @class */ (function () {
     /**
      * routes will register list of route configs.
      * @param routesConfig Routes will be list of route config objects
+     * @returns None
      */
     Febby.prototype.routes = function (routesConfig) {
         var _this = this;
@@ -186,6 +195,7 @@ var Febby = /** @class */ (function () {
      * middleware will register a middleware function to the specified route
      * @param middleware Middleware function
      * @param router Router object
+     * @returns None
      */
     Febby.prototype.middleware = function (middleware, router) {
         log('middleware registartion start');
@@ -196,6 +206,7 @@ var Febby = /** @class */ (function () {
      * middlewares will register list of middleware functions
      * @param middlewares list of middleware functions
      * @param router Router object
+     * @returns None
      */
     Febby.prototype.middlewares = function (middlewares, router) {
         var _this = this;
@@ -208,6 +219,7 @@ var Febby = /** @class */ (function () {
      * @param url Url
      * @param router Router object
      * @param options Router object options
+     * @returns Router
      */
     Febby.prototype.router = function (url, router, options) {
         log('router registartion start');
@@ -224,6 +236,7 @@ var Febby = /** @class */ (function () {
      * @param config Crud operation configuration
      * @param model Model object
      * @param router Router object
+     * @returns None
      */
     Febby.prototype.crud = function (path, config, model, router) {
         log('crud registartion start');
@@ -242,6 +255,8 @@ var Febby = /** @class */ (function () {
             log('crud put registartion');
             helper_1.register(router, types_1.POST, path, __spreadArrays([attachCollection], (config.middlewares || []), (config.post || [])), helper_1.postHandler);
             log('crud post registartion');
+            helper_1.register(router, types_1.PATCH, path, __spreadArrays([attachCollection], (config.middlewares || []), (config.post || [])), helper_1.patchHandler);
+            log('crud patch registartion');
             helper_1.register(router, types_1.GET, path, __spreadArrays([attachCollection], (config.middlewares || []), (config.get || [])), helper_1.getHandler);
             log('crud get registartion');
             helper_1.register(router, types_1.DELETE, path + "/:id", __spreadArrays([attachCollection], (config.middlewares || []), (config.delete || [])), helper_1.removeByIdHandler);
@@ -272,16 +287,22 @@ var Febby = /** @class */ (function () {
         }
     };
     /**
-     * model will register and creates mongoose model instance
+     * model will register and creates mongoose model instance if not exist
      * @param name Model name
      * @param schema Model schema
+     * @returns Model<Document, {}>
      */
     Febby.prototype.model = function (name, schema) {
         log("model registartion : " + name);
+        var models = this.models();
+        if (models[name]) {
+            return models[name];
+        }
         return mongoose_1.default.model(name, schema);
     };
     /**
-     * models will return model object as key and schema pair
+     * models will return model objects
+     * @returns { [index: string]: Model<Document, {}> }
      */
     Febby.prototype.models = function () {
         log("return models");
@@ -290,6 +311,7 @@ var Febby = /** @class */ (function () {
     /**
      * finalMiddlewares will register all final middleware function
      * @param middlewares Middleware functions
+     * @returns None
      */
     Febby.prototype.finalMiddlewares = function (middlewares) {
         var _this = this;
@@ -299,6 +321,7 @@ var Febby = /** @class */ (function () {
     /**
      * finalHandler will register final middleware function
      * @param middleware Middleware function
+     * @returns None
      */
     Febby.prototype.finalHandler = function (middleware) {
         log("final handler registartion");
@@ -306,6 +329,7 @@ var Febby = /** @class */ (function () {
     };
     /**
      * shutdown will close the application
+     * @returns None
      */
     Febby.prototype.shutdown = function () {
         var _a;
@@ -313,7 +337,9 @@ var Febby = /** @class */ (function () {
         (_a = this.server) === null || _a === void 0 ? void 0 : _a.close();
     };
     /**
+     * @deprecated
      * closeConnection will close database connection
+     * @returns None
      */
     Febby.prototype.closeConnection = function () {
         log("closing database connection");
@@ -321,40 +347,12 @@ var Febby = /** @class */ (function () {
     };
     /**
      * closeDbConnection will close database connection
+     * @returns None
      */
     Febby.prototype.closeDbConnection = function () {
         log("closing database connection");
         mongoose_1.default.connection.close();
     };
-    /**
-     * @private
-     * @param url Database connection string
-     * @param options Database config options
-     */
-    Febby.prototype.connection = function (url, options) {
-        return __awaiter(this, void 0, void 0, function () {
-            var error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        options = options || {};
-                        options.useNewUrlParser = true;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, mongoose_1.default.connect(url, __assign({ useNewUrlParser: true }, options))];
-                    case 2:
-                        _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_1 = _a.sent();
-                        throw error_1;
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
     return Febby;
 }());
 exports.Febby = Febby;
-//# sourceMappingURL=core.js.map

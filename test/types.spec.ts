@@ -1,4 +1,4 @@
-import { GET, PUT, POST, PATCH, DELETE, HttpMethod, CREATED, OK, BADREQUEST, INTERNALSERVERERROR, IAppConfig } from './types'
+import { GET, PUT, POST, PATCH, DELETE, HttpMethod, CREATED, OK, BADREQUEST, INTERNALSERVERERROR, IAppConfig } from '../src/types'
 describe('Types', () => {
     it('Get', () => {
         expect(GET).toEqual('get')

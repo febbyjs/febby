@@ -15,4 +15,3 @@ exports.BADREQUEST = 400;
 exports.INTERNALSERVERERROR = 500;
 exports.OK = 200;
 exports.CREATED = 201;
-//# sourceMappingURL=types.js.map

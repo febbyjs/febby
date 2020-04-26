@@ -5,7 +5,9 @@
  */
 import { IAppConfig, appBaseUrl, HttpMethod, OK, BADREQUEST, CREATED } from "./types"
 import { NextFunction, Handler, Request, Response, Router } from "express"
+import * as debug from "debug"
 
+const log = debug.debug('febby:helper')
 /**
  * @private
  * @param config Validates application configuration
@@ -25,22 +27,28 @@ export function validateAppConfig(config: IAppConfig): IAppConfig {
  * @param handler request handler
  */
 export function register(router: Router, method: HttpMethod, path: string, middlewares: Handler[], handler: Handler): void {
-    router[method](path, middlewares, handler)
+    log(`Register route :: ${method} :: ${path}`)
+    try {
+        router[method](path, middlewares, handler) 
+    } catch (error) {
+        // give more context of error
+        throw error
+    }
 }
 
 /**
- * getByIdHandler - Get document by id
+ * getByIdHandler - Get document by id, supports projection now. just pass projection in query params. ex: projection=name+mobile+email
  * @param req Request 
  * @param res Response
  * @param next NextFunction
  */
 export async function getByIdHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id
-    const projection = buildProjection(req.query.projection)
+    const projection = (req.query.projection || "").length > 0 ? buildProjection(req.query.projection) : {}
     try {
         const result = await req.app.locals.collection.findById(id, projection)
         const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || {code, error: 'BADREQUEST'})
+        res.status(code).send(result || { code, error: 'BADREQUEST' })
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -63,7 +71,7 @@ export async function removeByIdHandler(req: Request, res: Response, next: NextF
             _id
         })
         const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || {code, error: 'BADREQUEST'})
+        res.status(code).send(result || { code, error: 'BADREQUEST' })
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -88,7 +96,7 @@ export async function postHandler(req: Request, res: Response, next: NextFunctio
         const coll = new req.app.locals.collection(body)
         const result = await coll.save()
         const code = result ? CREATED : BADREQUEST;
-        res.status(code).send(result || {code, error: 'BADREQUEST'})
+        res.status(code).send(result || { code, error: 'BADREQUEST' })
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -118,7 +126,7 @@ export async function putHandler(req: Request, res: Response, next: NextFunction
             new: true
         })
         const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || {code, error: 'BADREQUEST'})
+        res.status(code).send(result || { code, error: 'BADREQUEST' })
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -148,7 +156,7 @@ export async function patchHandler(req: Request, res: Response, next: NextFuncti
             new: false
         })
         const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || {code, error: 'BADREQUEST'})
+        res.status(code).send(result || { code, error: 'BADREQUEST' })
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -159,7 +167,7 @@ export async function patchHandler(req: Request, res: Response, next: NextFuncti
 }
 
 /**
- * getHandler - Get Documents
+ * getHandler - Get Documents, supports projection , skip and limit. skip defaulted to 0 and limit defaulted to 10
  * @param req Request 
  * @param res Response
  * @param next NextFunction
@@ -167,10 +175,10 @@ export async function patchHandler(req: Request, res: Response, next: NextFuncti
 export async function getHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
     const skip = req.query.skip ? parseInt(req.query.skip, 10) : 0;
     const limit = req.query.limit ? parseInt(req.query.limit, 10) : 10;
-    const projection = buildProjection(req.query.projection)
+    const projection = (req.query.projection || "").length > 0 ? buildProjection(req.query.projection) : {}
     try {
         const query = req.query.query ? JSON.parse(req.query.query) : {}
-        let results = await Promise.all([req.app.locals.collection.count(query), await req.app.locals.collection.find(query, projection, {
+        const results = await Promise.all([req.app.locals.collection.count(query), await req.app.locals.collection.find(query, projection, {
             skip,
             limit
         })])
@@ -188,6 +196,6 @@ export async function getHandler(req: Request, res: Response, next: NextFunction
  * buildProjection - builds Projection
  * @param projection projection string represents fields with + .Example : 'first_name+last_name+email'
  */
-function buildProjection(projection: string = ''): string {
+export function buildProjection(projection: string = ''): string {
     return projection.replace('+', ' ')
 }

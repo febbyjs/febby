@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 
-import mongoose from 'mongoose';
+import mongoose, { ConnectionOptions } from 'mongoose';
 import { Router, Handler, RouterOptions } from 'express';
 
 export const GET = 'get'
@@ -36,10 +36,12 @@ export interface IAppConfig {
     cors?: any
     db?: {
         url: string,
-        options?: mongoose.ConnectionOptions
+        options?: ConnectionOptions
     }
     clusterMode?: boolean
     appBaseUrl?: PathParams
+    helmet?: any 
+    morgan?: string
 }
 
 /**
@@ -64,6 +66,7 @@ export interface IRouteConfig {
     path: string
     middlewares?: Handler[]
     handler: Handler
+    bodySchema?: any
 }
 
 /**

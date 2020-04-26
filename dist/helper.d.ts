@@ -21,7 +21,7 @@ export declare function validateAppConfig(config: IAppConfig): IAppConfig;
  */
 export declare function register(router: Router, method: HttpMethod, path: string, middlewares: Handler[], handler: Handler): void;
 /**
- * getByIdHandler - Get document by id
+ * getByIdHandler - Get document by id, supports projection now. just pass projection in query params. ex: projection=name+mobile+email
  * @param req Request
  * @param res Response
  * @param next NextFunction
@@ -56,9 +56,14 @@ export declare function putHandler(req: Request, res: Response, next: NextFuncti
  */
 export declare function patchHandler(req: Request, res: Response, next: NextFunction): Promise<void>;
 /**
- * getHandler - Get Documents
+ * getHandler - Get Documents, supports projection , skip and limit. skip defaulted to 0 and limit defaulted to 10
  * @param req Request
  * @param res Response
  * @param next NextFunction
  */
 export declare function getHandler(req: Request, res: Response, next: NextFunction): Promise<void>;
+/**
+ * buildProjection - builds Projection
+ * @param projection projection string represents fields with + .Example : 'first_name+last_name+email'
+ */
+export declare function buildProjection(projection?: string): string;

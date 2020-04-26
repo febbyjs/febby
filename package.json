@@ -3,15 +3,16 @@
   "version": "0.2.10",
   "description": "microservice framework for building application services",
   "main": "dist/index.js",
-  "directories": {
-    "lib": "dist"
-  },
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist/src/**/!(*.spec).js",
+    "dist/src/**/!(*.spec).d.ts",
+    "dist/index.*"
+  ],
   "scripts": {
-    "build": "tsc",
-    "docs": "typedoc --out docs src --theme default",
-    "test": "jest",
-    "coverage": "jest --coverage",
-    "test:watch": "jest --coverage --watchAll"
+    "start": "./node_modules/.bin/tsc",
+    "test": "./node_modules/.bin/jest --coverage",
+    "docs": "./node_modules/.bin/typedoc --out docs --mode modules ./index.ts"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,9 @@
   "keywords": [
     "rest",
     "configuration",
-    "minimalistic"
+    "minimalistic",
+    "microservices",
+    "node framework"
   ],
   "author": "Vasu Vanka <vanka.vasu@gmail.com>",
   "license": "MIT",
@@ -38,9 +41,6 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-typescript": "^7.7.7",
     "@types/body-parser": "^1.17.1",
     "@types/cors": "^2.8.6",
     "@types/debug": "^4.1.5",
@@ -50,10 +50,9 @@
     "@types/mongoose": "^5.5.35",
     "@types/morgan": "^1.7.37",
     "@types/node": "^13.1.0",
-    "babel-jest": "^24.9.0",
-    "jest": "^25.1.0",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
-    "typescript": "^3.7.4"
+    "typedoc": "^0.17.4",
+    "typescript": "^3.8.3"
   }
 }

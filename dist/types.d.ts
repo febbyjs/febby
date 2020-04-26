@@ -3,7 +3,7 @@
  * Copyright(c) 2018-2020 Vasu Vanka
  * MIT Licensed
  */
-import mongoose from 'mongoose';
+import mongoose, { ConnectionOptions } from 'mongoose';
 import { Router, Handler, RouterOptions } from 'express';
 export declare const GET = "get";
 export declare const PUT = "put";
@@ -31,10 +31,12 @@ export interface IAppConfig {
     cors?: any;
     db?: {
         url: string;
-        options: mongoose.ConnectionOptions;
+        options?: ConnectionOptions;
     };
-    cluster?: boolean;
+    clusterMode?: boolean;
     appBaseUrl?: PathParams;
+    helmet?: any;
+    morgan?: string;
 }
 /**
  * ICrudConfig interface implements crud configuration
@@ -57,6 +59,7 @@ export interface IRouteConfig {
     path: string;
     middlewares?: Handler[];
     handler: Handler;
+    bodySchema?: any;
 }
 /**
  * IFebby interface implements all required features to support faster application development
