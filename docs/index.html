@@ -1,1585 +1,216 @@
 <!doctype html>
-<html>
+<html class="default no-js">
 <head>
-  <meta charset='utf-8' />
-  <title>febby 0.2.9 | Documentation</title>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
-  <link href='assets/style.css' type='text/css' rel='stylesheet' />
-  <link href='assets/github.css' type='text/css' rel='stylesheet' />
-  <link href='assets/split.css' type='text/css' rel='stylesheet' />
-  <meta name='description' content='microservice framework for building application services'>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>febby</title>
+	<meta name="description" content="Documentation for febby">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
 </head>
-<body class='documentation m0'>
-    <div class='flex'>
-      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
-        <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>febby</h3>
-          <div class='mb1'><code>0.2.9</code></div>
-          <input
-            placeholder='Filter'
-            id='filter-input'
-            class='col12 block input'
-            type='text' />
-          <div id='toc'>
-            <ul class='list-reset h5 py1-ul'>
-              
-                
-                <li><a
-                  href='#febby'
-                  class=" toggle-sibling">
-                  Febby
-                  <span class='icon'>▸</span>
-                </a>
-                
-                <div class='toggle-target display-none'>
-                  
-                  
-                    <ul class='list-reset py1-ul pl1'>
-                      <li class='h5'><span>Instance members</span></li>
-                      
-                      <li><a
-                        href='#febbyroute'
-                        class='regular pre-open'>
-                        #route
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbyroutes'
-                        class='regular pre-open'>
-                        #routes
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbymiddleware'
-                        class='regular pre-open'>
-                        #middleware
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbymiddlewares'
-                        class='regular pre-open'>
-                        #middlewares
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbyrouter'
-                        class='regular pre-open'>
-                        #router
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbyconnection'
-                        class='regular pre-open'>
-                        #connection
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbycrud'
-                        class='regular pre-open'>
-                        #crud
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbymodels'
-                        class='regular pre-open'>
-                        #models
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbymodel'
-                        class='regular pre-open'>
-                        #model
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbybootstrap'
-                        class='regular pre-open'>
-                        #bootstrap
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbyexpressapp'
-                        class='regular pre-open'>
-                        #expressApp
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbyfinalmiddlewares'
-                        class='regular pre-open'>
-                        #finalMiddlewares
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbyfinalhandler'
-                        class='regular pre-open'>
-                        #finalHandler
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbyshutdown'
-                        class='regular pre-open'>
-                        #shutdown
-                      </a></li>
-                      
-                      <li><a
-                        href='#febbycloseconnection'
-                        class='regular pre-open'>
-                        #closeConnection
-                      </a></li>
-                      
-                    </ul>
-                  
-                  
-                  
-                </div>
-                
-                </li>
-              
-            </ul>
-          </div>
-          <div class='mt1 h6 quiet'>
-            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
-          </div>
-        </div>
-      </div>
-      <div id='split-right' class='relative overflow-auto height-viewport-100'>
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">febby</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>febby</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#febby" id="febby" style="color: inherit; text-decoration: none;">
+					<h1>Febby</h1>
+				</a>
+				<p>Microservice framework built for Node.js with MongoDB to build application services.</p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<pre><code>npm <span class="hljs-keyword">install</span> febby</code></pre>
+				<a href="#build-status" id="build-status" style="color: inherit; text-decoration: none;">
+					<h1>Build Status</h1>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>Branch</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>Master</td>
+							<td><a href="https://travis-ci.org/febbyjs/febby"><img src="https://travis-ci.org/febbyjs/febby.svg?branch=master" alt="Build Status"></a></td>
+						</tr>
+				</tbody></table>
+				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
+					<h2>Docs</h2>
+				</a>
+				<ul>
+					<li>API Documentation: <a href="https://febbyjs.github.io/febby">https://febbyjs.github.io/febby</a></li>
+				</ul>
+				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+					<h2>Examples</h2>
+				</a>
+				<p>The example projects and some of the documentation has fallen behind, so the following is a quick sample of what a project utilizing SakuraApi looks like. Updated documentation and a getting started guide is coming.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> {
+  Febby
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'febby'</span>);
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='febby'>
-      Febby
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Febby</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>new Febby(config: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>config</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents basic app setup.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> config = {
+<span class="hljs-keyword">const</span> config = {
   <span class="hljs-attr">port</span>: <span class="hljs-number">3000</span>,
-  <span class="hljs-attr">hostname</span>: <span class="hljs-string">'abc.xyz'</span>,
   <span class="hljs-attr">db</span>: {
-         <span class="hljs-attr">url</span>: <span class="hljs-string">'mongodb://localhost/test'</span>
-      },
-  <span class="hljs-attr">bodyParser</span>: {},
-  <span class="hljs-attr">cors</span>: {},
-  <span class="hljs-attr">helmet</span>: {},
-  <span class="hljs-attr">version</span>: <span class="hljs-string">'v1'</span>
-};
-
-<span class="hljs-keyword">const</span> Febby = <span class="hljs-built_in">require</span>(<span class="hljs-string">'febby'</span>);
-<span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
-febby.bootstrap();</pre>
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='febbyroute'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>route(routeConfig)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Register Route</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>route(routeConfig: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>routeConfig</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    the route object used to create route configuration.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
-
- febby.route({
-     <span class="hljs-attr">router</span>: api,
-     <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-     <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
-     <span class="hljs-attr">middlewares</span>: [],
-     <span class="hljs-attr">handler</span>: <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
-         <span class="hljs-comment">// do business </span>
-     }
- });
-
- febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
-     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
- })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbyroutes'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>routes(routes)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Register Route list</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>routes(routes: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>routes</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    list of route objects
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> routes = [
-     {
-         <span class="hljs-attr">router</span>: api,
-         <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-         <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
-         <span class="hljs-attr">middlewares</span>: [],
-         <span class="hljs-attr">handler</span>: <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
-             <span class="hljs-comment">// do business </span>
-         }
-      },
-     {
-         <span class="hljs-attr">router</span>: api,
-         <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-         <span class="hljs-attr">path</span>: <span class="hljs-string">'/echo'</span>,
-         <span class="hljs-attr">middlewares</span>: [],
-         <span class="hljs-attr">handler</span>: <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
-             res.json({<span class="hljs-attr">echo</span>:req.url});
-         }
-      }
-     ];
-febby.routes(routes);
-
- febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
-     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
- })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbymiddleware'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>middleware(middleware, router)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Register middleware.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>middleware(middleware: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>, router: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>middleware</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Represents middleware function.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>router</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents Express Router object by default it is app router object.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> fn = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some logic or validation</span>
-     next();
- }
- <span class="hljs-keyword">const</span> fn2 = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some validation logic</span>
-     next();
- }
- <span class="hljs-comment">// middleware runs on api router</span>
- febby.middleware(fn,api);
-
- <span class="hljs-comment">// middleware runs on app router</span>
- febby.middleware(fn);</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbymiddlewares'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>middlewares(middlewares, router)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Register Middlewares.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>middlewares(middlewares: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>>, router: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>middlewares</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>>)</code>
-	    Represents list of middlewares.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>router</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents Express Router Object, default to app router.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> fn = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some logic or validation</span>
-     next();
- }
- <span class="hljs-keyword">const</span> fn2 = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some validation logic</span>
-     next();
- }
- <span class="hljs-comment">// middleware list runs on api router and router is optional</span>
- febby.middlewares([fn,fn2],api);</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbyrouter'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>router(url, router, options)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Register a Router.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>router(url: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, router: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>url</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    Represents url.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>router</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents Express Router object, default to app router object.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents Express Router config options.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>); <span class="hljs-comment">// path =  /api</span>
- <span class="hljs-comment">// users subroute mounted on /api</span>
- <span class="hljs-keyword">const</span> userApi = febby.router(<span class="hljs-string">'/users'</span>,api); <span class="hljs-comment">//  path = /api/users</span>
-
- <span class="hljs-keyword">const</span> fn = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some logic or validation</span>
-     next();
- }
- <span class="hljs-keyword">const</span> fn2 = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some validation logic</span>
-     next();
- }
- <span class="hljs-comment">// this middleware list runs on api router</span>
- febby.middlewares([fn, fn2], userApi);
-
- <span class="hljs-comment">// this middleware runs on app router</span>
- febby.middleware(fn);
-
- febby.route({
-     <span class="hljs-attr">router</span>: userApi,
-     <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-     <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
-     <span class="hljs-attr">middlewares</span>: [],
-     <span class="hljs-attr">handler</span>: <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
-         <span class="hljs-comment">// do business </span>
-     }
- });
-
- febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
-     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
- })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbyconnection'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>connection(url, options)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Establish Connection between app and database.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>connection(url: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>url</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    Represents database url.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents mongoose connect optional object.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> config = {
-  <span class="hljs-attr">port</span>: <span class="hljs-number">3000</span>,
-  <span class="hljs-attr">hostname</span>: <span class="hljs-string">'abc.xyz'</span>,
-  <span class="hljs-attr">bodyParser</span>: {},
-  <span class="hljs-attr">cors</span>: {},
-  <span class="hljs-attr">helmet</span>: {},
-  <span class="hljs-attr">version</span>: <span class="hljs-string">'v1'</span>
+    <span class="hljs-attr">url</span>: <span class="hljs-string">'mongodb://localhost:27017/test'</span>
+  },
+  <span class="hljs-attr">appBaseUrl</span>: <span class="hljs-string">'/hello-world'</span>
 }
- <span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> fn = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some logic or validation</span>
-     next();
- }
- <span class="hljs-keyword">const</span> fn2 = <span class="hljs-keyword">async</span> (req,res,next)=&gt;{
-     <span class="hljs-keyword">const</span> db = febby.model(); <span class="hljs-comment">// Returns db models object</span>
-     <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> db.user.find({});
-     <span class="hljs-comment">// some validation logic on users</span>
-     next();
- }
- <span class="hljs-comment">// this middleware runs on api router</span>
- febby.middleware(fn,api);
-
- <span class="hljs-comment">// this middleware runs on app router</span>
- febby.middleware(fn);
-
- <span class="hljs-comment">// if db config specified then febby will try to connect to database automatically</span>
- <span class="hljs-comment">// to make database connection externally then use febby.connection</span>
-
- <span class="hljs-keyword">const</span> options = {
-     <span class="hljs-attr">useNewUrlParser</span>: <span class="hljs-literal">true</span>,
-     <span class="hljs-comment">// other mongoose options</span>
- }
- <span class="hljs-keyword">const</span> url = <span class="hljs-string">'mongodb://localhost:27017/test'</span>;
- febby.connection(url, options)
-
- febby.route({
-     <span class="hljs-attr">router</span>: api,
-     <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-     <span class="hljs-attr">path</span>: <span class="hljs-string">'/:id'</span>,
-     <span class="hljs-attr">middlewares</span>: [],
-     <span class="hljs-attr">handler</span>: <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
-         <span class="hljs-keyword">const</span> user = febby.Model(<span class="hljs-string">'user'</span>); <span class="hljs-comment">// get registered model by name</span>
-         <span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> user.findById(req.params.id);
-         res.status(<span class="hljs-number">200</span>).send(info);
-     }
- });
-
-<span class="hljs-comment">// start the app </span>
- febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
-     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
- })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbycrud'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>crud(path, config, model, router)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Creates CRUD on given route object with specific config.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>crud(path: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, config: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, model: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, router: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    Represents url path.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>config</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents CRUD configuration.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>model</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents Model config object.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>router</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents Express Router object. it is optional.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> bookApi = febby.router(<span class="hljs-string">'/books'</span>,api);
- <span class="hljs-keyword">const</span> bookCrudConfig = {
-   <span class="hljs-attr">crud</span>: <span class="hljs-literal">true</span>,
-   <span class="hljs-attr">middlewares</span>:[]
- };
- <span class="hljs-keyword">const</span> bookSchema = {
-   <span class="hljs-attr">name</span>: { <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span> },
-   <span class="hljs-attr">author</span>:{ <span class="hljs-attr">type</span>: <span class="hljs-built_in">Number</span> }
- };
- <span class="hljs-keyword">const</span> bookModel = febby.model(<span class="hljs-string">'books'</span>,bookSchema);
- <span class="hljs-comment">// creates POST method on book api</span>
- <span class="hljs-comment">// if model already registered then use febby.model('books') to get model object</span>
-febby.crud(<span class="hljs-string">'/'</span>, bookCrudConfig, bookModel, bookApi);</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbymodels'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>models()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Returns models object.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>models(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        Returns mongoose models object.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> fn = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some logic or validation</span>
-     next();
- }
- <span class="hljs-keyword">const</span> fn2 = <span class="hljs-keyword">async</span> (req,res,next)=&gt;{
-     <span class="hljs-keyword">const</span> db = febby.model(); <span class="hljs-comment">// Returns db models object</span>
-     <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> db.user.find({});
-     <span class="hljs-comment">// some validation logic on users</span>
-     next();
- }
- <span class="hljs-comment">// this middleware runs on api router</span>
- febby.middleware(fn,api);
-
- <span class="hljs-comment">// this middleware runs on app router</span>
- febby.middleware(fn);
-
- febby.route({
-     <span class="hljs-attr">router</span>: api,
-     <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-     <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
-     <span class="hljs-attr">middlewares</span>: [],
-     <span class="hljs-attr">handler</span>: <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
-         <span class="hljs-comment">// do business </span>
-     }
- });
-
- febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
-     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
- })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbymodel'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>model(name, schema)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Rigister and Returns model object.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>model(name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, schema: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    Represents name of model.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>schema</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Represents mongoose schema object.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> fn = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some logic or validation</span>
-     next();
- }
- <span class="hljs-keyword">const</span> fn2 = <span class="hljs-keyword">async</span> (req,res,next)=&gt;{
-     <span class="hljs-keyword">const</span> db = febby.model(); <span class="hljs-comment">// Returns db models object</span>
-     <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> db.user.find({});
-     <span class="hljs-comment">// some validation logic on users</span>
-     next();
- }
- <span class="hljs-comment">// this middleware runs on api router</span>
- febby.middleware(fn,api);
-
- <span class="hljs-comment">// this middleware runs on app router</span>
- febby.middleware(fn);
-
- febby.route({
-     <span class="hljs-attr">router</span>: api,
-     <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-     <span class="hljs-attr">path</span>: <span class="hljs-string">'/:id'</span>,
-     <span class="hljs-attr">middlewares</span>: [],
-     <span class="hljs-attr">handler</span>: <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
-         <span class="hljs-keyword">const</span> user = febby.Model(<span class="hljs-string">'user'</span>); <span class="hljs-comment">// get registered model by name</span>
-         <span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> user.findById(req.params.id);
-         res.status(<span class="hljs-number">200</span>).send(info);
-     }
- });
-
- febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
-     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
- })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbybootstrap'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>bootstrap(fn)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>if database "db" object specified in config then febby will try to connect database on bootstarp.</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>bootstrap(fn: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>fn</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Represents callback function which will called after app start up.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
- <span class="hljs-comment">// create router</span>
- <span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
- <span class="hljs-keyword">const</span> fn = <span class="hljs-function">(<span class="hljs-params">req,res,next</span>)=&gt;</span>{
-     <span class="hljs-comment">// some logic or validation</span>
-     next();
- }
- <span class="hljs-keyword">const</span> fn2 = <span class="hljs-keyword">async</span> (req,res,next)=&gt;{
-     <span class="hljs-keyword">const</span> db = febby.model(); <span class="hljs-comment">// Returns db models object</span>
-     <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> db.user.find({});
-     <span class="hljs-comment">// some validation logic on users</span>
-     next();
- }
- <span class="hljs-comment">// this middleware runs on api router</span>
- febby.middleware(fn,api);
-
- <span class="hljs-comment">// this middleware runs on app router</span>
- febby.middleware(fn);
-
- febby.route({
-     <span class="hljs-attr">router</span>: api,
-     <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
-     <span class="hljs-attr">path</span>: <span class="hljs-string">'/:id'</span>,
-     <span class="hljs-attr">middlewares</span>: [],
-     <span class="hljs-attr">handler</span>: <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
-         <span class="hljs-keyword">const</span> user = febby.Model(<span class="hljs-string">'user'</span>); <span class="hljs-comment">// get registered model by name</span>
-         <span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> user.findById(req.params.id);
-         res.status(<span class="hljs-number">200</span>).send(info);
-     }
- });
-
-<span class="hljs-comment">// start the app </span>
- febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
-     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
- })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbyexpressapp'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>expressApp()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Get Express App object</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>expressApp()</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>febby.expressApp();</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbyfinalmiddlewares'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>finalMiddlewares(functions)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Register final middlewares after bootstrap</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>finalMiddlewares(functions: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>functions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    List of final middlewares
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>febby.bootstrap( <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
- <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
+<span class="hljs-keyword">const</span> febby = <span class="hljs-keyword">new</span> Febby(config);
+
+<span class="hljs-keyword">const</span> api = febby.router(<span class="hljs-string">'/api'</span>);
+
+<span class="hljs-keyword">const</span> users = febby.model(<span class="hljs-string">'users'</span>, {
+  <span class="hljs-attr">name</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>
+  },
+  <span class="hljs-attr">firstname</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>
+  }
 });
-<span class="hljs-keyword">const</span> finalMiddlewares = [ <span class="hljs-function">(<span class="hljs-params">req,res,next</span>) =&gt;</span> {
- <span class="hljs-keyword">const</span> err = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Not found'</span>);
- err.status = <span class="hljs-number">404</span>;
- next(err);
-}]
-febby.finalMiddlewares(finalMiddlewares);
-febby.finalHandler( <span class="hljs-function">(<span class="hljs-params">err,req,res,next</span>) =&gt;</span> {
- <span class="hljs-comment">// add final business logic</span>
- <span class="hljs-comment">// respond with proper http status code</span>
- <span class="hljs-keyword">const</span> message = err.message || <span class="hljs-string">'unkown error'</span>;
- res.status(err.status || <span class="hljs-number">500</span>).send({message});
-})</pre>
-    
-  
 
-  
 
-  
+<span class="hljs-keyword">const</span> logActionOnUserCrud = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${req.method}</span>:<span class="hljs-subst">${req.url}</span>`</span>);
+  next()
+}
+febby.middleware(logActionOnUserCrud, api);
 
-  
-</section>
 
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbyfinalhandler'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>finalHandler(fn)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
+febby.crud(<span class="hljs-string">'/users'</span>, {
+  <span class="hljs-attr">crud</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">middlewares</span>: [logActionOnUserCrud]
+}, users, api);
 
-  
+febby.route({
+  <span class="hljs-attr">router</span>: api,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">method</span>: <span class="hljs-string">'get'</span>,
+  <span class="hljs-attr">handler</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> message = <span class="hljs-string">'welcome to febby.!'</span>;
+    res.json({
+      message
+    })
+  }
+})
 
-  <p>Register Final Handler after bootstrap</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>finalHandler(fn: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>fn</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Represents final Hnadler of application
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>febby.bootstrap( <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
- <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'app started'</span>);
-});
-<span class="hljs-comment">// register any last middlewares</span>
-febby.finalHandler( <span class="hljs-function">(<span class="hljs-params">err,req,res,next</span>) =&gt;</span> {
- <span class="hljs-comment">// add final business logic</span>
- <span class="hljs-comment">// respond with proper http status code</span>
- <span class="hljs-keyword">const</span> message = <span class="hljs-string">'unkown error'</span>;
- res.status(<span class="hljs-number">500</span>).send({message});
-})</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbyshutdown'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>shutdown()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Shutdown app</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>shutdown()</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>febby.shutdown();</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='febbycloseconnection'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>closeConnection()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Close database connections</p>
-
- 
-  
-    <div class='pre p1 fill-light mt0'>closeConnection()</div>
-   
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>febby.closeConnection();</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
+febby.bootstrap(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Server started`</span>)
+});</code></pre>
+				<p>Creates CRUD routes on <code>hello-world/api/users/</code>.</p>
+				<a href="#dependencies" id="dependencies" style="color: inherit; text-decoration: none;">
+					<h2>Dependencies</h2>
+				</a>
+				<p>To build this project you must have:</p>
+				<ul>
+					<li>Node</li>
+					<li>MongoDB</li>
+				</ul>
+				<a href="#testing" id="testing" style="color: inherit; text-decoration: none;">
+					<h2>Testing</h2>
+				</a>
+				<ul>
+					<li><code>npm test</code>: runs the full suite of tests</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_src_core_.html">&quot;src/core&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_src_helper_.html">&quot;src/helper&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_src_types_.html">&quot;src/types&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
 </div>
-
-  
-
-  
-</section>
-
-        
-      </div>
-    </div>
-  <script src='assets/anchor.js'></script>
-  <script src='assets/split.js'></script>
-  <script src='assets/site.js'></script>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
