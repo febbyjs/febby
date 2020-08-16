@@ -1,14 +1,11 @@
 {
   "name": "febby",
-  "version": "0.2.12",
+  "version": "0.2.14",
   "description": "microservice framework for building application services",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist/src/**/!(*.spec).js",
-    "dist/src/**/!(*.spec).d.ts",
-    "dist/index.*",
-    "index.ts"
+    "dist"
   ],
   "scripts": {
     "start": "./node_modules/.bin/tsc",
