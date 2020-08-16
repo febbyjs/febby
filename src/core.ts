@@ -273,3 +273,5 @@ export class Febby implements IFebby {
         mongoose.connection.close()
     }
 }
+
+export default Febby;

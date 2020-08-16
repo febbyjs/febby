@@ -356,3 +356,4 @@ var Febby = /** @class */ (function () {
     return Febby;
 }());
 exports.Febby = Febby;
+exports.default = Febby;

@@ -118,3 +118,4 @@ export declare class Febby implements IFebby {
      */
     closeDbConnection(): void;
 }
+export default Febby;

@@ -3,4 +3,4 @@
  * Copyright(c) 2018-2020 Vasu Vanka
  * MIT Licensed
  */
-export * from './src/core';
+export * from './core';

@@ -88,7 +88,7 @@ exports.register = register;
  */
 function getByIdHandler(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var id, projection, result, code, error_1, code;
+        var id, projection, result, error_1, code;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -100,8 +100,7 @@ function getByIdHandler(req, res, next) {
                     return [4 /*yield*/, req.app.locals.collection.findById(id, projection)];
                 case 2:
                     result = _a.sent();
-                    code = result ? types_1.OK : types_1.BADREQUEST;
-                    res.status(code).send(result || { code: code, error: 'BADREQUEST' });
+                    res.status(types_1.OK).send(result);
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
@@ -125,7 +124,7 @@ exports.getByIdHandler = getByIdHandler;
  */
 function removeByIdHandler(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _id, result, code, error_2, code;
+        var _id, result, error_2, code;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -138,8 +137,7 @@ function removeByIdHandler(req, res, next) {
                         })];
                 case 2:
                     result = _a.sent();
-                    code = result ? types_1.OK : types_1.BADREQUEST;
-                    res.status(code).send(result || { code: code, error: 'BADREQUEST' });
+                    res.status(types_1.OK).send(result);
                     return [3 /*break*/, 4];
                 case 3:
                     error_2 = _a.sent();
@@ -163,7 +161,7 @@ exports.removeByIdHandler = removeByIdHandler;
  */
 function postHandler(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, coll, result, code, error_3, code;
+        var body, coll, result, error_3, code;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -175,8 +173,7 @@ function postHandler(req, res, next) {
                     return [4 /*yield*/, coll.save()];
                 case 2:
                     result = _a.sent();
-                    code = result ? types_1.CREATED : types_1.BADREQUEST;
-                    res.status(code).send(result || { code: code, error: 'BADREQUEST' });
+                    res.status(types_1.CREATED).send(result);
                     return [3 /*break*/, 4];
                 case 3:
                     error_3 = _a.sent();
@@ -200,7 +197,7 @@ exports.postHandler = postHandler;
  */
 function putHandler(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, _id, result, code, error_4, code;
+        var body, _id, result, error_4, code;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -214,12 +211,11 @@ function putHandler(req, res, next) {
                         }, {
                             $set: body
                         }, {
-                            new: true
+                            new: false
                         })];
                 case 2:
                     result = _a.sent();
-                    code = result ? types_1.OK : types_1.BADREQUEST;
-                    res.status(code).send(result || { code: code, error: 'BADREQUEST' });
+                    res.status(types_1.OK).send(result);
                     return [3 /*break*/, 4];
                 case 3:
                     error_4 = _a.sent();
@@ -243,7 +239,7 @@ exports.putHandler = putHandler;
  */
 function patchHandler(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, _id, result, code, error_5, code;
+        var body, _id, result, error_5, code;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -261,8 +257,7 @@ function patchHandler(req, res, next) {
                         })];
                 case 2:
                     result = _a.sent();
-                    code = result ? types_1.OK : types_1.BADREQUEST;
-                    res.status(code).send(result || { code: code, error: 'BADREQUEST' });
+                    res.status(types_1.OK).send(result);
                     return [3 /*break*/, 4];
                 case 3:
                     error_5 = _a.sent();

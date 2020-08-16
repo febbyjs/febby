@@ -29,7 +29,7 @@ export function validateAppConfig(config: IAppConfig): IAppConfig {
 export function register(router: Router, method: HttpMethod, path: string, middlewares: Handler[], handler: Handler): void {
     log(`Register route :: ${method} :: ${path}`)
     try {
-        router[method](path, middlewares, handler) 
+        router[method](path, middlewares, handler)
     } catch (error) {
         // give more context of error
         throw error
@@ -47,8 +47,7 @@ export async function getByIdHandler(req: Request, res: Response, next: NextFunc
     const projection = (req.query.projection || "").length > 0 ? buildProjection(req.query.projection) : {}
     try {
         const result = await req.app.locals.collection.findById(id, projection)
-        const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || { code, error: 'BADREQUEST' })
+        res.status(OK).send(result)
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -70,8 +69,7 @@ export async function removeByIdHandler(req: Request, res: Response, next: NextF
         const result = await req.app.locals.collection.findOneAndRemove({
             _id
         })
-        const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || { code, error: 'BADREQUEST' })
+        res.status(OK).send(result)
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -95,8 +93,7 @@ export async function postHandler(req: Request, res: Response, next: NextFunctio
     try {
         const coll = new req.app.locals.collection(body)
         const result = await coll.save()
-        const code = result ? CREATED : BADREQUEST;
-        res.status(code).send(result || { code, error: 'BADREQUEST' })
+        res.status(CREATED).send(result)
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -123,10 +120,9 @@ export async function putHandler(req: Request, res: Response, next: NextFunction
         }, {
             $set: body
         }, {
-            new: true
+            new: false
         })
-        const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || { code, error: 'BADREQUEST' })
+        res.status(OK).send(result)
     } catch (error) {
         const code = 500
         res.status(code).send({
@@ -155,8 +151,7 @@ export async function patchHandler(req: Request, res: Response, next: NextFuncti
         }, {
             new: false
         })
-        const code = result ? OK : BADREQUEST;
-        res.status(code).send(result || { code, error: 'BADREQUEST' })
+        res.status(OK).send(result)
     } catch (error) {
         const code = 500
         res.status(code).send({

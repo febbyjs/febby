@@ -11,7 +11,7 @@ const config = {
 }
 const febby = new Febby(config);
 
-const api = febby.router('/api'); 
+const api = febby.router('/api');
 
 const users = febby.model('users', {
   name: {
@@ -46,8 +46,8 @@ febby.crud('/users', {
 
 febby.crud('/books', {
   crud: false,
-  get:[],
-  post:[],
+  get: [],
+  post: [],
   middlewares: [logActionOnUserCrud]
 }, books, api);
 
