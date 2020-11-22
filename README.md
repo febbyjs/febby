@@ -1,6 +1,6 @@
 # Febby
 
-Microservice framework to build application services using Node.js and MongoDB.
+Nodejs framework built to create production ready rest endpoints on defined Mongodb database collections with minimum developer effort.
 
 ## Install
 
@@ -92,12 +92,6 @@ febby.bootstrap(() => {
 });
 ```
 Creates CRUD routes on `hello/api/[users | books]`.
-
-## Dependencies
-To build this project you must have:
-* Node
-* Npm
-* MongoDB
 
 ## Testing
 * `npm test`: runs the full suite of tests
