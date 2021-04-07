@@ -40,8 +40,9 @@ export interface IAppConfig {
     }
     clusterMode?: boolean
     appBaseUrl?: PathParams
-    helmet?: any 
+    helmet?: any
     morgan?: string
+    redis?: string
 }
 
 /**

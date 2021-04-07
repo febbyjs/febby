@@ -1,11 +1,13 @@
 /*!
  * febby
- * Copyright(c) 2018-2020 Vasu Vanka
+ * Copyright(c) 2018-2021 Vasu Vanka
  * MIT Licensed
  */
 import { IAppConfig, appBaseUrl, HttpMethod, OK, BADREQUEST, CREATED } from "./types"
 import { NextFunction, Handler, Request, Response, Router } from "express"
 import * as debug from "debug"
+import { Validator } from 'jsonschema'
+import * as mongoose from "mongoose"
 
 const log = debug.debug('febby:helper')
 /**
@@ -31,8 +33,8 @@ export function register(router: Router, method: HttpMethod, path: string, middl
     try {
         router[method](path, middlewares, handler)
     } catch (error) {
-        // give more context of error
-        throw error
+        const err = `failed to register route at path : ${path} with method : ${method} , error is ` + error.message
+        throw new Error(err)
     }
 }
 
@@ -42,10 +44,16 @@ export function register(router: Router, method: HttpMethod, path: string, middl
  * @param res Response
  * @param next NextFunction
  */
-export async function getByIdHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function getByIdHandler(req: Request, res: Response) {
     const id = req.params.id
-    const projection = (req.query.projection || "").length > 0 ? buildProjection(req.query.projection) : {}
+    const projection = (req.query?.projection || "").length > 0 ? buildProjection(req.query?.projection) : {}
     try {
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(400).send({
+                error: 'Invalid Id',
+                code: '400'
+            });
+        }
         const result = await req.app.locals.collection.findById(id, projection)
         res.status(OK).send(result)
     } catch (error) {
@@ -63,9 +71,15 @@ export async function getByIdHandler(req: Request, res: Response, next: NextFunc
  * @param res Response
  * @param next NextFunction
  */
-export async function removeByIdHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function removeByIdHandler(req: Request, res: Response) {
     const _id = req.params.id
     try {
+        if (!mongoose.isValidObjectId(_id)) {
+            return res.status(400).send({
+                error: 'Invalid Id',
+                code: '400'
+            });
+        }
         const result = await req.app.locals.collection.findOneAndRemove({
             _id
         })
@@ -86,7 +100,7 @@ export async function removeByIdHandler(req: Request, res: Response, next: NextF
  * @param res Response
  * @param next NextFunction
  */
-export async function postHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function postHandler(req: Request, res: Response): Promise<void> {
     const {
         body
     } = req
@@ -109,18 +123,24 @@ export async function postHandler(req: Request, res: Response, next: NextFunctio
  * @param res Response
  * @param next NextFunction
  */
-export async function putHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function putHandler(req: Request, res: Response) {
     const {
         body
     } = req
     const _id = req.params.id
     try {
+        if (!mongoose.isValidObjectId(_id)) {
+            return res.status(400).send({
+                error: 'Invalid Id',
+                code: '400'
+            });
+        }
         const result = await req.app.locals.collection.findOneAndUpdate({
             _id
         }, {
             $set: body
         }, {
-            new: false
+            new: true
         })
         res.status(OK).send(result)
     } catch (error) {
@@ -138,18 +158,24 @@ export async function putHandler(req: Request, res: Response, next: NextFunction
  * @param res Response
  * @param next NextFunction
  */
-export async function patchHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function patchHandler(req: Request, res: Response) {
     const {
         body
     } = req
     const _id = req.params.id
     try {
+        if (!mongoose.isValidObjectId(_id)) {
+            return res.status(400).send({
+                error: 'Invalid Id',
+                code: '400'
+            });
+        }
         const result = await req.app.locals.collection.findOneAndUpdate({
             _id
         }, {
             $set: body
         }, {
-            new: false
+            new: true
         })
         res.status(OK).send(result)
     } catch (error) {
@@ -167,12 +193,12 @@ export async function patchHandler(req: Request, res: Response, next: NextFuncti
  * @param res Response
  * @param next NextFunction
  */
-export async function getHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const skip = req.query.skip ? parseInt(req.query.skip, 10) : 0;
-    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 10;
-    const projection = (req.query.projection || "").length > 0 ? buildProjection(req.query.projection) : {}
+export async function getHandler(req: Request, res: Response): Promise<void> {
+    const skip = req.query.skip ? parseInt(req.query?.skip, 10) : 0;
+    const limit = req.query.limit ? parseInt(req.query?.limit, 10) : 10;
+    const projection = (req.query?.projection || "").length > 0 ? buildProjection(req.query?.projection) : {}
     try {
-        const query = req.query.query ? JSON.parse(req.query.query) : {}
+        const query = req.query.query ? JSON.parse(req.query?.query) : {}
         const results = await Promise.all([req.app.locals.collection.count(query), await req.app.locals.collection.find(query, projection, {
             skip,
             limit
@@ -193,4 +219,24 @@ export async function getHandler(req: Request, res: Response, next: NextFunction
  */
 export function buildProjection(projection: string = ''): string {
     return projection.replace('+', ' ')
+}
+
+
+export function bodyValidator(req: Request, res: Response, next: NextFunction) {
+    try {
+        const validator = new Validator();
+        const result = validator.validate(req.body, req.app.locals.bodySchema)
+        if (!result.valid) {
+            return res.status(400).send({
+                errors: result.errors,
+                code: 400
+            })
+        }
+        next()
+    } catch (err) {
+        res.status(400).send({
+            error: (err || {}).message,
+            code: 400
+        })
+    }
 }

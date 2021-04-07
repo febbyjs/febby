@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 import express, { Router, NextFunction, RouterOptions, Request, Response, Handler } from 'express'
-import { validateAppConfig, register, getByIdHandler, removeByIdHandler, putHandler, postHandler, getHandler, patchHandler } from './helper'
+import { validateAppConfig, register, getByIdHandler, removeByIdHandler, putHandler, postHandler, getHandler, patchHandler, bodyValidator } from './helper'
 import { IAppConfig, IRouteConfig, ICrudConfig, GET, PUT, POST, DELETE, PATCH, IFebby } from './types'
 import { createServer, Server } from 'http'
 import { debug } from 'debug'
@@ -12,7 +12,7 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
-import mongoose, { Model, Document, Schema, ConnectionOptions } from 'mongoose'
+import mongoose, { Model, Document, Schema } from 'mongoose'
 
 const log = debug('febby:core')
 
@@ -59,7 +59,7 @@ export class Febby implements IFebby {
         log('final middlewares')
         log('app main router set')
         Febby.instance = this
-        this.connectToDb().then(log).catch(console.error)
+        this.connectToDb()
     }
     /**
      * @private
@@ -99,7 +99,16 @@ export class Febby implements IFebby {
      */
     route(routeConfig: IRouteConfig): void {
         log('route registartion start')
-        register(routeConfig.router || this.mainRouter, routeConfig.method, routeConfig.path, routeConfig.middlewares || [], routeConfig.handler)
+        const mids = [...routeConfig?.middlewares || []]
+        if (routeConfig.bodySchema) {
+            mids.push(
+                (req, res, next) => {
+                    req.app.locals.bodySchema = routeConfig.bodySchema
+                    next()
+                },
+                bodyValidator)
+        }
+        register(routeConfig.router || this.mainRouter, routeConfig.method, routeConfig.path, mids, routeConfig.handler)
         log('route registartion end')
     }
     /**
