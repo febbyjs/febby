@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.2.14",
+  "version": "0.3.0",
   "description": "microservice framework for building application services",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -11,7 +11,7 @@
     "start": "./node_modules/.bin/tsc",
     "test": "./node_modules/.bin/jest --updateSnapshot",
     "test:coverage": "./node_modules/.bin/jest --coverage",
-    "docs": "./node_modules/.bin/typedoc --out docs --mode modules ./index.ts",
+    "docs": "./node_modules/.bin/typedoc",
     "build": "./node_modules/.bin/tsc",
     "build:local": "npm test && npm start && npm run docs"
   },
@@ -35,26 +35,28 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "debug": "^4.1.1",
+    "debug": "^4.3.2",
     "express": "^4.17.1",
-    "helmet": "^3.21.3",
-    "mongoose": "^5.9.2",
-    "morgan": "^1.9.1"
+    "helmet": "^4.6.0",
+    "ioredis": "^4.27.9",
+    "mongoose": "^6.0.7",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.17.1",
-    "@types/cors": "^2.8.6",
-    "@types/debug": "^4.1.5",
-    "@types/express": "^4.17.2",
-    "@types/helmet": "0.0.45",
-    "@types/jest": "^24.0.25",
-    "@types/mongoose": "^5.5.35",
-    "@types/morgan": "^1.7.37",
-    "@types/node": "^13.1.0",
-    "jest": "^26.4.0",
-    "ts-jest": "^24.2.0",
-    "ts-node": "^8.5.4",
-    "typedoc": "^0.17.4",
-    "typescript": "^3.8.3"
+    "@types/body-parser": "^1.19.1",
+    "@types/cors": "^2.8.12",
+    "@types/debug": "^4.1.7",
+    "@types/express": "^4.17.13",
+    "@types/helmet": "0.0.48",
+    "@types/ioredis": "^4.27.4",
+    "@types/jest": "^27.0.2",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^16.10.1",
+    "jest": "^27.2.2",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typedoc": "^0.22.4",
+    "typescript": "^4.4.3"
   }
 }

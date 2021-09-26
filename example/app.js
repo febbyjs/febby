@@ -5,9 +5,13 @@ const {
 const config = {
   port: 3000,
   db: {
-    url: 'mongodb://localhost:27017/test'
+    url: 'mongodb://0.0.0.0:27017/test'
   },
-  appBaseUrl: '/hello'
+  appBaseUrl: '/hello',
+  redis: {
+    port:6379,
+    host:'0.0.0.0'
+  },
 }
 const febby = new Febby(config);
 
