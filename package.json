@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.3.0",
+  "version": "0.3.3",
   "description": "microservice framework for building application services",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
