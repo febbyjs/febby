@@ -61,14 +61,17 @@ export async function getByIdHandler(
 	const projection = req.query.projection
 		? buildProjection(req.query.projection as string)
 		: "";
-	try {
-		const doc = await req.app.locals.febby.redis.get(
+	let doc;
+	if (req.app.locals.febby.redis) {
+		doc = await req.app.locals.febby.redis.get(
 			buildRedisKey(
 				req.app.locals.febby.appConfig.serviceName,
 				req.app.locals.collection.modelName,
 				id
 			)
 		);
+	}
+	try {
 		if (doc) {
 			const parsedDoc = JSON.parse(doc);
 			const keys = projection ? (projection as string).split(" ") : [];
@@ -97,7 +100,7 @@ export async function getByIdHandler(
 			id,
 			projection || {}
 		);
-		if (result) {
+		if (result && req.app.locals.febby.redis) {
 			await req.app.locals.febby.redis.set(
 				buildRedisKey(
 					req.app.locals.febby.appConfig.serviceName,
@@ -133,13 +136,15 @@ export async function removeByIdHandler(
 		`removeByIdHandler :: ${req.app.locals.collection.modelName} :: ${_id}`
 	);
 	try {
-		await req.app.locals.febby.redis.del(
-			buildRedisKey(
-				req.app.locals.febby.appConfig.serviceName,
-				req.app.locals.collection.modelName,
-				_id
-			)
-		);
+		if (req.app.locals.febby.redis) {
+			await req.app.locals.febby.redis.del(
+				buildRedisKey(
+					req.app.locals.febby.appConfig.serviceName,
+					req.app.locals.collection.modelName,
+					_id
+				)
+			);
+		}
 	} catch (error: unknown) {
 		const code = 500;
 		res.status(code).send({
@@ -190,14 +195,16 @@ export async function postHandler(
 		`postHandler :: ${req.app.locals.collection.modelName} :: ${result._id}`
 	);
 	try {
-		await req.app.locals.febby.redis.set(
-			buildRedisKey(
-				req.app.locals.febby.appConfig.serviceName,
-				req.app.locals.collection.modelName,
-				result._id
-			),
-			JSON.stringify(result)
-		);
+		if (req.app.locals.febby.redis) {
+			await req.app.locals.febby.redis.set(
+				buildRedisKey(
+					req.app.locals.febby.appConfig.serviceName,
+					req.app.locals.collection.modelName,
+					result._id
+				),
+				JSON.stringify(result)
+			);
+		}
 	} catch (error) {
 		log(`postHandler error:: ${error.message}`);
 	}
@@ -218,13 +225,15 @@ export async function putHandler(
 	const _id = req.params.id;
 	log(`putHandler :: ${req.app.locals.collection.modelName} :: ${_id}`);
 	try {
-		await req.app.locals.febby.redis.del(
-			buildRedisKey(
-				req.app.locals.febby.appConfig.serviceName,
-				req.app.locals.collection.modelName,
-				_id
-			)
-		);
+		if (req.app.locals.febby.redis) {
+			await req.app.locals.febby.redis.del(
+				buildRedisKey(
+					req.app.locals.febby.appConfig.serviceName,
+					req.app.locals.collection.modelName,
+					_id
+				)
+			);
+		}
 	} catch (error: unknown) {
 		const code = 500;
 		res.status(code).send({
@@ -246,13 +255,15 @@ export async function putHandler(
 			}
 		);
 		res.status(OK).send(result);
-		await req.app.locals.febby.redis.del(
-			buildRedisKey(
-				req.app.locals.febby.appConfig.serviceName,
-				req.app.locals.collection.modelName,
-				_id
-			)
-		);
+		if (req.app.locals.febby.redis) {
+			await req.app.locals.febby.redis.del(
+				buildRedisKey(
+					req.app.locals.febby.appConfig.serviceName,
+					req.app.locals.collection.modelName,
+					_id
+				)
+			);
+		}
 	} catch (error: unknown) {
 		const code = 500;
 		res.status(code).send({
@@ -284,13 +295,15 @@ export async function getHandler(
 	try {
 		const query = req.query.query ? JSON.parse(req.query.query as any) : {};
 		const results = await Promise.all([
-			req.app.locals.collection.count(query),
+			req.app.locals.collection.find(query, { _id: 1 }),
 			await req.app.locals.collection.find(query, projection, {
 				skip,
 				limit,
 			}),
 		]);
-		res.status(200).send({ value: results[1], count: results[0] });
+		const count = (results[0] || []).length;
+		const value = results[1] || {};
+		res.status(200).send({ value, count });
 	} catch (error: unknown) {
 		const code = 500;
 		res.status(code).send({
