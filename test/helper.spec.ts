@@ -14,6 +14,7 @@ import {
 } from "../src/helper";
 import { Router, Request, Response, NextFunction, Application } from "express";
 import { IAppConfig, POST } from "../src/types";
+import { Febby } from "../src";
 
 // jest.mock("express");
 // jest.mock("mongoose");
@@ -63,6 +64,7 @@ describe("Helper", () => {
 					};
 				},
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -85,6 +87,7 @@ describe("Helper", () => {
 					throw new Error("some error");
 				},
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -109,10 +112,8 @@ describe("Helper", () => {
 				find: async (query: any, projection: string) => {
 					return [{}];
 				},
-				count: async (query: number) => {
-					return 1;
-				},
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -137,10 +138,8 @@ describe("Helper", () => {
 				find: async (query: any, projection: string) => {
 					return [{}];
 				},
-				count: async (count: number) => {
-					throw new Error("some error");
-				},
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -187,6 +186,7 @@ describe("Helper", () => {
 					},
 				};
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -211,6 +211,7 @@ describe("Helper", () => {
 					},
 				};
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -235,6 +236,7 @@ describe("Helper", () => {
 					},
 				};
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -257,6 +259,7 @@ describe("Helper", () => {
 					return {};
 				},
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
@@ -279,6 +282,7 @@ describe("Helper", () => {
 					throw new Error("some error");
 				},
 			},
+			febby: new Febby(),
 		};
 		const res = {
 			status: (code: number) => {
