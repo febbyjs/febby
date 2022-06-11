@@ -10,19 +10,6 @@ Whole Febby is build on top of proven [express.js](https://expressjs.com/) frame
 npm install febby --save
 ```
 
-# Build Status
-
-| Branch | Status                                                                                                        |
-| ------ | ------------------------------------------------------------------------------------------------------------- |
-| Master | [![Build Status](https://travis-ci.org/febbyjs/febby.svg?branch=master)](https://travis-ci.org/febbyjs/febby) |
-
-## Dependencies
-
-- Node.js v4+
-- MongoDB v3+
-- Npm v6+
-- Redis (Optional)
-
 ## Docs
 
 febby provides some of the coolest features out of the box, like projection, querying and pagination on mongodb collections.
@@ -161,6 +148,19 @@ febby.bootstrap(() => {
   console.log(`Server started on port : ${config.port}`);
 });
 ```
+
+# Build Status
+
+| Branch | Status                                                                                                        |
+| ------ | ------------------------------------------------------------------------------------------------------------- |
+| Master | [![Build Status](https://travis-ci.org/febbyjs/febby.svg?branch=master)](https://travis-ci.org/febbyjs/febby) |
+
+## Dependencies
+
+- Node.js v4+
+- MongoDB v3+
+- Npm v6+
+- Redis (Optional)
 
 ## Licence
 
