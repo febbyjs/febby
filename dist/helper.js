@@ -49,7 +49,10 @@ async function getByIdHandler(req, res, next) {
         ? buildProjection(req.query.projection)
         : "";
     try {
-        const doc = await req.app.locals.febby.redis.get(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, id));
+        let doc = null;
+        if (req.app.locals.febby.redis) {
+            doc = await req.app.locals.febby.redis.get(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, id));
+        }
         if (doc) {
             const parsedDoc = JSON.parse(doc);
             const keys = projection ? projection.split(" ") : [];
@@ -77,7 +80,7 @@ async function getByIdHandler(req, res, next) {
     }
     try {
         const result = await req.app.locals.collection.findById(id, projection || {});
-        if (result) {
+        if (result && req.app.locals.febby.redis) {
             await req.app.locals.febby.redis.set(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, id), JSON.stringify(result));
         }
         res.status(types_1.OK).send(result);
@@ -95,7 +98,9 @@ async function removeByIdHandler(req, res, next) {
     const _id = req.params.id;
     log(`removeByIdHandler :: ${req.app.locals.collection.modelName} :: ${_id}`);
     try {
-        await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+        if (req.app.locals.febby.redis) {
+            await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+        }
     }
     catch (error) {
         const code = 500;
@@ -136,7 +141,9 @@ async function postHandler(req, res, next) {
     }
     log(`postHandler :: ${req.app.locals.collection.modelName} :: ${result._id}`);
     try {
-        await req.app.locals.febby.redis.set(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, result._id), JSON.stringify(result));
+        if (req.app.locals.febby.redis) {
+            await req.app.locals.febby.redis.set(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, result._id), JSON.stringify(result));
+        }
     }
     catch (error) {
         log(`postHandler error:: ${error.message}`);
@@ -148,7 +155,9 @@ async function putHandler(req, res, next) {
     const _id = req.params.id;
     log(`putHandler :: ${req.app.locals.collection.modelName} :: ${_id}`);
     try {
-        await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+        if (req.app.locals.febby.redis) {
+            await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+        }
     }
     catch (error) {
         const code = 500;
@@ -166,7 +175,9 @@ async function putHandler(req, res, next) {
             new: false,
         });
         res.status(types_1.OK).send(result);
-        await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+        if (req.app.locals.febby.redis) {
+            await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+        }
     }
     catch (error) {
         const code = 500;
@@ -188,13 +199,15 @@ async function getHandler(req, res, next) {
     try {
         const query = req.query.query ? JSON.parse(req.query.query) : {};
         const results = await Promise.all([
-            req.app.locals.collection.count(query),
+            req.app.locals.collection.find(query, { _id: 1 }),
             await req.app.locals.collection.find(query, projection, {
                 skip,
                 limit,
             }),
         ]);
-        res.status(200).send({ value: results[1], count: results[0] });
+        const count = (results[0] || []).length;
+        const value = results[1] || {};
+        res.status(200).send({ value, count });
     }
     catch (error) {
         const code = 500;
