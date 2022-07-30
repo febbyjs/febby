@@ -61,17 +61,19 @@ export async function getByIdHandler(
 	const projection = req.query.projection
 		? buildProjection(req.query.projection as string)
 		: "";
-	let doc;
-	if (req.app.locals.febby.redis) {
-		doc = await req.app.locals.febby.redis.get(
-			buildRedisKey(
-				req.app.locals.febby.appConfig.serviceName,
-				req.app.locals.collection.modelName,
-				id
-			)
-		);
-	}
+
 	try {
+		let doc = null;
+		if (req.app.locals.febby.redis) {
+			doc = await req.app.locals.febby.redis.get(
+				buildRedisKey(
+					req.app.locals.febby.appConfig.serviceName,
+					req.app.locals.collection.modelName,
+					id
+				)
+			);
+		}
+
 		if (doc) {
 			const parsedDoc = JSON.parse(doc);
 			const keys = projection ? (projection as string).split(" ") : [];
@@ -95,6 +97,7 @@ export async function getByIdHandler(
 			code,
 		});
 	}
+
 	try {
 		const result = await req.app.locals.collection.findById(
 			id,
