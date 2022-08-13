@@ -1,6 +1,6 @@
 "use strict";
 /*!
- * Copyright(c) 2018-2021 Vasu Vanka
+ * Copyright(c) 2018-2022 Vasu Vanka
  * MIT Licensed
  */
 Object.defineProperty(exports, "__esModule", { value: true });

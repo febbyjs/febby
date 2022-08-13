@@ -1,3 +1,7 @@
+/*!
+ * Copyright(c) 2018-2022 Vasu Vanka
+ * MIT Licensed
+ */
 import { IAppConfig, HttpMethod } from "./types";
 import { NextFunction, Handler, Request, Response, Router } from "express";
 export declare function validateAppConfig(config: IAppConfig): IAppConfig;

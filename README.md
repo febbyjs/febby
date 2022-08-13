@@ -15,7 +15,7 @@ npm install febby --save
 febby provides some of the coolest features out of the box, like projection, querying and pagination on mongodb collections.
 
 - API Documentation: https://febbyjs.github.io/febby
-- Usage (projection, querying and pagination)[https://github.com/febbyjs/febby/tree/master/Helper.md]
+- Usage [projection, querying and pagination](https://github.com/febbyjs/febby/tree/master/Helper.md)
 
 ## Example
 

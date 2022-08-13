@@ -388,9 +388,9 @@ export class Febby implements IFebby {
 	 * model will register and creates mongoose model instance if not exist
 	 * @param name Model name
 	 * @param schema Model schema
-	 * @returns Model<Document, {}>
+	 * @returns Model<Document & any>
 	 */
-	model(name: string, schema?: Schema): Model<Document, {}> {
+	model(name: string, schema?: Schema): Model<Document & any> {
 		log(`model registartion : ${name}`);
 		const models = this.models();
 		if (models[name]) {
@@ -400,9 +400,9 @@ export class Febby implements IFebby {
 	}
 	/**
 	 * models will return model objects
-	 * @returns { [index: string]: Model<Document, {}> }
+	 * @returns { [index: string]: Model<Document & any> }
 	 */
-	models(): { [index: string]: Model<Document, {}> } {
+	models(): { [index: string]: Model<Document & any> } {
 		log(`return models`);
 		return mongoose.models;
 	}

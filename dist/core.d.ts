@@ -1,5 +1,5 @@
 /*!
- * Copyright(c) 2018-2021 Vasu Vanka
+ * Copyright(c) 2018-2022 Vasu Vanka
  * MIT Licensed
  */
 /// <reference types="node" />
@@ -24,9 +24,9 @@ export declare class Febby implements IFebby {
     middlewares(middlewares: Handler[], router?: Router): void;
     router(url: string, router?: Router, options?: RouterOptions): Router;
     crud(path: string, config: ICrudConfig, model: Model<Document, {}>, router?: Router): void;
-    model(name: string, schema?: Schema): Model<Document, {}>;
+    model(name: string, schema?: Schema): Model<Document & any>;
     models(): {
-        [index: string]: Model<Document, {}>;
+        [index: string]: Model<Document & any>;
     };
     finalMiddlewares(middlewares: Handler[]): void;
     finalHandler(middleware: Handler): void;
