@@ -115,7 +115,9 @@ export class Febby implements IFebby {
 			);
 			try {
 				await mongoose.connect(this.appConfig.db?.url, options);
+				console.log(`database connection established successfully`);
 			} catch (error: any) {
+				console.log(`database connection failed to establish`);
 				throw error;
 			}
 			log("db connection created");

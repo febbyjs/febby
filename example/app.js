@@ -56,6 +56,7 @@ febby.crud(
     crud: false,
     get: [],
     post: [],
+    put: [],
     middlewares: [logActionOnUserCrud],
   },
   books,
