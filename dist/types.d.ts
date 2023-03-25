@@ -11,23 +11,23 @@ export declare const POST = "post";
 export declare const DELETE = "delete";
 export declare const PATCH = "patch";
 export declare const appBaseUrl = "/";
-export declare const BADREQUEST = 400;
-export declare const INTERNALSERVERERROR = 500;
+export declare const BAD_REQUEST = 400;
+export declare const INTERNAL_SERVER_ERROR = 500;
 export declare const OK = 200;
 export declare const CREATED = 201;
-export declare type PathParams = string | RegExp | Array<string | RegExp>;
-export declare type HttpMethod = "get" | "put" | "post" | "delete" | "patch" | "head" | "options" | "copy";
+export type PathParams = string | RegExp | Array<string | RegExp>;
+export type HttpMethod = "get" | "put" | "post" | "delete" | "patch" | "head" | "options";
 export interface IAppConfig {
     port: number;
+    db: {
+        url: string;
+        options?: ConnectOptions;
+    };
     serviceName?: string;
     hostname?: string;
     version?: string;
     bodyParser?: any;
     cors?: any;
-    db?: {
-        url: string;
-        options?: ConnectOptions;
-    };
     clusterMode?: boolean;
     appBaseUrl?: PathParams;
     helmet?: any;
@@ -52,6 +52,7 @@ export interface IRouteConfig {
 }
 export interface IFebby {
     bootstrap(cb?: Function): void;
+    start(): Promise<void>;
     model(name: string, schema: mongoose.Schema): mongoose.Model<mongoose.Document, {}>;
     finalHandler(middleware: Handler): void;
     models(): {

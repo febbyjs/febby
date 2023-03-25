@@ -26,12 +26,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildProjection = exports.getHandler = exports.putHandler = exports.postHandler = exports.removeByIdHandler = exports.getByIdHandler = exports.register = exports.validateAppConfig = void 0;
 const types_1 = require("./types");
 const debug = __importStar(require("debug"));
+const assert_1 = __importDefault(require("assert"));
 const log = debug.debug("febby:helper");
 function validateAppConfig(config) {
+    (0, assert_1.default)(config !== undefined, "config should be provided");
     config.appBaseUrl = config.appBaseUrl || types_1.appBaseUrl;
     config.serviceName = config.serviceName || "febby";
     return config;
@@ -42,12 +47,11 @@ function buildRedisKey(serviceName, functionName, key) {
 }
 function register(router, method, path, middlewares, handler) {
     log(`Register route :: ${method} :: ${path}`);
-    try {
-        router[method](path, middlewares, handler);
-    }
-    catch (error) {
-        throw error;
-    }
+    (0, assert_1.default)(method !== undefined, "method should be defined");
+    (0, assert_1.default)(path !== undefined, "path should be defined");
+    (0, assert_1.default)(middlewares !== undefined, "middlewares should be defined or empty array");
+    (0, assert_1.default)(handler !== undefined, "handler should be defined");
+    router[method](path, middlewares, handler);
 }
 exports.register = register;
 async function getByIdHandler(req, res, next) {
