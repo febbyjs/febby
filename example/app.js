@@ -6,11 +6,11 @@ const config = {
     url: "mongodb://0.0.0.0:27017/test",
   },
   appBaseUrl: "/hello",
-  redis: {
-    // optional config
-    port: 6379,
-    host: "0.0.0.0",
-  },
+  // redis: {
+  //   // optional config
+  //   port: 6379,
+  //   host: "0.0.0.0",
+  // },
 };
 const febby = new Febby(config);
 
@@ -38,6 +38,7 @@ const logActionOnUserCrud = (req, res, next) => {
   console.log(`${req.method}:${req.url}`);
   next();
 };
+
 febby.middleware(logActionOnUserCrud, api);
 
 febby.crud(

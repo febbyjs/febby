@@ -64,7 +64,10 @@ describe("Helper", () => {
 					};
 				},
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -87,7 +90,10 @@ describe("Helper", () => {
 					throw new Error("some error");
 				},
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -113,7 +119,10 @@ describe("Helper", () => {
 					return [{}];
 				},
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -139,7 +148,10 @@ describe("Helper", () => {
 					return [{}];
 				},
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -186,7 +198,10 @@ describe("Helper", () => {
 					},
 				};
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -211,7 +226,10 @@ describe("Helper", () => {
 					},
 				};
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -236,7 +254,10 @@ describe("Helper", () => {
 					},
 				};
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -259,7 +280,10 @@ describe("Helper", () => {
 					return {};
 				},
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {
@@ -282,7 +306,10 @@ describe("Helper", () => {
 					throw new Error("some error");
 				},
 			},
-			febby: new Febby(),
+			febby: new Febby({
+				port: 5000,
+				db: { url: "mongodb://localhost:27017/test" },
+			}),
 		};
 		const res = {
 			status: (code: number) => {

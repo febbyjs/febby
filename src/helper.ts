@@ -6,6 +6,7 @@
 import { IAppConfig, appBaseUrl, HttpMethod, OK, CREATED } from "./types";
 import { NextFunction, Handler, Request, Response, Router } from "express";
 import * as debug from "debug";
+import assert from "assert";
 
 const log = debug.debug("febby:helper");
 /**
@@ -13,6 +14,8 @@ const log = debug.debug("febby:helper");
  * @param config Validates application configuration
  */
 export function validateAppConfig(config: IAppConfig): IAppConfig {
+	assert(config !== undefined, "config should be provided");
+
 	config.appBaseUrl = config.appBaseUrl || appBaseUrl;
 	config.serviceName = config.serviceName || "febby";
 	return config;
@@ -38,12 +41,16 @@ export function register(
 	handler: Handler
 ): void {
 	log(`Register route :: ${method} :: ${path}`);
-	try {
-		router[method](path, middlewares, handler);
-	} catch (error: unknown) {
-		// give more context of error
-		throw error;
-	}
+
+	assert(method !== undefined, "method should be defined");
+	assert(path !== undefined, "path should be defined");
+	assert(
+		middlewares !== undefined,
+		"middlewares should be defined or empty array"
+	);
+	assert(handler !== undefined, "handler should be defined");
+
+	router[method](path, middlewares, handler);
 }
 
 /**
@@ -183,6 +190,7 @@ export async function postHandler(
 	next: NextFunction
 ): Promise<void> {
 	const { body } = req;
+
 	let result;
 	try {
 		const coll = new req.app.locals.collection(body);

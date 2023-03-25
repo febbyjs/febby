@@ -1,6 +1,6 @@
 # Febby
 
-Nodejs HTTP framework built to create production ready rest endpoints on [mongodb](https://www.mongodb.com) collections with minimum developer effort.
+Node.js HTTP framework built to create production ready rest endpoints on [mongodb](https://www.mongodb.com) collections with minimal developer effort.
 [Redis](https://redis.io) cache introduced to reduce latency and database calls to improve performace by far.
 Whole Febby is build on top of proven [express.js](https://expressjs.com/) framework.
 

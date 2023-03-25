@@ -1,5 +1,5 @@
 /*!
- * Copyright(c) 2018-2022 Vasu Vanka
+ * Copyright(c) 2018-2023 Vasu Vanka < vanka.vasu@gmail.com>
  * MIT Licensed
  */
 /// <reference types="node" />
@@ -14,14 +14,15 @@ export declare class Febby implements IFebby {
     server: Server;
     private mainRouter;
     private redis;
-    constructor(config?: IAppConfig);
+    constructor(config: IAppConfig);
     private connectDatabase;
     private connectRedis;
     bootstrap(cb?: Function): void;
+    start(): Promise<void>;
     route(routeConfig: IRouteConfig): void;
-    routes(routesConfig: IRouteConfig[]): void;
+    routes(list: Array<IRouteConfig>): void;
     middleware(middleware: Handler, router?: Router): void;
-    middlewares(middlewares: Handler[], router?: Router): void;
+    middlewares(list: Handler[], router?: Router): void;
     router(url: string, router?: Router, options?: RouterOptions): Router;
     crud(path: string, config: ICrudConfig, model: Model<Document, {}>, router?: Router): void;
     model(name: string, schema?: Schema): Model<Document & any>;

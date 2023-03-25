@@ -14,8 +14,8 @@ export const DELETE = "delete";
 export const PATCH = "patch";
 export const appBaseUrl = "/";
 
-export const BADREQUEST = 400;
-export const INTERNALSERVERERROR = 500;
+export const BAD_REQUEST = 400;
+export const INTERNAL_SERVER_ERROR = 500;
 export const OK = 200;
 export const CREATED = 201;
 export type PathParams = string | RegExp | Array<string | RegExp>;
@@ -30,26 +30,25 @@ export type HttpMethod =
 	| "delete"
 	| "patch"
 	| "head"
-	| "options"
-	| "copy";
+	| "options";
 
 /**
  * IAppConfig interface implements Application configuration
  */
 export interface IAppConfig {
 	port: number;
+	db: {
+		url: string;
+		options?: ConnectOptions;
+	};
 	/**
-	 * serviceName - will be used to indentify service with given name and used across app
+	 * serviceName - will be used to identify service with given name and used across app
 	 */
 	serviceName?: string;
 	hostname?: string;
 	version?: string;
 	bodyParser?: any;
 	cors?: any;
-	db?: {
-		url: string;
-		options?: ConnectOptions;
-	};
 	clusterMode?: boolean;
 	appBaseUrl?: PathParams;
 	helmet?: any;
@@ -86,6 +85,7 @@ export interface IRouteConfig {
  */
 export interface IFebby {
 	bootstrap(cb?: Function): void;
+	start(): Promise<void>;
 	model(
 		name: string,
 		schema: mongoose.Schema

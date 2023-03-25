@@ -11,8 +11,8 @@ import {
 	HttpMethod,
 	CREATED,
 	OK,
-	BADREQUEST,
-	INTERNALSERVERERROR,
+	BAD_REQUEST,
+	INTERNAL_SERVER_ERROR,
 	IAppConfig,
 } from "../src/types";
 describe("Types", () => {
@@ -69,10 +69,6 @@ describe("Type HttpMethod", () => {
 		var value: HttpMethod = "patch";
 		expect(value).toEqual("patch");
 	});
-	it("type HttpMethod equal to copy", () => {
-		var value: HttpMethod = "copy";
-		expect(value).toEqual("copy");
-	});
 	it("type HttpMethod equal to head", () => {
 		var value: HttpMethod = "head";
 		expect(value).toEqual("head");
@@ -95,22 +91,22 @@ describe("Http status codes", () => {
 		expect(CREATED).not.toEqual(400);
 	});
 	it("badrequest 400 ok", () => {
-		expect(BADREQUEST).toEqual(400);
+		expect(BAD_REQUEST).toEqual(400);
 	});
 	it("badrequest not any otherthan 400", () => {
-		expect(BADREQUEST).not.toEqual(401);
+		expect(BAD_REQUEST).not.toEqual(401);
 	});
 	it("success 200 ok", () => {
 		expect(OK).toEqual(200);
 	});
 	it("success not any otherthan 200", () => {
-		expect(BADREQUEST).not.toEqual(401);
+		expect(BAD_REQUEST).not.toEqual(401);
 	});
 	it("internal server error 500 ok", () => {
-		expect(INTERNALSERVERERROR).toEqual(500);
+		expect(INTERNAL_SERVER_ERROR).toEqual(500);
 	});
 	it("internal server error not any otherthan 200", () => {
-		expect(INTERNALSERVERERROR).not.toEqual(401);
+		expect(INTERNAL_SERVER_ERROR).not.toEqual(401);
 	});
 });
 

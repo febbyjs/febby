@@ -1,6 +1,6 @@
 "use strict";
 /*!
- * Copyright(c) 2018-2022 Vasu Vanka
+ * Copyright(c) 2018-2023 Vasu Vanka < vanka.vasu@gmail.com>
  * MIT Licensed
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -42,7 +42,7 @@ const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Redis = __importStar(require("ioredis"));
-const util_1 = __importDefault(require("util"));
+const assert_1 = __importDefault(require("assert"));
 const log = (0, debug_1.debug)("febby:core");
 class Febby {
     constructor(config) {
@@ -52,10 +52,7 @@ class Febby {
         if (Febby.instance) {
             return Febby.instance;
         }
-        this.appConfig = (0, helper_1.validateAppConfig)(config || {});
-        log("app config set");
-        log("mongoose set default values for useNewUrlParser,useFindAndModify,useCreateIndex,useUnifiedTopology");
-        log("express app created");
+        this.appConfig = (0, helper_1.validateAppConfig)(config);
         log("app default middlewares init started");
         this.expressApp.use((0, morgan_1.default)(this.appConfig.morgan || "combined"));
         log("express app added morgan logger");
@@ -80,40 +77,34 @@ class Febby {
         }
     }
     async connectDatabase() {
-        var _a, _b, _c;
+        var _a;
         log("db connection init");
-        if ((_a = this.appConfig) === null || _a === void 0 ? void 0 : _a.db) {
-            const options = Object.assign({
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            }, (_b = this.appConfig.db) === null || _b === void 0 ? void 0 : _b.options);
-            try {
-                await mongoose_1.default.connect((_c = this.appConfig.db) === null || _c === void 0 ? void 0 : _c.url, options);
-            }
-            catch (error) {
-                throw error;
-            }
-            log("db connection created");
-        }
+        assert_1.default.notStrictEqual(this.appConfig.db, undefined, "database config should be defined");
+        const options = Object.assign({
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+        }, (_a = this.appConfig.db) === null || _a === void 0 ? void 0 : _a.options);
+        (0, assert_1.default)(this.appConfig.db.url !== undefined, "mongodb url - db.url should be defined");
+        await mongoose_1.default.connect(this.appConfig.db.url, options);
+        log("db connection created");
     }
     async connectRedis() {
-        var _a;
         log("redis connection init");
-        const conf = (_a = this.appConfig) === null || _a === void 0 ? void 0 : _a.redis;
-        if (conf) {
-            this.redis = new Redis.default(conf.port, conf.host, { ...conf });
-            this.redis.monitor().then(function (monitor) {
-                monitor.on("monitor", function (time, args, source, database) {
-                    log(time + " : " + util_1.default.inspect(args));
-                });
-            });
-        }
+        (0, assert_1.default)(this.appConfig.redis === undefined, "redis config should be defined");
+        const conf = this.appConfig.redis;
+        (0, assert_1.default)(conf.port === undefined, "redis port should be defined");
+        (0, assert_1.default)(conf.host === undefined, "redis host should be defined");
+        this.redis = new Redis.default(conf.port, conf.host, { ...conf });
+        const monitor = await this.redis.monitor();
+        monitor.on("monitor", function (time, args, source, database) {
+            log(`time : ${time}, args : ${args}, source: ${source}, database: ${database}`);
+        });
     }
     bootstrap(cb) {
-        var _a;
         log("bootstrap init");
         this.server = (0, http_1.createServer)(this.expressApp);
-        this.server.listen((_a = this.appConfig) === null || _a === void 0 ? void 0 : _a.port, () => {
+        (0, assert_1.default)(this.appConfig.port !== undefined, "app port should be defined");
+        this.server.listen(this.appConfig.port, () => {
             var _a;
             log(`Server started on PORT ${JSON.stringify((_a = this.server) === null || _a === void 0 ? void 0 : _a.address())}`);
             if (cb) {
@@ -122,39 +113,54 @@ class Febby {
         });
         log("bootstrap end");
     }
+    async start() {
+        log("start init");
+        (0, assert_1.default)(this.appConfig.port !== undefined, "app port should be defined");
+        this.server = (0, http_1.createServer)(this.expressApp);
+        this.server.listen(this.appConfig.port, () => {
+            var _a;
+            log(`Server started on PORT ${(_a = this.server) === null || _a === void 0 ? void 0 : _a.address()}`);
+        });
+        log("start end");
+    }
     route(routeConfig) {
-        log("route registartion start");
-        (0, helper_1.register)(routeConfig.router || this.mainRouter, routeConfig.method, routeConfig.path, routeConfig.middlewares || [], routeConfig.handler);
-        log("route registartion end");
+        log("route registration start");
+        const router = routeConfig.router || this.mainRouter;
+        const middlewares = routeConfig.middlewares || [];
+        (0, helper_1.register)(router, routeConfig.method, routeConfig.path, middlewares, routeConfig.handler);
+        log("route registration end");
     }
-    routes(routesConfig) {
-        log("routes registartion start");
-        routesConfig.forEach((route) => this.route(route));
-        log("routes registartion end");
+    routes(list) {
+        log("routes registration start");
+        (0, assert_1.default)(Array.isArray(list), "routes should be an array of route object definitions");
+        (0, assert_1.default)(list.length !== 0, "should contain at least minimum of one route object definitions");
+        list.forEach((route) => this.route(route));
+        log("routes registration end");
     }
-    middleware(middleware, router) {
-        log("middleware registartion start");
-        (router || this.mainRouter).use(middleware);
-        log("middleware registartion end");
+    middleware(middleware, router = this.mainRouter) {
+        log("middleware registration start");
+        (0, assert_1.default)(middleware !== undefined, "middleware should defined");
+        router.use(middleware);
+        log("middleware registration end");
     }
-    middlewares(middlewares, router) {
-        log("middlewares registartion start");
-        middlewares.forEach((middleware) => this.middleware(middleware, router || this.mainRouter));
-        log("middlewares registartion end");
+    middlewares(list, router = this.mainRouter) {
+        log("middlewares registration start");
+        (0, assert_1.default)(Array.isArray(list), "routes should be an array of route object definitions");
+        (0, assert_1.default)(list.length !== 0, "should contain at least minimum of one route object definitions");
+        list.forEach((middleware) => this.middleware(middleware, router));
+        log("middlewares registration end");
     }
     router(url, router, options) {
-        log("router registartion start");
+        log("router registration start");
         router = router || this.mainRouter;
         options = options || {};
         const newRouter = (0, express_1.Router)(options);
         router.use(url, newRouter);
-        log("router registartion end");
+        log("router registration end");
         return newRouter;
     }
-    crud(path, config, model, router) {
-        log("crud registartion start");
-        router = router || this.mainRouter;
-        path = path || "/";
+    crud(path = "/", config, model, router = this.mainRouter) {
+        log("crud registration start");
         const attachCollection = (req, _res, next) => {
             log("attaching model & redis");
             req.app.locals.collection = model;
@@ -168,74 +174,72 @@ class Febby {
                 ...(config.middlewares || []),
                 ...(config.get || []),
             ], helper_1.getByIdHandler);
-            log("crud get registartion");
+            log("crud get registration");
             (0, helper_1.register)(router, types_1.PUT, `${path}/:id`, [
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.put || []),
             ], helper_1.putHandler);
-            log("crud put registartion");
+            log("crud post registration");
             (0, helper_1.register)(router, types_1.POST, path, [
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.post || []),
             ], helper_1.postHandler);
-            log("crud post registartion");
+            log("crud get registration");
             (0, helper_1.register)(router, types_1.GET, path, [
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.get || []),
             ], helper_1.getHandler);
-            log("crud get registartion");
+            log("crud delete registration");
             (0, helper_1.register)(router, types_1.DELETE, `${path}/:id`, [
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.delete || []),
             ], helper_1.removeByIdHandler);
-            log("crud delete registartion");
+            return;
         }
-        else {
-            if (config.get) {
-                log("crud get registartion");
-                (0, helper_1.register)(router, types_1.GET, `${path}/:id`, [
-                    attachCollection,
-                    ...(config.middlewares || []),
-                    ...(config.get || []),
-                ], helper_1.getByIdHandler);
-                (0, helper_1.register)(router, types_1.GET, path, [
-                    attachCollection,
-                    ...(config.middlewares || []),
-                    ...(config.get || []),
-                ], helper_1.getHandler);
-            }
-            if (config.put) {
-                log("crud put registartion");
-                (0, helper_1.register)(router, types_1.PUT, `${path}/:id`, [
-                    attachCollection,
-                    ...(config.middlewares || []),
-                    ...(config.put || []),
-                ], helper_1.putHandler);
-            }
-            if (config.delete) {
-                log("crud delete registartion");
-                (0, helper_1.register)(router, types_1.DELETE, path, [
-                    attachCollection,
-                    ...(config.middlewares || []),
-                    ...(config.delete || []),
-                ], helper_1.removeByIdHandler);
-            }
-            if (config.post) {
-                log("crud post registartion");
-                (0, helper_1.register)(router, types_1.POST, path, [
-                    attachCollection,
-                    ...(config.middlewares || []),
-                    ...(config.post || []),
-                ], helper_1.postHandler);
-            }
+        if (config.get) {
+            log("crud get registration");
+            (0, helper_1.register)(router, types_1.GET, `${path}/:id`, [
+                attachCollection,
+                ...(config.middlewares || []),
+                ...(config.get || []),
+            ], helper_1.getByIdHandler);
+            (0, helper_1.register)(router, types_1.GET, path, [
+                attachCollection,
+                ...(config.middlewares || []),
+                ...(config.get || []),
+            ], helper_1.getHandler);
+        }
+        if (config.put) {
+            log("crud put registration");
+            (0, helper_1.register)(router, types_1.PUT, `${path}/:id`, [
+                attachCollection,
+                ...(config.middlewares || []),
+                ...(config.put || []),
+            ], helper_1.putHandler);
+        }
+        if (config.delete) {
+            log("crud delete registration");
+            (0, helper_1.register)(router, types_1.DELETE, path, [
+                attachCollection,
+                ...(config.middlewares || []),
+                ...(config.delete || []),
+            ], helper_1.removeByIdHandler);
+        }
+        if (config.post) {
+            log("crud post registration");
+            (0, helper_1.register)(router, types_1.POST, path, [
+                attachCollection,
+                ...(config.middlewares || []),
+                ...(config.post || []),
+            ], helper_1.postHandler);
         }
     }
     model(name, schema) {
-        log(`model registartion : ${name}`);
+        log(`model registration : ${name}`);
         const models = this.models();
         if (models[name]) {
             return models[name];
@@ -247,11 +251,11 @@ class Febby {
         return mongoose_1.default.models;
     }
     finalMiddlewares(middlewares) {
-        log(`final middlewares registartion`);
+        log(`final middlewares registration`);
         middlewares.forEach((middleware) => this.expressApp.use(middleware));
     }
     finalHandler(middleware) {
-        log(`final handler registartion`);
+        log(`final handler registration`);
         this.expressApp.use(middleware);
     }
     shutdown() {
