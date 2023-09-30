@@ -4,7 +4,7 @@
  */
 /// <reference types="node" />
 import { Router, RouterOptions, Handler } from "express";
-import { IAppConfig, IRouteConfig, ICrudConfig, IFebby } from "./types";
+import { IAppConfig, IRouteConfig, ICrudConfig, IFebby, IOpenApiOptions } from "./types";
 import { Server } from "http";
 import { Model, Document, Schema } from "mongoose";
 export declare class Febby implements IFebby {
@@ -19,6 +19,7 @@ export declare class Febby implements IFebby {
     private connectRedis;
     bootstrap(cb?: Function): void;
     start(): Promise<void>;
+    loadOpenAPIConfigYAML(path: string, options?: IOpenApiOptions): Promise<void>;
     route(routeConfig: IRouteConfig): void;
     routes(list: Array<IRouteConfig>): void;
     middleware(middleware: Handler, router?: Router): void;

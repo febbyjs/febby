@@ -41,6 +41,11 @@ const logActionOnUserCrud = (req, res, next) => {
 
 febby.middleware(logActionOnUserCrud, api);
 
+febby.loadOpenAPIConfigYAML("open-api.yaml", {
+  middlewares: [],
+  controllers: [],
+});
+
 febby.crud(
   "/users",
   {

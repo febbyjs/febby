@@ -4,7 +4,7 @@
  */
 
 import mongoose, { ConnectOptions } from "mongoose";
-import { Router, Handler, RouterOptions } from "express";
+import { Router, Handler, RouterOptions, NextFunction } from "express";
 import { RedisOptions } from "ioredis";
 
 export const GET = "get";
@@ -61,7 +61,7 @@ export interface IAppConfig {
  */
 export interface ICrudConfig {
 	crud: boolean;
-	middlewares?: Handler[];
+	middlewares?: NextFunction[];
 	get?: Handler[];
 	post?: Handler[];
 	put?: Handler[];
@@ -75,7 +75,7 @@ export interface IRouteConfig {
 	router?: Router;
 	method: HttpMethod;
 	path: string;
-	middlewares?: Handler[];
+	middlewares?: NextFunction[];
 	handler: Handler;
 	bodySchema?: any;
 }
@@ -90,15 +90,45 @@ export interface IFebby {
 		name: string,
 		schema: mongoose.Schema
 	): mongoose.Model<mongoose.Document, {}>;
-	finalHandler(middleware: Handler): void;
+	finalHandler(middleware: NextFunction): void;
 	models(): { [index: string]: mongoose.Model<mongoose.Document, {}> };
 	crud(path: string, config: ICrudConfig, model: any, router?: Router): void;
 	router(url: string, router?: Router, options?: RouterOptions): Router;
-	middlewares(middlewares: Handler[], router?: Router): void;
-	middleware(middleware: Handler, router?: Router): void;
+	middlewares(middlewares: NextFunction[], router?: Router): void;
+	middleware(middleware: NextFunction, router?: Router): void;
 	routes(routesConfig: IRouteConfig[]): void;
 	route(routeConfig: IRouteConfig): void;
 	shutdown(): void;
 	closeDbConnection(): void;
 	closeConnection(): void;
+	loadMiddlewares?(middlewares: IMiddleware[]): void;
+	loadOpenAPIConfigYAML(
+		path: string,
+		options?: IOpenApiOptions
+	): Promise<void>;
+}
+/**
+ * IMiddleware interface represent next function and its name, it will be used to config route level middleware.
+ */
+export interface IMiddleware {
+	// function name will be used to map middleware on api level
+	name: string;
+	// middleware function
+	func: NextFunction;
+}
+
+/**
+ * IMiddleware interface represent next function and its name, it will be used to config route level middleware.
+ */
+export interface IController {
+	// function name will be used to map middleware on api level
+	name: string;
+	// middleware function
+	func: NextFunction | Handler;
+}
+
+// openapi yaml file config options
+export interface IOpenApiOptions {
+	middlewares: IMiddleware[];
+	controllers: IController[];
 }

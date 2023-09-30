@@ -23,6 +23,8 @@
   "keywords": [
     "rest",
     "restful",
+    "open-api",
+    "auto generate",
     "configuration",
     "minimalist",
     "microservices",
@@ -41,6 +43,7 @@
     "express": "^4.17.1",
     "helmet": "^5.1.1",
     "ioredis": "^5.2.2",
+    "js-yaml": "^4.1.0",
     "mongoose": "^6.0.7",
     "morgan": "^1.10.0"
   },
@@ -52,6 +55,7 @@
     "@types/helmet": "^4.0.0",
     "@types/ioredis": "^4.27.4",
     "@types/jest": "^28.1.6",
+    "@types/js-yaml": "^4.0.6",
     "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.7.3",

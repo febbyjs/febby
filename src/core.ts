@@ -29,6 +29,7 @@ import {
 	POST,
 	DELETE,
 	IFebby,
+	IOpenApiOptions,
 } from "./types";
 import { createServer, Server } from "http";
 import { debug } from "debug";
@@ -39,6 +40,9 @@ import helmet from "helmet";
 import mongoose, { Model, Document, Schema } from "mongoose";
 import * as Redis from "ioredis";
 import assert from "assert";
+import { existsSync } from "fs";
+import { readFile } from "fs/promises";
+import { parseYAMLFile, processOpenApiSpecFile } from "./openapi";
 
 const log = debug("febby:core");
 
@@ -185,6 +189,28 @@ export class Febby implements IFebby {
 		});
 		log("start end");
 	}
+
+	async loadOpenAPIConfigYAML(
+		path: string,
+		options: IOpenApiOptions = {} as IOpenApiOptions
+	): Promise<void> {
+		log("loadOpenAPIConfigYAML init");
+		if (!existsSync(path)) {
+			log("file not found at " + path);
+			throw new Error("invalid file path - " + path);
+		}
+
+		// read open-api spec file
+		const fileBuffer = await readFile(path, { encoding: "utf-8" });
+
+		// parse YAML to Json
+		const parsedJson = await parseYAMLFile(fileBuffer);
+
+		await processOpenApiSpecFile(parsedJson, this, options);
+
+		log("loadOpenAPIConfigYAML end");
+	}
+
 	/**
 	 * route will register an url with handler and middlewares
 	 * @param routeConfig Route configuration

@@ -3,7 +3,7 @@
  * MIT Licensed
  */
 import mongoose, { ConnectOptions } from "mongoose";
-import { Router, Handler, RouterOptions } from "express";
+import { Router, Handler, RouterOptions, NextFunction } from "express";
 import { RedisOptions } from "ioredis";
 export declare const GET = "get";
 export declare const PUT = "put";
@@ -36,7 +36,7 @@ export interface IAppConfig {
 }
 export interface ICrudConfig {
     crud: boolean;
-    middlewares?: Handler[];
+    middlewares?: NextFunction[];
     get?: Handler[];
     post?: Handler[];
     put?: Handler[];
@@ -46,7 +46,7 @@ export interface IRouteConfig {
     router?: Router;
     method: HttpMethod;
     path: string;
-    middlewares?: Handler[];
+    middlewares?: NextFunction[];
     handler: Handler;
     bodySchema?: any;
 }
@@ -54,17 +54,31 @@ export interface IFebby {
     bootstrap(cb?: Function): void;
     start(): Promise<void>;
     model(name: string, schema: mongoose.Schema): mongoose.Model<mongoose.Document, {}>;
-    finalHandler(middleware: Handler): void;
+    finalHandler(middleware: NextFunction): void;
     models(): {
         [index: string]: mongoose.Model<mongoose.Document, {}>;
     };
     crud(path: string, config: ICrudConfig, model: any, router?: Router): void;
     router(url: string, router?: Router, options?: RouterOptions): Router;
-    middlewares(middlewares: Handler[], router?: Router): void;
-    middleware(middleware: Handler, router?: Router): void;
+    middlewares(middlewares: NextFunction[], router?: Router): void;
+    middleware(middleware: NextFunction, router?: Router): void;
     routes(routesConfig: IRouteConfig[]): void;
     route(routeConfig: IRouteConfig): void;
     shutdown(): void;
     closeDbConnection(): void;
     closeConnection(): void;
+    loadMiddlewares?(middlewares: IMiddleware[]): void;
+    loadOpenAPIConfigYAML(path: string, options?: IOpenApiOptions): Promise<void>;
+}
+export interface IMiddleware {
+    name: string;
+    func: NextFunction;
+}
+export interface IController {
+    name: string;
+    func: NextFunction | Handler;
+}
+export interface IOpenApiOptions {
+    middlewares: IMiddleware[];
+    controllers: IController[];
 }

@@ -43,6 +43,9 @@ const helmet_1 = __importDefault(require("helmet"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Redis = __importStar(require("ioredis"));
 const assert_1 = __importDefault(require("assert"));
+const fs_1 = require("fs");
+const promises_1 = require("fs/promises");
+const openapi_1 = require("./openapi");
 const log = (0, debug_1.debug)("febby:core");
 class Febby {
     constructor(config) {
@@ -122,6 +125,17 @@ class Febby {
             log(`Server started on PORT ${(_a = this.server) === null || _a === void 0 ? void 0 : _a.address()}`);
         });
         log("start end");
+    }
+    async loadOpenAPIConfigYAML(path, options = {}) {
+        log("loadOpenAPIConfigYAML init");
+        if (!(0, fs_1.existsSync)(path)) {
+            log("file not found at " + path);
+            throw new Error("invalid file path - " + path);
+        }
+        const fileBuffer = await (0, promises_1.readFile)(path, { encoding: "utf-8" });
+        const parsedJson = await (0, openapi_1.parseYAMLFile)(fileBuffer);
+        await (0, openapi_1.processOpenApiSpecFile)(parsedJson, this, options);
+        log("loadOpenAPIConfigYAML end");
     }
     route(routeConfig) {
         log("route registration start");
