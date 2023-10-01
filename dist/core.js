@@ -33,7 +33,7 @@ const types_1 = require("./types");
 const http_1 = require("http");
 const debug_1 = require("debug");
 const morgan_1 = __importDefault(require("morgan"));
-const body_parser_1 = __importDefault(require("body-parser"));
+const bodyParser = __importStar(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const mongoose_1 = __importDefault(require("mongoose"));
@@ -59,11 +59,11 @@ class Febby {
             log("app default middlewares init started");
             this.expressApp.use((0, morgan_1.default)(this.appConfig.morgan || "combined"));
             log("express app added morgan logger");
-            this.expressApp.use(body_parser_1.default.urlencoded({
+            this.expressApp.use(bodyParser.urlencoded({
                 extended: false,
             }));
             log("express app added bodyParser");
-            this.expressApp.use(body_parser_1.default.json());
+            this.expressApp.use(bodyParser.json());
             log("express app added bodyParser.json");
             this.expressApp.use((0, helmet_1.default)(this.appConfig.helmet || {}));
             log("express app added helmet");
@@ -133,11 +133,11 @@ class Febby {
         log("app default middlewares init started");
         this.expressApp.use((0, morgan_1.default)(this.appConfig.morgan || "combined"));
         log("express app added morgan logger");
-        this.expressApp.use(body_parser_1.default.urlencoded({
+        this.expressApp.use(bodyParser.urlencoded({
             extended: false,
         }));
         log("express app added bodyParser");
-        this.expressApp.use(body_parser_1.default.json());
+        this.expressApp.use(bodyParser.json());
         log("express app added bodyParser.json");
         this.expressApp.use((0, helmet_1.default)(this.appConfig.helmet || {}));
         log("express app added helmet");

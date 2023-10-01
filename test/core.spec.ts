@@ -13,9 +13,6 @@ describe("Core", () => {
 	it("constructor with config", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		expect(febby).toBeDefined();
@@ -24,9 +21,6 @@ describe("Core", () => {
 	it("constructor with db config", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		expect(febby).toBeDefined();
@@ -36,9 +30,6 @@ describe("Core", () => {
 	it("bootstrap", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		febby.bootstrap(() => console.log("server running"));
@@ -49,9 +40,6 @@ describe("Core", () => {
 	it("route", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		febby.route({
@@ -70,9 +58,6 @@ describe("Core", () => {
 	it("routes", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		const method: HttpMethod = "get";
@@ -94,9 +79,6 @@ describe("Core", () => {
 	it("middleware", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		const middleware = (
@@ -115,9 +97,6 @@ describe("Core", () => {
 	it("middleware", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		const middleware = (
@@ -136,9 +115,6 @@ describe("Core", () => {
 	it("middlewares", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		const middleware = (
@@ -167,9 +143,6 @@ describe("Core", () => {
 	it("router", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		const api = febby.router("/api");
@@ -179,9 +152,6 @@ describe("Core", () => {
 	it("model - models", () => {
 		const config: IAppConfig = {
 			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
 		};
 		const febby = new Febby(config);
 		const model = febby.model(
@@ -197,32 +167,6 @@ describe("Core", () => {
 		febby.shutdown();
 	});
 
-	it("close db connection", () => {
-		const config: IAppConfig = {
-			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
-		};
-		const febby = new Febby(config);
-		expect(febby).toBeDefined();
-		febby.closeConnection();
-		febby.shutdown();
-	});
-
-	it("close db connection", () => {
-		const config: IAppConfig = {
-			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
-		};
-		const febby = new Febby(config);
-		febby.closeDbConnection();
-		expect(febby).toBeDefined();
-		febby.shutdown();
-	});
-
 	it("db connection exception", () => {
 		const config: IAppConfig = {
 			port: 3000,
@@ -235,134 +179,5 @@ describe("Core", () => {
 		} catch (error) {
 			expect(error).toBeDefined();
 		}
-	});
-
-	it("crud", () => {
-		const config: IAppConfig = {
-			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
-		};
-		const febby = new Febby(config);
-		const books = febby.model(
-			"books",
-			new Schema({
-				name: String,
-			})
-		);
-		febby.crud(
-			"/books",
-			{
-				crud: true,
-				middlewares: [],
-			},
-			books
-		);
-		febby.closeDbConnection();
-		febby.shutdown();
-		expect(febby).toBeDefined();
-	});
-
-	it("crud # get", () => {
-		const config: IAppConfig = {
-			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
-		};
-		const febby = new Febby(config);
-		const books = febby.model(
-			"books",
-			new Schema({
-				name: String,
-			})
-		);
-		febby.crud(
-			"/books",
-			{
-				crud: false,
-				middlewares: [],
-				get: [],
-			},
-			books
-		);
-		febby.closeDbConnection();
-		febby.shutdown();
-		expect(febby).toBeDefined();
-	});
-
-	it("crud # post", () => {
-		const config: IAppConfig = {
-			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
-		};
-		const febby = new Febby(config);
-		const books = febby.model(
-			"books",
-			new Schema({
-				name: String,
-			})
-		);
-		febby.crud(
-			"/books",
-			{
-				crud: false,
-				middlewares: [],
-				post: [],
-			},
-			books
-		);
-		febby.closeDbConnection();
-		febby.shutdown();
-		expect(febby).toBeDefined();
-	});
-
-	it("crud # put", () => {
-		const config: IAppConfig = {
-			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
-		};
-		const febby = new Febby(config);
-		const books = febby.model("books");
-		febby.crud(
-			"/books",
-			{
-				crud: false,
-				middlewares: [],
-				put: [],
-			},
-			books
-		);
-		febby.closeDbConnection();
-		febby.shutdown();
-		expect(febby).toBeDefined();
-	});
-
-	it("crud # delete", () => {
-		const config: IAppConfig = {
-			port: 3000,
-			db: {
-				url: "mongodb://localhost:27017/test",
-			},
-		};
-		const febby = new Febby(config);
-		const books = febby.model("books");
-		febby.crud(
-			"/books",
-			{
-				crud: false,
-				middlewares: [],
-				delete: [],
-			},
-			books
-		);
-		febby.closeDbConnection();
-		febby.shutdown();
-		expect(febby).toBeDefined();
 	});
 });

@@ -34,7 +34,7 @@ export type HttpMethod =
  */
 export interface IAppConfig {
 	port: number;
-	db: {
+	db?: {
 		url: string;
 		options?: ConnectOptions;
 	};

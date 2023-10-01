@@ -17,7 +17,7 @@ export type PathParams = string | RegExp | Array<string | RegExp>;
 export type HttpMethod = "get" | "put" | "post" | "delete" | "patch" | "head" | "options";
 export interface IAppConfig {
     port: number;
-    db: {
+    db?: {
         url: string;
         options?: ConnectOptions;
     };
