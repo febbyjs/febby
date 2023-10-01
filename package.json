@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "start": "./node_modules/.bin/tsc",
-    "test": "./node_modules/.bin/jest --updateSnapshot",
-    "test:coverage": "./node_modules/.bin/jest --coverage",
+    "test": "jest --updateSnapshot",
+    "test:coverage": "jest --coverage",
     "docs": "./node_modules/.bin/typedoc",
     "build": "./node_modules/.bin/tsc",
     "build:local": "npm test && npm start && npm run docs"
