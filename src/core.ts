@@ -29,7 +29,7 @@ import {
 import { createServer, Server } from "http";
 import { debug } from "debug";
 import morgan from "morgan";
-import bodyParser from "body-parser";
+import * as bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import mongoose, { Model, Document, Schema } from "mongoose";
