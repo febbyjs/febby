@@ -1,9 +1,5 @@
-/*!
- * Copyright(c) 2018-2022 Vasu Vanka
- * MIT Licensed
- */
 import mongoose, { ConnectOptions } from "mongoose";
-import { Router, Handler, RouterOptions, NextFunction } from "express";
+import express, { Router, Handler, RouterOptions, NextFunction } from "express";
 import { RedisOptions } from "ioredis";
 export declare const GET = "get";
 export declare const PUT = "put";
@@ -11,6 +7,8 @@ export declare const POST = "post";
 export declare const DELETE = "delete";
 export declare const PATCH = "patch";
 export declare const appBaseUrl = "/";
+export declare const XCONTROLLER = "x-controller";
+export declare const XMIDDLEWARES = "x-middlewares";
 export declare const BAD_REQUEST = 400;
 export declare const INTERNAL_SERVER_ERROR = 500;
 export declare const OK = 200;
@@ -23,6 +21,7 @@ export interface IAppConfig {
         url: string;
         options?: ConnectOptions;
     };
+    loadDefaultMiddlewareOnAppCreation?: boolean;
     serviceName?: string;
     hostname?: string;
     version?: string;
@@ -33,10 +32,11 @@ export interface IAppConfig {
     helmet?: any;
     morgan?: string;
     redis?: RedisOptions;
+    app?: express.Express;
 }
 export interface ICrudConfig {
     crud: boolean;
-    middlewares?: NextFunction[];
+    middlewares?: Handler[];
     get?: Handler[];
     post?: Handler[];
     put?: Handler[];
@@ -46,7 +46,7 @@ export interface IRouteConfig {
     router?: Router;
     method: HttpMethod;
     path: string;
-    middlewares?: NextFunction[];
+    middlewares?: Handler[];
     handler: Handler;
     bodySchema?: any;
 }
@@ -67,18 +67,22 @@ export interface IFebby {
     shutdown(): void;
     closeDbConnection(): void;
     closeConnection(): void;
-    loadMiddlewares?(middlewares: IMiddleware[]): void;
     loadOpenAPIConfigYAML(path: string, options?: IOpenApiOptions): Promise<void>;
+    loadDefaultMiddlewares(): Promise<void>;
 }
 export interface IMiddleware {
     name: string;
-    func: NextFunction;
+    func: Handler;
 }
-export interface IController {
-    name: string;
-    func: NextFunction | Handler;
+export interface IController extends IMiddleware {
+}
+export interface IOpenApiValidatorOptions {
+    validateApiSpec?: boolean;
+    validateResponses?: boolean;
+    validateRequests?: boolean;
 }
 export interface IOpenApiOptions {
     middlewares: IMiddleware[];
     controllers: IController[];
+    openApiValidatorOptions: IOpenApiValidatorOptions;
 }

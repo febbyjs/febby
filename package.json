@@ -31,7 +31,7 @@
     "node.js framework"
   ],
   "author": "Vasu Vanka <vanka.vasu@gmail.com>",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/febbyjs/febby/issues"
   },
@@ -41,6 +41,7 @@
     "cors": "^2.8.5",
     "debug": "^4.3.2",
     "express": "^4.17.1",
+    "express-openapi-validator": "^5.0.6",
     "helmet": "^5.1.1",
     "ioredis": "^5.2.2",
     "js-yaml": "^4.1.0",
@@ -64,5 +65,8 @@
     "ts-node": "^10.2.1",
     "typedoc": "^0.23.10",
     "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }

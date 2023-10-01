@@ -1,8 +1,3 @@
-/*!
- * Copyright(c) 2018-2023 Vasu Vanka < vanka.vasu@gmail.com>
- * MIT Licensed
- */
-
 import express, {
 	Router,
 	NextFunction,
@@ -47,12 +42,12 @@ import { parseYAMLFile, processOpenApiSpecFile } from "./openapi";
 const log = debug("febby:core");
 
 /**
- * Creates febby application instance.
  * Febby implements [[IFebby]] interface
  */
 export class Febby implements IFebby {
 	// instance will hold febby object
 	private static instance: Febby;
+
 	// expressApp holds express application object
 	expressApp = express();
 
@@ -63,7 +58,7 @@ export class Febby implements IFebby {
 
 	private redis: Redis.Redis;
 	/**
-	 * @param config Application configuration
+	 * @param {IAppConfig} config - Febby application configuration
 	 */
 	constructor(config: IAppConfig) {
 		log("Febby init started");
@@ -72,27 +67,40 @@ export class Febby implements IFebby {
 		}
 		this.appConfig = validateAppConfig(config);
 
-		log("app default middlewares init started");
-		this.expressApp.use(morgan(this.appConfig.morgan || "combined"));
-		log("express app added morgan logger");
-		this.expressApp.use(
-			bodyParser.urlencoded({
-				extended: false,
-			})
-		);
-		log("express app added bodyParser");
-		this.expressApp.use(bodyParser.json());
-		log("express app added bodyParser.json");
-		this.expressApp.use(helmet(this.appConfig.helmet || {}));
-		log("express app added helmet");
-		this.expressApp.use(cors(this.appConfig.cors || {}));
-		log("express app added cors");
+		/**
+		 * if express app provided explicitly then use it else use created one.
+		 */
+		if (config.app) {
+			this.expressApp = config.app;
+		}
+
+		if (this.appConfig.loadDefaultMiddlewareOnAppCreation) {
+			log("app default middlewares init started");
+			this.expressApp.use(morgan(this.appConfig.morgan || "combined"));
+			log("express app added morgan logger");
+			this.expressApp.use(
+				bodyParser.urlencoded({
+					extended: false,
+				})
+			);
+			log("express app added bodyParser");
+			this.expressApp.use(bodyParser.json());
+			log("express app added bodyParser.json");
+			this.expressApp.use(helmet(this.appConfig.helmet || {}));
+			log("express app added helmet");
+			this.expressApp.use(cors(this.appConfig.cors || {}));
+			log("express app added cors");
+		}
+
 		log("app main router created");
 		this.expressApp.use(this.appConfig.appBaseUrl!, this.mainRouter);
-		log("final middlewares");
+
 		log("app main router set");
 		Febby.instance = this;
-		this.connectDatabase();
+
+		if (this.appConfig.db) {
+			this.connectDatabase();
+		}
 		if (this.appConfig.redis) {
 			this.connectRedis();
 		}
@@ -123,6 +131,7 @@ export class Febby implements IFebby {
 			"mongodb url - db.url should be defined"
 		);
 
+		mongoose.set("strictQuery", true);
 		await mongoose.connect(this.appConfig.db.url, options);
 		log("db connection created");
 	}
@@ -152,9 +161,7 @@ export class Febby implements IFebby {
 	}
 	/**
 	 * @deprecated - bootstrap will be deprecated in favor of start method for better async usability
-	 * bootstrap will start the application
-	 * @param cb Callback function which will execute after application bootstrap
-	 * @returns None
+	 * @param {function} cb - Callback function which will execute after application bootstrap
 	 */
 	bootstrap(cb?: Function): void {
 		log("bootstrap init");
@@ -175,9 +182,7 @@ export class Febby implements IFebby {
 	}
 
 	/**
-	 * start will start the application
-	 * @param cb Callback function which will execute after application bootstrap
-	 * @returns None
+	 * start - will start/bootstrap the application
 	 */
 	async start(): Promise<void> {
 		log("start init");
@@ -190,6 +195,32 @@ export class Febby implements IFebby {
 		log("start end");
 	}
 
+	/**
+	 * loadDefaultMiddlewares - morgan,body-parser,helmet and cors will load as default middlewares for your express app.
+	 */
+	async loadDefaultMiddlewares(): Promise<void> {
+		log("app default middlewares init started");
+		this.expressApp.use(morgan(this.appConfig.morgan || "combined"));
+		log("express app added morgan logger");
+		this.expressApp.use(
+			bodyParser.urlencoded({
+				extended: false,
+			})
+		);
+		log("express app added bodyParser");
+		this.expressApp.use(bodyParser.json());
+		log("express app added bodyParser.json");
+		this.expressApp.use(helmet(this.appConfig.helmet || {}));
+		log("express app added helmet");
+		this.expressApp.use(cors(this.appConfig.cors || {}));
+		log("express app added cors");
+	}
+
+	/**
+	 * loadOpenAPIConfigYAML - Will be used when you want to create your app using open-api specification YAML file.
+	 * @param {string} path - path to open-api YAML spec file
+	 * @param {IOpenApiOptions} options - Options hold all controller,middleware definitions and validation config
+	 */
 	async loadOpenAPIConfigYAML(
 		path: string,
 		options: IOpenApiOptions = {} as IOpenApiOptions
@@ -197,7 +228,9 @@ export class Febby implements IFebby {
 		log("loadOpenAPIConfigYAML init");
 		if (!existsSync(path)) {
 			log("file not found at " + path);
-			throw new Error("invalid file path - " + path);
+			throw new Error(
+				`invalid file path to load openApi YAML file at "${path}"`
+			);
 		}
 
 		// read open-api spec file
@@ -206,15 +239,25 @@ export class Febby implements IFebby {
 		// parse YAML to Json
 		const parsedJson = await parseYAMLFile(fileBuffer);
 
-		await processOpenApiSpecFile(parsedJson, this, options);
+		const { pathnames, router } = await processOpenApiSpecFile(
+			parsedJson,
+			options
+		);
+
+		log(
+			`base paths registered on server for OpenApi is ${pathnames.join(
+				","
+			)}`
+		);
+
+		this.expressApp.use(pathnames, router);
 
 		log("loadOpenAPIConfigYAML end");
 	}
 
 	/**
 	 * route will register an url with handler and middlewares
-	 * @param routeConfig Route configuration
-	 * @returns None
+	 * @param {IRouteConfig} routeConfig - Route configuration
 	 */
 	route(routeConfig: IRouteConfig): void {
 		log("route registration start");
@@ -232,8 +275,7 @@ export class Febby implements IFebby {
 	/**
 	 * @deprecated - rarely used and can be achieved
 	 * routes will register list of route configs.
-	 * @param routesConfig[] Routes will be list of route config objects
-	 * @returns None
+	 * @param {Array<IRouteConfig>} list - Routes will be list of route config objects
 	 */
 	routes(list: Array<IRouteConfig>): void {
 		log("routes registration start");
@@ -254,9 +296,8 @@ export class Febby implements IFebby {
 	}
 	/**
 	 * middleware will register a middleware function to the specified route
-	 * @param middleware Middleware function
-	 * @param router Router object
-	 * @returns None
+	 * @param {Handler} middleware - Middleware function
+	 * @param {Router} router - router
 	 */
 	middleware(middleware: Handler, router: Router = this.mainRouter): void {
 		log("middleware registration start");
@@ -268,9 +309,8 @@ export class Febby implements IFebby {
 	/**
 	 * @deprecated - will be removed from next version onwards
 	 * middlewares will register list of middleware functions
-	 * @param middlewares[] list of middleware functions
-	 * @param router Router object
-	 * @returns None
+	 * @param {Array<Handler>} list - list of middleware functions
+	 * @param {Router} router - router
 	 */
 	middlewares(list: Handler[], router: Router = this.mainRouter): void {
 		log("middlewares registration start");
@@ -293,10 +333,10 @@ export class Febby implements IFebby {
 
 	/**
 	 * router will creates router object
-	 * @param url Url
-	 * @param router Router object
-	 * @param options Router object options
-	 * @returns Router
+	 * @param {string} url - router base URL
+	 * @param {Router} router - parent router object
+	 * @param {RouterOptions} options - router options
+	 * @returns {Router} - Router instance
 	 */
 	router(url: string, router?: Router, options?: RouterOptions): Router {
 		log("router registration start");
@@ -309,11 +349,10 @@ export class Febby implements IFebby {
 	}
 	/**
 	 * crud will create create,update,get and delete operations on model
-	 * @param path Url
-	 * @param config Crud operation configuration
-	 * @param model Model object
-	 * @param router Router object
-	 * @returns None
+	 * @param {string} path Url
+	 * @param {ICrudConfig} config Crud operation configuration
+	 * @param {Model<Document, {}>} model Model object
+	 * @param {Router} router Router object
 	 */
 	crud(
 		path: string = "/",
@@ -472,9 +511,9 @@ export class Febby implements IFebby {
 
 	/**
 	 * model will register and creates mongoose model instance if not exist
-	 * @param name Model name
-	 * @param schema Model schema
-	 * @returns Model<Document & any>
+	 * @param {string} name Model name
+	 * @param {Schema} schema Model schema
+	 * @returns {Model<Document & any>}
 	 */
 	model(name: string, schema?: Schema): Model<Document & any> {
 		log(`model registration : ${name}`);
@@ -497,10 +536,9 @@ export class Febby implements IFebby {
 	/**
 	 * @deprecated - use case is very rare so deprecating it
 	 * finalMiddlewares will register all final middleware function
-	 * @param middlewares Middleware functions
-	 * @returns None
+	 * @param {Array<NextFunction>} middlewares Middleware functions
 	 */
-	finalMiddlewares(middlewares: Handler[]): void {
+	finalMiddlewares(middlewares: NextFunction[]): void {
 		log(`final middlewares registration`);
 		middlewares.forEach((middleware) => this.expressApp.use(middleware));
 	}
@@ -508,10 +546,9 @@ export class Febby implements IFebby {
 	/**
 	 * @deprecated - use case is very rare so deprecating it
 	 * finalHandler will register final middleware function
-	 * @param middleware Middleware function
-	 * @returns None
+	 * @param {NextFunction} middleware Middleware function
 	 */
-	finalHandler(middleware: Handler): void {
+	finalHandler(middleware: NextFunction): void {
 		log(`final handler registration`);
 		this.expressApp.use(middleware);
 	}
@@ -519,7 +556,6 @@ export class Febby implements IFebby {
 	/**
 	 * @deprecated - use case is very rare so deprecating it
 	 * shutdown will close the application
-	 * @returns None
 	 */
 	shutdown(): void {
 		log(`application shutdown`);
@@ -529,7 +565,6 @@ export class Febby implements IFebby {
 	/**
 	 * @deprecated - use case is very rare so deprecating it
 	 * closeConnection will close database connection
-	 * @returns None
 	 */
 	closeConnection(): void {
 		log(`closing database connection`);
@@ -539,12 +574,9 @@ export class Febby implements IFebby {
 	/**
 	 * @deprecated - use case is very rare so deprecating it
 	 * closeDbConnection will close database connection
-	 * @returns None
 	 */
 	closeDbConnection(): void {
 		log(`closing database connection`);
 		mongoose.connection.close();
 	}
 }
-
-export default Febby;

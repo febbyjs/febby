@@ -1,10 +1,5 @@
-/*!
- * Copyright(c) 2018-2022 Vasu Vanka
- * MIT Licensed
- */
-
 import mongoose, { ConnectOptions } from "mongoose";
-import { Router, Handler, RouterOptions, NextFunction } from "express";
+import express, { Router, Handler, RouterOptions, NextFunction } from "express";
 import { RedisOptions } from "ioredis";
 
 export const GET = "get";
@@ -13,6 +8,8 @@ export const POST = "post";
 export const DELETE = "delete";
 export const PATCH = "patch";
 export const appBaseUrl = "/";
+export const XCONTROLLER = "x-controller";
+export const XMIDDLEWARES = "x-middlewares";
 
 export const BAD_REQUEST = 400;
 export const INTERNAL_SERVER_ERROR = 500;
@@ -41,6 +38,7 @@ export interface IAppConfig {
 		url: string;
 		options?: ConnectOptions;
 	};
+	loadDefaultMiddlewareOnAppCreation?: boolean;
 	/**
 	 * serviceName - will be used to identify service with given name and used across app
 	 */
@@ -54,6 +52,7 @@ export interface IAppConfig {
 	helmet?: any;
 	morgan?: string;
 	redis?: RedisOptions;
+	app?: express.Express;
 }
 
 /**
@@ -61,7 +60,7 @@ export interface IAppConfig {
  */
 export interface ICrudConfig {
 	crud: boolean;
-	middlewares?: NextFunction[];
+	middlewares?: Handler[];
 	get?: Handler[];
 	post?: Handler[];
 	put?: Handler[];
@@ -75,13 +74,13 @@ export interface IRouteConfig {
 	router?: Router;
 	method: HttpMethod;
 	path: string;
-	middlewares?: NextFunction[];
+	middlewares?: Handler[];
 	handler: Handler;
 	bodySchema?: any;
 }
 
 /**
- * IFebby interface implements all required features to support faster application development
+ * Used for [[Febby]] constructor
  */
 export interface IFebby {
 	bootstrap(cb?: Function): void;
@@ -101,11 +100,11 @@ export interface IFebby {
 	shutdown(): void;
 	closeDbConnection(): void;
 	closeConnection(): void;
-	loadMiddlewares?(middlewares: IMiddleware[]): void;
 	loadOpenAPIConfigYAML(
 		path: string,
 		options?: IOpenApiOptions
 	): Promise<void>;
+	loadDefaultMiddlewares(): Promise<void>;
 }
 /**
  * IMiddleware interface represent next function and its name, it will be used to config route level middleware.
@@ -114,21 +113,23 @@ export interface IMiddleware {
 	// function name will be used to map middleware on api level
 	name: string;
 	// middleware function
-	func: NextFunction;
+	func: Handler;
 }
 
 /**
  * IMiddleware interface represent next function and its name, it will be used to config route level middleware.
  */
-export interface IController {
-	// function name will be used to map middleware on api level
-	name: string;
-	// middleware function
-	func: NextFunction | Handler;
+export interface IController extends IMiddleware {}
+
+export interface IOpenApiValidatorOptions {
+	validateApiSpec?: boolean;
+	validateResponses?: boolean;
+	validateRequests?: boolean;
 }
 
 // openapi yaml file config options
 export interface IOpenApiOptions {
 	middlewares: IMiddleware[];
 	controllers: IController[];
+	openApiValidatorOptions: IOpenApiValidatorOptions;
 }
