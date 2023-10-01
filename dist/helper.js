@@ -1,8 +1,4 @@
 "use strict";
-/*!
- * Copyright(c) 2018-2022 Vasu Vanka
- * MIT Licensed
- */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -39,6 +35,10 @@ function validateAppConfig(config) {
     (0, assert_1.default)(config !== undefined, "config should be provided");
     config.appBaseUrl = config.appBaseUrl || types_1.appBaseUrl;
     config.serviceName = config.serviceName || "febby";
+    config.loadDefaultMiddlewareOnAppCreation =
+        config.loadDefaultMiddlewareOnAppCreation === undefined
+            ? true
+            : config.loadDefaultMiddlewareOnAppCreation;
     return config;
 }
 exports.validateAppConfig = validateAppConfig;

@@ -1,8 +1,4 @@
 "use strict";
-/*!
- * Copyright(c) 2018-2023 Vasu Vanka < vanka.vasu@gmail.com>
- * MIT Licensed
- */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -37,12 +33,15 @@ const types_1 = require("./types");
 const http_1 = require("http");
 const debug_1 = require("debug");
 const morgan_1 = __importDefault(require("morgan"));
-const body_parser_1 = __importDefault(require("body-parser"));
+const bodyParser = __importStar(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Redis = __importStar(require("ioredis"));
 const assert_1 = __importDefault(require("assert"));
+const fs_1 = require("fs");
+const promises_1 = require("fs/promises");
+const openapi_1 = require("./openapi");
 const log = (0, debug_1.debug)("febby:core");
 class Febby {
     constructor(config) {
@@ -53,25 +52,31 @@ class Febby {
             return Febby.instance;
         }
         this.appConfig = (0, helper_1.validateAppConfig)(config);
-        log("app default middlewares init started");
-        this.expressApp.use((0, morgan_1.default)(this.appConfig.morgan || "combined"));
-        log("express app added morgan logger");
-        this.expressApp.use(body_parser_1.default.urlencoded({
-            extended: false,
-        }));
-        log("express app added bodyParser");
-        this.expressApp.use(body_parser_1.default.json());
-        log("express app added bodyParser.json");
-        this.expressApp.use((0, helmet_1.default)(this.appConfig.helmet || {}));
-        log("express app added helmet");
-        this.expressApp.use((0, cors_1.default)(this.appConfig.cors || {}));
-        log("express app added cors");
+        if (config.app) {
+            this.expressApp = config.app;
+        }
+        if (this.appConfig.loadDefaultMiddlewareOnAppCreation) {
+            log("app default middlewares init started");
+            this.expressApp.use((0, morgan_1.default)(this.appConfig.morgan || "combined"));
+            log("express app added morgan logger");
+            this.expressApp.use(bodyParser.urlencoded({
+                extended: false,
+            }));
+            log("express app added bodyParser");
+            this.expressApp.use(bodyParser.json());
+            log("express app added bodyParser.json");
+            this.expressApp.use((0, helmet_1.default)(this.appConfig.helmet || {}));
+            log("express app added helmet");
+            this.expressApp.use((0, cors_1.default)(this.appConfig.cors || {}));
+            log("express app added cors");
+        }
         log("app main router created");
         this.expressApp.use(this.appConfig.appBaseUrl, this.mainRouter);
-        log("final middlewares");
         log("app main router set");
         Febby.instance = this;
-        this.connectDatabase();
+        if (this.appConfig.db) {
+            this.connectDatabase();
+        }
         if (this.appConfig.redis) {
             this.connectRedis();
         }
@@ -85,6 +90,7 @@ class Febby {
             useNewUrlParser: true,
         }, (_a = this.appConfig.db) === null || _a === void 0 ? void 0 : _a.options);
         (0, assert_1.default)(this.appConfig.db.url !== undefined, "mongodb url - db.url should be defined");
+        mongoose_1.default.set("strictQuery", true);
         await mongoose_1.default.connect(this.appConfig.db.url, options);
         log("db connection created");
     }
@@ -122,6 +128,34 @@ class Febby {
             log(`Server started on PORT ${(_a = this.server) === null || _a === void 0 ? void 0 : _a.address()}`);
         });
         log("start end");
+    }
+    async loadDefaultMiddlewares() {
+        log("app default middlewares init started");
+        this.expressApp.use((0, morgan_1.default)(this.appConfig.morgan || "combined"));
+        log("express app added morgan logger");
+        this.expressApp.use(bodyParser.urlencoded({
+            extended: false,
+        }));
+        log("express app added bodyParser");
+        this.expressApp.use(bodyParser.json());
+        log("express app added bodyParser.json");
+        this.expressApp.use((0, helmet_1.default)(this.appConfig.helmet || {}));
+        log("express app added helmet");
+        this.expressApp.use((0, cors_1.default)(this.appConfig.cors || {}));
+        log("express app added cors");
+    }
+    async loadOpenAPIConfigYAML(path, options = {}) {
+        log("loadOpenAPIConfigYAML init");
+        if (!(0, fs_1.existsSync)(path)) {
+            log("file not found at " + path);
+            throw new Error(`invalid file path to load openApi YAML file at "${path}"`);
+        }
+        const fileBuffer = await (0, promises_1.readFile)(path, { encoding: "utf-8" });
+        const parsedJson = await (0, openapi_1.parseYAMLFile)(fileBuffer);
+        const { pathnames, router } = await (0, openapi_1.processOpenApiSpecFile)(parsedJson, options);
+        log(`base paths registered on server for OpenApi is ${pathnames.join(",")}`);
+        this.expressApp.use(pathnames, router);
+        log("loadOpenAPIConfigYAML end");
     }
     route(routeConfig) {
         log("route registration start");
@@ -273,5 +307,4 @@ class Febby {
     }
 }
 exports.Febby = Febby;
-exports.default = Febby;
 //# sourceMappingURL=core.js.map

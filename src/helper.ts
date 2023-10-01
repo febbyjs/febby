@@ -1,8 +1,3 @@
-/*!
- * Copyright(c) 2018-2022 Vasu Vanka
- * MIT Licensed
- */
-
 import { IAppConfig, appBaseUrl, HttpMethod, OK, CREATED } from "./types";
 import { NextFunction, Handler, Request, Response, Router } from "express";
 import * as debug from "debug";
@@ -11,27 +6,39 @@ import assert from "assert";
 const log = debug.debug("febby:helper");
 /**
  * @private
- * @param config Validates application configuration
+ * @param {IAppConfig} config Validates application configuration
  */
 export function validateAppConfig(config: IAppConfig): IAppConfig {
 	assert(config !== undefined, "config should be provided");
 
 	config.appBaseUrl = config.appBaseUrl || appBaseUrl;
 	config.serviceName = config.serviceName || "febby";
+	config.loadDefaultMiddlewareOnAppCreation =
+		config.loadDefaultMiddlewareOnAppCreation === undefined
+			? true
+			: config.loadDefaultMiddlewareOnAppCreation;
 	return config;
 }
 
+/**
+ * buildRedisKey - build redis key using prebuilt structure as 'user_app.getUser.<user_id>'
+ * @param {string} serviceName - service name
+ * @param {string} functionName - function name
+ * @param {string} key - key
+ * @returns {string}
+ */
 function buildRedisKey(serviceName: string, functionName: string, key: string) {
 	return `${serviceName}.${functionName}.${key}`;
 }
+
 /**
  * @private
  * Route Registration
- * @param router Application Router
- * @param method Http methgod
- * @param path Url path
- * @param middlewares Middleware functions
- * @param handler request handler
+ * @param {Router} router Application Router
+ * @param {HttpMethod} method Http methgod
+ * @param {string} path Url path
+ * @param {Array<Handler>} middlewares Middleware functions
+ * @param {Handler} handler request handler
  */
 export function register(
 	router: Router,
@@ -55,9 +62,9 @@ export function register(
 
 /**
  * getByIdHandler - Get document by id, supports projection now. just pass projection in query params. ex: projection=name+mobile+email
- * @param req Request
- * @param res Response
- * @param next NextFunction
+ * @param {Request} req Request
+ * @param {Response} res Response
+ * @param {NextFunction} next NextFunction
  */
 export async function getByIdHandler(
 	req: Request,
@@ -133,9 +140,9 @@ export async function getByIdHandler(
 
 /**
  * removeByIdHandler - Remove document by id
- * @param req Request
- * @param res Response
- * @param next NextFunction
+ * @param {Request} req Request
+ * @param {Response} res Response
+ * @param {NextFunction} next NextFunction
  */
 export async function removeByIdHandler(
 	req: Request,
@@ -180,9 +187,9 @@ export async function removeByIdHandler(
 
 /**
  * postHandler - Creates Document
- * @param req Request
- * @param res Response
- * @param next NextFunction
+ * @param {Request} req Request
+ * @param {Response} res Response
+ * @param {NextFunction} next NextFunction
  */
 export async function postHandler(
 	req: Request,
@@ -224,9 +231,9 @@ export async function postHandler(
 
 /**
  * putHandler - Updates Document
- * @param req Request
- * @param res Response
- * @param next NextFunction
+ * @param {Request} req Request
+ * @param {Response} res Response
+ * @param {NextFunction} next NextFunction
  */
 export async function putHandler(
 	req: Request,
@@ -287,9 +294,9 @@ export async function putHandler(
 
 /**
  * getHandler - Get Documents, supports projection , skip and limit. skip defaulted to 0 and limit defaulted to 10
- * @param req Request
- * @param res Response
- * @param next NextFunction
+ * @param {Request} req Request
+ * @param {Response} res Response
+ * @param {NextFunction} next NextFunction
  */
 export async function getHandler(
 	req: Request,
@@ -327,7 +334,8 @@ export async function getHandler(
 
 /**
  * buildProjection - builds Projection
- * @param projection projection string represents fields with + .Example : 'first_name+last_name+email'
+ * @param {string} projection projection string represents fields with + .Example : 'first_name+last_name+email'
+ * @returns {string}
  */
 export function buildProjection(projection: string = ""): string {
 	return projection.replace("+", " ");

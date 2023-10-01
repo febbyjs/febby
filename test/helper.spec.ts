@@ -66,7 +66,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -92,7 +91,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -121,7 +119,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -150,7 +147,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -200,7 +196,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -228,7 +223,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -256,7 +250,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -282,7 +275,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {
@@ -308,7 +300,6 @@ describe("Helper", () => {
 			},
 			febby: new Febby({
 				port: 5000,
-				db: { url: "mongodb://localhost:27017/test" },
 			}),
 		};
 		const res = {

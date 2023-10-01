@@ -1,10 +1,6 @@
-/*!
- * Copyright(c) 2018-2023 Vasu Vanka < vanka.vasu@gmail.com>
- * MIT Licensed
- */
 /// <reference types="node" />
-import { Router, RouterOptions, Handler } from "express";
-import { IAppConfig, IRouteConfig, ICrudConfig, IFebby } from "./types";
+import { Router, NextFunction, RouterOptions, Handler } from "express";
+import { IAppConfig, IRouteConfig, ICrudConfig, IFebby, IOpenApiOptions } from "./types";
 import { Server } from "http";
 import { Model, Document, Schema } from "mongoose";
 export declare class Febby implements IFebby {
@@ -19,6 +15,8 @@ export declare class Febby implements IFebby {
     private connectRedis;
     bootstrap(cb?: Function): void;
     start(): Promise<void>;
+    loadDefaultMiddlewares(): Promise<void>;
+    loadOpenAPIConfigYAML(path: string, options?: IOpenApiOptions): Promise<void>;
     route(routeConfig: IRouteConfig): void;
     routes(list: Array<IRouteConfig>): void;
     middleware(middleware: Handler, router?: Router): void;
@@ -29,10 +27,9 @@ export declare class Febby implements IFebby {
     models(): {
         [index: string]: Model<Document & any>;
     };
-    finalMiddlewares(middlewares: Handler[]): void;
-    finalHandler(middleware: Handler): void;
+    finalMiddlewares(middlewares: NextFunction[]): void;
+    finalHandler(middleware: NextFunction): void;
     shutdown(): void;
     closeConnection(): void;
     closeDbConnection(): void;
 }
-export default Febby;

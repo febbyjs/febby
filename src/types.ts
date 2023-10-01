@@ -1,10 +1,5 @@
-/*!
- * Copyright(c) 2018-2022 Vasu Vanka
- * MIT Licensed
- */
-
 import mongoose, { ConnectOptions } from "mongoose";
-import { Router, Handler, RouterOptions } from "express";
+import express, { Router, Handler, RouterOptions, NextFunction } from "express";
 import { RedisOptions } from "ioredis";
 
 export const GET = "get";
@@ -13,6 +8,8 @@ export const POST = "post";
 export const DELETE = "delete";
 export const PATCH = "patch";
 export const appBaseUrl = "/";
+export const XCONTROLLER = "x-controller";
+export const XMIDDLEWARES = "x-middlewares";
 
 export const BAD_REQUEST = 400;
 export const INTERNAL_SERVER_ERROR = 500;
@@ -37,10 +34,11 @@ export type HttpMethod =
  */
 export interface IAppConfig {
 	port: number;
-	db: {
+	db?: {
 		url: string;
 		options?: ConnectOptions;
 	};
+	loadDefaultMiddlewareOnAppCreation?: boolean;
 	/**
 	 * serviceName - will be used to identify service with given name and used across app
 	 */
@@ -54,6 +52,7 @@ export interface IAppConfig {
 	helmet?: any;
 	morgan?: string;
 	redis?: RedisOptions;
+	app?: express.Express;
 }
 
 /**
@@ -81,7 +80,7 @@ export interface IRouteConfig {
 }
 
 /**
- * IFebby interface implements all required features to support faster application development
+ * Used for [[Febby]] constructor
  */
 export interface IFebby {
 	bootstrap(cb?: Function): void;
@@ -90,15 +89,47 @@ export interface IFebby {
 		name: string,
 		schema: mongoose.Schema
 	): mongoose.Model<mongoose.Document, {}>;
-	finalHandler(middleware: Handler): void;
+	finalHandler(middleware: NextFunction): void;
 	models(): { [index: string]: mongoose.Model<mongoose.Document, {}> };
 	crud(path: string, config: ICrudConfig, model: any, router?: Router): void;
 	router(url: string, router?: Router, options?: RouterOptions): Router;
-	middlewares(middlewares: Handler[], router?: Router): void;
-	middleware(middleware: Handler, router?: Router): void;
+	middlewares(middlewares: NextFunction[], router?: Router): void;
+	middleware(middleware: NextFunction, router?: Router): void;
 	routes(routesConfig: IRouteConfig[]): void;
 	route(routeConfig: IRouteConfig): void;
 	shutdown(): void;
 	closeDbConnection(): void;
 	closeConnection(): void;
+	loadOpenAPIConfigYAML(
+		path: string,
+		options?: IOpenApiOptions
+	): Promise<void>;
+	loadDefaultMiddlewares(): Promise<void>;
+}
+/**
+ * IMiddleware interface represent next function and its name, it will be used to config route level middleware.
+ */
+export interface IMiddleware {
+	// function name will be used to map middleware on api level
+	name: string;
+	// middleware function
+	func: Handler;
+}
+
+/**
+ * IMiddleware interface represent next function and its name, it will be used to config route level middleware.
+ */
+export interface IController extends IMiddleware {}
+
+export interface IOpenApiValidatorOptions {
+	validateApiSpec?: boolean;
+	validateResponses?: boolean;
+	validateRequests?: boolean;
+}
+
+// openapi yaml file config options
+export interface IOpenApiOptions {
+	middlewares: IMiddleware[];
+	controllers: IController[];
+	openApiValidatorOptions: IOpenApiValidatorOptions;
 }
