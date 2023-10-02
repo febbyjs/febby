@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "start": "./node_modules/.bin/tsc",
-    "test": "jest --updateSnapshot",
+    "test": "./node_modules/.bin/jest --updateSnapshot",
     "test:coverage": "jest --coverage",
     "docs": "./node_modules/.bin/typedoc",
     "build": "./node_modules/.bin/tsc",
