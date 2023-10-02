@@ -16,6 +16,9 @@ Install febby with npm
 [Febby API Documentation](https://febbyjs.github.io/febby)
 
 
+## Example
+[Simple Febby App](https://github.com/febbyjs/febby/blob/master/example/app.js)
+
 ## Appendix
 
 - [Installation](#installation)
