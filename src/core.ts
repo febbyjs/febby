@@ -33,11 +33,11 @@ import * as bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import mongoose, { Model, Document, Schema } from "mongoose";
-import * as Redis from "ioredis";
 import assert from "assert";
 import { existsSync } from "fs";
 import { readFile } from "fs/promises";
 import { parseYAMLFile, processOpenApiSpecFile } from "./openapi";
+import { Redis, RedisOptions } from "ioredis";
 
 const log = debug("febby:core");
 
@@ -48,17 +48,17 @@ const log = debug("febby:core");
  */
 export class Febby implements IFebby {
 	// instance will hold febby object
-	private static instance: Febby;
+	protected static instance: Febby;
 
 	// expressApp holds express application object
 	expressApp = express();
 
-	private appConfig: IAppConfig;
+	protected appConfig: IAppConfig;
 	// server - express server object
 	server: Server;
-	private mainRouter = Router();
+	protected mainRouter = Router();
 
-	private redis: Redis.Redis;
+	protected redis: Redis;
 	/**
 	 * Creates an instance of the Febby class.
 	 * @param {IAppConfig} config - The application configuration.
@@ -85,12 +85,14 @@ export class Febby implements IFebby {
 		log("app main router set");
 		Febby.instance = this;
 
-		if (this.appConfig.db) {
-			this.connectDatabase();
-		}
-		if (this.appConfig.redis) {
-			this.connectRedis();
-		}
+		(async () => {
+			if (this.appConfig.db) {
+				await this.connectDatabase();
+			}
+			if (config.redis) {
+				await this.connectRedis(config.redis);
+			}
+		})();
 	}
 
 	/**
@@ -126,19 +128,10 @@ export class Febby implements IFebby {
 	/**
 	 * Connects to the Redis server using ioredis.
 	 */
-	private async connectRedis() {
+	private async connectRedis(redisOpts: RedisOptions) {
 		log("redis connection init");
-		assert(
-			this.appConfig.redis === undefined,
-			"redis config should be defined"
-		);
 
-		const conf = this.appConfig.redis;
-
-		assert(conf.port === undefined, "redis port should be defined");
-		assert(conf.host === undefined, "redis host should be defined");
-
-		this.redis = new Redis.default(conf.port, conf.host, { ...conf });
+		this.redis = new Redis(redisOpts);
 		const monitor = await this.redis.monitor();
 		monitor.on("monitor", function (time, args, source, database) {
 			log(

@@ -1,6 +1,6 @@
 # Febby - A Typescript based backend Framework
 
-Febby is a versatile a typescript based backend HTTP framework designed to streamline the development of production-ready RESTful APIs. It offers a rich set of features that make building API endpoints and managing data effortless. Whether you're working with MongoDB collections, integrating Redis caching, or utilizing the power of the OpenAPI Specification, Febby provides the tools you need to build robust and efficient APIs.
+Febby is a versatile typescript based backend HTTP framework designed to streamline the development of production-ready RESTful APIs. It offers a rich set of features that make building API endpoints and managing data effortless. Whether you're working with MongoDB collections, integrating Redis caching, or utilizing the power of the OpenAPI Specification, Febby provides the tools you need to build robust and efficient APIs.
 
 ## Appendix
 
@@ -18,7 +18,6 @@ Febby is a versatile a typescript based backend HTTP framework designed to strea
   - [Installation](#installation)
   - [Documentation](#documentation)
 - [Example](#example)
-- [License](#license)
 
 
 
@@ -316,9 +315,6 @@ await febby.start();
 ## Authors
 
 - [@VasuVanka](https://www.github.com/vasuvanka)
-
-## LICENSE
-[License](LICENSE.md)
 
 # Contributor Covenant Code of Conduct
 

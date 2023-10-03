@@ -1,4 +1,5 @@
 const path = require("path");
+// const { Febby } = require("febby");
 const { Febby } = require("../dist");
 
 const config = {
@@ -8,11 +9,11 @@ const config = {
   },
   appBaseUrl: "/hello", // if routes are created by open-api spec then this base url will not be used
   loadDefaultMiddlewareOnAppCreation: false, // you can set false and load default middleware on demand using 'loadDefaultMiddleware'
-  // redis: {
-  //   // optional config
-  //   port: 6379,
-  //   host: "0.0.0.0",
-  // },
+  redis: {
+    // optional config
+    port: 6379,
+    host: "0.0.0.0",
+  },
 };
 // febby instance creation
 const febby = new Febby(config);

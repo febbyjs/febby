@@ -64,37 +64,30 @@ async function getByIdHandler(req, res, next) {
     const projection = ((_b = req.query) === null || _b === void 0 ? void 0 : _b.projection)
         ? buildProjection((_c = req.query) === null || _c === void 0 ? void 0 : _c.projection)
         : "";
-    try {
-        let doc = null;
-        if (febby.redis) {
-            doc = await febby.redis.get(buildRedisKey(febby.appConfig.serviceName, model.modelName, id));
-        }
-        if (doc) {
-            const parsedDoc = JSON.parse(doc);
-            const keys = projection ? projection.split(" ") : [];
-            let result = {};
-            if (keys.length > 0) {
-                for (const key of keys) {
-                    if (parsedDoc[key]) {
-                        result[key] = parsedDoc[key];
-                    }
+    let doc = null;
+    if (febby.redis) {
+        doc = await febby.redis.get(buildRedisKey(febby.appConfig.serviceName, model.modelName, id));
+    }
+    if (doc) {
+        const parsedDoc = JSON.parse(doc);
+        const keys = projection ? projection.split(" ") : [];
+        let result = {};
+        if (keys.length > 0) {
+            for (const key of keys) {
+                if (parsedDoc[key]) {
+                    result[key] = parsedDoc[key];
                 }
             }
-            else {
-                result = parsedDoc;
-            }
-            res.status(types_1.OK).send(result);
-            return;
         }
+        else {
+            result = parsedDoc;
+        }
+        res.status(types_1.OK).send(result);
+        return;
     }
-    catch (error) {
-        log(`getByIdHandler redis ${error}`);
-    }
+    let result;
     try {
-        const result = await model.findById(id, projection || {});
-        if (result && febby.redis) {
-            await febby.redis.set(buildRedisKey(febby.appConfig.serviceName, model.modelName, id), JSON.stringify(result));
-        }
+        result = await model.findById(id, projection || {});
         res.status(types_1.OK).send(result);
     }
     catch (error) {
@@ -104,6 +97,14 @@ async function getByIdHandler(req, res, next) {
             code,
         });
     }
+    if (result && febby.redis) {
+        try {
+            await febby.redis.set(buildRedisKey(febby.appConfig.serviceName, model.modelName, id), JSON.stringify(result), "EX", 600);
+        }
+        catch (error) {
+            console.error(`failed to store rec in redis, error is ${error}`);
+        }
+    }
 }
 exports.getByIdHandler = getByIdHandler;
 async function removeByIdHandler(req, res, next) {
@@ -112,14 +113,6 @@ async function removeByIdHandler(req, res, next) {
     const febby = res.app.get("febby");
     const _id = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
     log(`removeByIdHandler :: ${model.modelName} :: ${_id}`);
-    if (febby.redis) {
-        try {
-            await febby.redis.del(buildRedisKey(febby.appConfig.serviceName, model.modelName, _id));
-        }
-        catch (error) {
-            log(`removeByIdHandler redis ${error}`);
-        }
-    }
     try {
         const result = await model.deleteOne({
             _id,
@@ -133,16 +126,22 @@ async function removeByIdHandler(req, res, next) {
             code,
         });
     }
+    if (febby.redis) {
+        try {
+            await febby.redis.del(buildRedisKey(febby.appConfig.serviceName, model.modelName, _id));
+        }
+        catch (error) {
+            log(`removeByIdHandler redis error ${error}`);
+        }
+    }
 }
 exports.removeByIdHandler = removeByIdHandler;
 async function postHandler(req, res, next) {
     const { body } = req;
     log(`postHandler - ${JSON.stringify(body)}`);
     const model = res.app.get("collection");
-    const febby = res.app.get("febby");
     let result;
     try {
-        const model = res.app.get("collection");
         const coll = new model(body);
         result = await coll.save();
         res.status(types_1.CREATED).send(result);
@@ -155,33 +154,15 @@ async function postHandler(req, res, next) {
         });
         return;
     }
-    log(`postHandler :: ${model.modelName} :: ${result._id}`);
-    if (febby.redis) {
-        try {
-            await febby.redis.set(buildRedisKey(febby.appConfig.serviceName, model.modelName, result._id), JSON.stringify(result));
-        }
-        catch (error) {
-            log(`postHandler error:: ${error.message}`);
-        }
-    }
 }
 exports.postHandler = postHandler;
 async function putHandler(req, res, next) {
     var _a;
-    const model = res.app.get("collection");
-    const febby = res.app.get("febby");
     const { body } = req;
     log(`putHandler - ${JSON.stringify(body)}`);
+    const model = res.app.get("collection");
+    const febby = res.app.get("febby");
     const _id = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
-    log(`putHandler :: ${model.modelName} :: ${_id}`);
-    if (febby.redis) {
-        try {
-            await febby.redis.del(buildRedisKey(febby.appConfig.serviceName, model.modelName, _id));
-        }
-        catch (error) {
-            log(`putHandler redis error:: ${error}`);
-        }
-    }
     try {
         const result = await model.updateOne({
             _id,
@@ -198,6 +179,14 @@ async function putHandler(req, res, next) {
             error: error.message,
             code,
         });
+    }
+    if (febby.redis) {
+        try {
+            await febby.redis.del(buildRedisKey(febby.appConfig.serviceName, model.modelName, _id));
+        }
+        catch (error) {
+            log(`putHandler redis error:: ${error}`);
+        }
     }
 }
 exports.putHandler = putHandler;
