@@ -1,12 +1,14 @@
 {
   "name": "febby",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "microservice framework for building restful services",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE.md",
+    "package.json"
   ],
   "scripts": {
     "start": "tsc",
