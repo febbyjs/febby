@@ -56,19 +56,7 @@ class Febby {
             this.expressApp = config.app;
         }
         if (this.appConfig.loadDefaultMiddlewareOnAppCreation) {
-            log("app default middlewares init started");
-            this.expressApp.use((0, morgan_1.default)(this.appConfig.morgan || "combined"));
-            log("express app added morgan logger");
-            this.expressApp.use(bodyParser.urlencoded({
-                extended: false,
-            }));
-            log("express app added bodyParser");
-            this.expressApp.use(bodyParser.json());
-            log("express app added bodyParser.json");
-            this.expressApp.use((0, helmet_1.default)(this.appConfig.helmet || {}));
-            log("express app added helmet");
-            this.expressApp.use((0, cors_1.default)(this.appConfig.cors || {}));
-            log("express app added cors");
+            this.loadDefaultMiddlewares();
         }
         log("app main router created");
         this.expressApp.use(this.appConfig.appBaseUrl, this.mainRouter);
@@ -106,7 +94,7 @@ class Febby {
             log(`time : ${time}, args : ${args}, source: ${source}, database: ${database}`);
         });
     }
-    bootstrap(cb) {
+    async bootstrap(cb) {
         log("bootstrap init");
         this.server = (0, http_1.createServer)(this.expressApp);
         (0, assert_1.default)(this.appConfig.port !== undefined, "app port should be defined");
@@ -157,34 +145,34 @@ class Febby {
         this.expressApp.use(pathnames, router);
         log("loadOpenAPIConfigYAML end");
     }
-    route(routeConfig) {
+    async route(routeConfig) {
         log("route registration start");
         const router = routeConfig.router || this.mainRouter;
         const middlewares = routeConfig.middlewares || [];
         (0, helper_1.register)(router, routeConfig.method, routeConfig.path, middlewares, routeConfig.handler);
         log("route registration end");
     }
-    routes(list) {
+    async routes(list) {
         log("routes registration start");
         (0, assert_1.default)(Array.isArray(list), "routes should be an array of route object definitions");
         (0, assert_1.default)(list.length !== 0, "should contain at least minimum of one route object definitions");
         list.forEach((route) => this.route(route));
         log("routes registration end");
     }
-    middleware(middleware, router = this.mainRouter) {
+    async middleware(middleware, router = this.mainRouter) {
         log("middleware registration start");
         (0, assert_1.default)(middleware !== undefined, "middleware should defined");
         router.use(middleware);
         log("middleware registration end");
     }
-    middlewares(list, router = this.mainRouter) {
+    async middlewares(list, router = this.mainRouter) {
         log("middlewares registration start");
         (0, assert_1.default)(Array.isArray(list), "routes should be an array of route object definitions");
         (0, assert_1.default)(list.length !== 0, "should contain at least minimum of one route object definitions");
         list.forEach((middleware) => this.middleware(middleware, router));
         log("middlewares registration end");
     }
-    router(url, router, options) {
+    async router(url, router, options) {
         log("router registration start");
         router = router || this.mainRouter;
         options = options || {};
@@ -193,12 +181,12 @@ class Febby {
         log("router registration end");
         return newRouter;
     }
-    crud(path = "/", config, model, router = this.mainRouter) {
+    async crud(path = "/", config, model, router = this.mainRouter) {
         log("crud registration start");
         const attachCollection = (req, _res, next) => {
             log("attaching model & redis");
-            req.app.locals.collection = model;
-            req.app.locals.febby = this;
+            _res.app.set("collection", model);
+            _res.app.set("febby", this);
             next();
         };
         if (config.crud) {
@@ -210,12 +198,14 @@ class Febby {
             ], helper_1.getByIdHandler);
             log("crud get registration");
             (0, helper_1.register)(router, types_1.PUT, `${path}/:id`, [
+                express_1.default.json(),
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.put || []),
             ], helper_1.putHandler);
             log("crud post registration");
             (0, helper_1.register)(router, types_1.POST, path, [
+                express_1.default.json(),
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.post || []),
@@ -250,6 +240,7 @@ class Febby {
         if (config.put) {
             log("crud put registration");
             (0, helper_1.register)(router, types_1.PUT, `${path}/:id`, [
+                express_1.default.json(),
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.put || []),
@@ -266,13 +257,14 @@ class Febby {
         if (config.post) {
             log("crud post registration");
             (0, helper_1.register)(router, types_1.POST, path, [
+                express_1.default.json(),
                 attachCollection,
                 ...(config.middlewares || []),
                 ...(config.post || []),
             ], helper_1.postHandler);
         }
     }
-    model(name, schema) {
+    async model(name, schema) {
         log(`model registration : ${name}`);
         const models = this.models();
         if (models[name]) {
@@ -280,28 +272,28 @@ class Febby {
         }
         return mongoose_1.default.model(name, schema);
     }
-    models() {
+    async models() {
         log(`return models`);
         return mongoose_1.default.models;
     }
-    finalMiddlewares(middlewares) {
+    async finalMiddlewares(middlewares) {
         log(`final middlewares registration`);
         middlewares.forEach((middleware) => this.expressApp.use(middleware));
     }
-    finalHandler(middleware) {
+    async finalHandler(middleware) {
         log(`final handler registration`);
         this.expressApp.use(middleware);
     }
-    shutdown() {
+    async shutdown() {
         var _a;
         log(`application shutdown`);
         (_a = this.server) === null || _a === void 0 ? void 0 : _a.close();
     }
-    closeConnection() {
+    async closeConnection() {
         log(`closing database connection`);
         mongoose_1.default.connection.close();
     }
-    closeDbConnection() {
+    async closeDbConnection() {
         log(`closing database connection`);
         mongoose_1.default.connection.close();
     }

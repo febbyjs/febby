@@ -1,6 +1,7 @@
 import { IAppConfig, HttpMethod } from "./types";
 import { NextFunction, Handler, Request, Response, Router } from "express";
 export declare function validateAppConfig(config: IAppConfig): IAppConfig;
+export declare function buildRedisKey(serviceName: string, functionName: string, key: string): string;
 export declare function register(router: Router, method: HttpMethod, path: string, middlewares: Handler[], handler: Handler): void;
 export declare function getByIdHandler(req: Request, res: Response, next: NextFunction): Promise<void>;
 export declare function removeByIdHandler(req: Request, res: Response, next: NextFunction): Promise<void>;
