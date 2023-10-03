@@ -13,23 +13,23 @@ export declare class Febby implements IFebby {
     constructor(config: IAppConfig);
     private connectDatabase;
     private connectRedis;
-    bootstrap(cb?: Function): void;
+    bootstrap(cb?: Function): Promise<void>;
     start(): Promise<void>;
     loadDefaultMiddlewares(): Promise<void>;
     loadOpenAPIConfigYAML(path: string, options?: IOpenApiOptions): Promise<void>;
-    route(routeConfig: IRouteConfig): void;
-    routes(list: Array<IRouteConfig>): void;
-    middleware(middleware: Handler, router?: Router): void;
-    middlewares(list: Handler[], router?: Router): void;
-    router(url: string, router?: Router, options?: RouterOptions): Router;
-    crud(path: string, config: ICrudConfig, model: Model<Document, {}>, router?: Router): void;
-    model(name: string, schema?: Schema): Model<Document & any>;
-    models(): {
+    route(routeConfig: IRouteConfig): Promise<void>;
+    routes(list: Array<IRouteConfig>): Promise<void>;
+    middleware(middleware: Handler, router?: Router): Promise<void>;
+    middlewares(list: Handler[], router?: Router): Promise<void>;
+    router(url: string, router?: Router, options?: RouterOptions): Promise<Router>;
+    crud(path: string, config: ICrudConfig, model: Model<Document, {}>, router?: Router): Promise<void>;
+    model(name: string, schema?: Schema): Promise<Model<Document & any>>;
+    models(): Promise<{
         [index: string]: Model<Document & any>;
-    };
-    finalMiddlewares(middlewares: NextFunction[]): void;
-    finalHandler(middleware: NextFunction): void;
-    shutdown(): void;
-    closeConnection(): void;
-    closeDbConnection(): void;
+    }>;
+    finalMiddlewares(middlewares: NextFunction[]): Promise<void>;
+    finalHandler(middleware: NextFunction): Promise<void>;
+    shutdown(): Promise<void>;
+    closeConnection(): Promise<void>;
+    closeDbConnection(): Promise<void>;
 }

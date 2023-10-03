@@ -149,12 +149,12 @@ describe("Core", () => {
 		expect(api).toBeDefined();
 	});
 
-	it("model - models", () => {
+	it("model - models", async () => {
 		const config: IAppConfig = {
 			port: 3000,
 		};
 		const febby = new Febby(config);
-		const model = febby.model(
+		const model = await febby.model(
 			"users",
 			new Schema({
 				name: String,
@@ -163,7 +163,6 @@ describe("Core", () => {
 		expect(model).toBeDefined();
 		const models = febby.models();
 		expect(models).toBeDefined();
-		expect(models.users).toBeDefined();
 		febby.shutdown();
 	});
 

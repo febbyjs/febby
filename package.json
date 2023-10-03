@@ -1,6 +1,6 @@
 {
   "name": "febby",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "microservice framework for building restful services",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -9,11 +9,11 @@
     "README.md"
   ],
   "scripts": {
-    "start": "./node_modules/.bin/tsc",
-    "test": "./node_modules/.bin/jest --updateSnapshot",
+    "start": "tsc",
+    "test": "jest --updateSnapshot",
     "test:coverage": "jest --coverage",
-    "docs": "./node_modules/.bin/typedoc",
-    "build": "./node_modules/.bin/tsc",
+    "docs": "typedoc",
+    "build": "tsc",
     "build:local": "npm test && npm start && npm run docs"
   },
   "repository": {

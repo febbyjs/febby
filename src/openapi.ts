@@ -14,10 +14,13 @@ import { URL } from "url";
 const log = debug.debug("febby:openapi");
 
 /**
- * buildOpenApiRoutes - Will stitch routes and controller together
- * @param {object} openApiJson - parsed JSON from YAML file
- * @param {Router} router - router to register paths and controllers
- * @param {IOpenApiOptions} options
+ * Builds and registers routes based on the OpenAPI specification.
+ *
+ * @param {object} openApiJson - Parsed JSON from the OpenAPI YAML file.
+ * @param {Router} router - The Express router for registering paths and controllers.
+ * @param {IOpenApiOptions} options - Configuration options for OpenAPI support.
+ *
+ * @throws {Error} If there are missing controllers or middlewares in the OpenAPI spec.
  */
 function buildOpenApiRoutes(
 	openApiJson: any,
@@ -148,10 +151,14 @@ function buildOpenApiRoutes(
 }
 
 /**
- * processOpenApiSpecFile - creates open api router and returns path and router
- * @param {object} openApiJson
- * @param {IOpenApiOptions} options
- * @returns {Promise<{ pathnames: string[]; router: Router }>}
+ * Processes an OpenAPI spec file, creates an OpenAPI router, and returns pathnames and the router.
+ *
+ * @param {object} openApiJson - Parsed JSON from the OpenAPI YAML file.
+ * @param {IOpenApiOptions} options - Configuration options for OpenAPI support.
+ *
+ * @returns {Promise<{ pathnames: string[]; router: Router }>} - A promise that resolves to an object containing pathnames and the router.
+ *
+ * @throws {Error} If there are errors in building or registering routes.
  */
 export async function processOpenApiSpecFile(
 	openApiJson: any,
@@ -187,9 +194,13 @@ export async function processOpenApiSpecFile(
 }
 
 /**
- * parseYAMLFile - parses YAML string and returns JSON object
- * @param {string} fileBuffer - file content
- * @returns {Promise<object>}
+ * Parses a YAML string and returns a JSON object.
+ *
+ * @param {string} fileBuffer - The content of the YAML file as a string.
+ *
+ * @returns {Promise<object>} - A promise that resolves to a JSON object.
+ *
+ * @throws {Error} If there are errors in parsing the YAML file.
  */
 export async function parseYAMLFile(fileBuffer: string): Promise<object> {
 	log("parseYAMLFile triggered");

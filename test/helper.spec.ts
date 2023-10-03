@@ -1,314 +1,482 @@
-/*!
- * Copyright(c) 2018-2021 Vasu Vanka
- * MIT Licensed
- */
+import { Febby } from "../src/core";
 import {
-	register,
 	validateAppConfig,
-	buildProjection,
+	buildRedisKey,
+	register,
 	getByIdHandler,
-	getHandler,
+	removeByIdHandler,
 	postHandler,
 	putHandler,
-	removeByIdHandler,
+	getHandler,
+	buildProjection,
 } from "../src/helper";
-import { Router, Request, Response, NextFunction, Application } from "express";
-import { IAppConfig, POST } from "../src/types";
-import { Febby } from "../src";
 
-// jest.mock("express");
-// jest.mock("mongoose");
-// const expressMock = require("express");
-// const mongooseMock = require("mongoose");
+import { Router, Request, Response, NextFunction } from "express";
 
-describe("Helper", () => {
-	it("validateAppConfig", () => {
-		const config = { port: 3000 } as IAppConfig;
-		const validatedConfig = validateAppConfig(config);
-		expect(validatedConfig.port).toEqual(config.port);
-		expect(validatedConfig.bodyParser).toEqual(undefined);
-		expect(validatedConfig.version).toEqual(undefined);
-		expect(validatedConfig.appBaseUrl).toEqual("/");
-		expect(validatedConfig.clusterMode).toEqual(undefined);
-		expect(validatedConfig.cors).toEqual(undefined);
-		expect(validatedConfig.db).toEqual(undefined);
+describe("validateAppConfig", () => {
+	it("should validate a valid application configuration", () => {
+		const validConfig = {
+			port: 3000,
+			// other config properties...
+		};
+
+		const result = validateAppConfig(validConfig);
+
+		expect(result).toEqual(validConfig);
 	});
-	it("Register", () => {
-		const testRouter = Router();
-		const resp = register(
-			testRouter,
-			POST,
-			"/",
-			[],
-			(req, res, next) => {}
+
+	it("should set default values when properties are missing", () => {
+		const configWithoutDefaults = {
+			port: 3000,
+			// other config properties...
+		};
+
+		const result = validateAppConfig(configWithoutDefaults);
+
+		expect(result.loadDefaultMiddlewareOnAppCreation).toBe(true);
+		expect(result.serviceName).toBe("febby");
+	});
+});
+
+describe("buildRedisKey", () => {
+	it("should build a valid Redis key", () => {
+		const serviceName = "my-service";
+		const functionName = "getUsers";
+		const key = "user123";
+
+		const result = buildRedisKey(serviceName, functionName, key);
+
+		expect(result).toBe("my-service.getUsers.user123");
+	});
+});
+
+describe("register", () => {
+	// Create a mock Express Router for testing purposes.
+	let mockRouter: Router;
+
+	beforeEach(() => {
+		mockRouter = {
+			get: jest.fn(),
+			post: jest.fn(),
+			put: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as Router;
+	});
+
+	it("should register a GET route with no middlewares", () => {
+		const method = "get";
+		const path = "/test";
+		const middlewares: [] = [];
+		const handler = (req: Request, res: Response) => {
+			res.send("GET request handled");
+		};
+
+		register(mockRouter, method, path, middlewares, handler);
+
+		expect(mockRouter.get).toHaveBeenCalledWith(path, middlewares, handler);
+	});
+
+	it("should register a POST route with middlewares", () => {
+		const method = "post";
+		const path = "/test";
+		const middlewares = [(req: Request, res: Response, next: any) => {}];
+		const handler = (req: Request, res: Response) => {
+			res.send("POST request handled");
+		};
+
+		register(mockRouter, method, path, middlewares, handler);
+
+		expect(mockRouter.post).toHaveBeenCalledWith(
+			path,
+			middlewares,
+			handler
 		);
-		expect(resp).toBe(undefined);
 	});
+});
 
-	it("buildProjection", () => {
-		const proj = buildProjection("hello+world");
-		expect(proj).toBeDefined();
-		expect(proj).toBe("hello world");
+describe("buildProjection", () => {
+	it("should build a valid projection string", () => {
+		const projection = "name+email";
+
+		const result = buildProjection(projection);
+
+		expect(result).toBe("name email");
 	});
+});
 
-	it("getByIdHandler", async () => {
-		const req = {} as Request;
-		req.params = { id: "id" };
-		req.query = { projection: "hello+world" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: {
-				findById: async (id: string, projection: string) => {
-					return {
-						_id: id,
-					};
-				},
+describe("getByIdHandler", () => {
+	it("should return a document by ID when found in the database", async () => {
+		const req = {
+			params: {
+				id: "123",
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
+		} as unknown as Request;
+
+		const model = {
+			findById: async (id) => {
+				return {
+					id,
+					name: "hello",
+				};
+			},
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", jest.fn());
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
 		await getByIdHandler(req, res, next);
+		expect(res.status).toHaveBeenCalledWith(200);
 	});
 
-	it("getByIdHandler Exception", async () => {
-		const req = {} as Request;
-		req.params = { id: "id" };
-		req.query = { projection: "hello+world" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: {
-				findById: async (id: string, projection: string) => {
-					throw new Error("some error");
-				},
+	it("should handle errors and return a 500 status code when an error occurs", async () => {
+		const req = {
+			params: {
+				id: "123",
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
+		} as unknown as Request;
+
+		const model = {
+			findById: async (id) => {
+				throw new Error("Database error");
+			},
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", jest.fn());
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
 		await getByIdHandler(req, res, next);
+		expect(res.status).toHaveBeenCalledWith(500);
 	});
+});
 
-	it("getHandler", async () => {
-		const req = {} as Request;
-		req.params = { skip: "0", limit: "10" };
-		req.query = {
-			projection: "hello+world",
-			query: JSON.stringify({ name: "test" }),
-		};
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: {
-				find: async (query: any, projection: string) => {
-					return [{}];
-				},
+describe("getHandler", () => {
+	it("should return documents from the database with default skip and limit", async () => {
+		// Mocking the Request and Response objects
+		const req = {
+			query: {},
+		} as Request;
+
+		const model = {
+			find: async () => {
+				return [1, 2, 3];
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", jest.fn());
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
 		await getHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.send).toHaveBeenCalledWith({
+			value: [1, 2, 3],
+			count: 3,
+		});
 	});
 
-	it("getHandler Exception", async () => {
-		const req = {} as Request;
-		req.params = { skip: "0", limit: "10" };
-		req.query = {
-			projection: "hello+world",
-			query: JSON.stringify({ name: "test" }),
-		};
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: {
-				find: async (query: any, projection: string) => {
-					return [{}];
-				},
+	it("should return documents from the database with custom skip and limit", async () => {
+		// Mocking the Request and Response objects with custom skip and limit
+		const req = {
+			query: {
+				skip: "2",
+				limit: "5",
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
+		} as unknown as Request;
+
+		const model = {
+			find: async () => {
+				return [4, 5, 6];
+			},
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
 		await getHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.send).toHaveBeenCalledWith({
+			value: [4, 5, 6],
+			count: 3,
+		});
 	});
 
-	xit("postHandler", async () => {
-		const req = {} as Request;
-		req.body = { name: "test" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: (body: any) => {
-				return {
-					save: async () => {
-						return { name: "test" };
-					},
-				};
+	it("should handle errors and return a 500 status code when an error occurs", async () => {
+		// Mocking the Request and Response objects
+		const req = {
+			query: {},
+		} as Request;
+		const model = {
+			find: async () => {
+				throw new Error("Database error");
 			},
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
+		await getHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith({
+			error: "Database error",
+			code: 500,
+		});
+	});
+});
+
+describe("postHandler", () => {
+	it("should create a document and return it with a 201 status code", async () => {
+		// Mocking the Request and Response objects
+		const req = {
+			body: {
+				name: "John",
+				email: "john@example.com",
+			},
+		} as Request;
+		const model = function (body) {
+			this.body = body;
+			this.save = async () => ({
+				_id: "12345",
+				...this.body,
+			});
+		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", {} as Febby);
+		const res = {
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
+		const next = {} as NextFunction;
+
 		await postHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(201);
+		expect(res.send).toHaveBeenCalledWith({
+			_id: "12345",
+			...req.body,
+		});
 	});
 
-	xit("postHandler Exception", async () => {
-		const req = {} as Request;
-		req.body = { name: "test" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: (body: any) => {
-				return {
-					save: async () => {
-						throw new Error("some error");
-					},
-				};
+	it("should handle errors and return a 500 status code when an error occurs", async () => {
+		// Mocking the Request and Response objects
+		const req = {
+			body: {
+				name: "John",
+				email: "john@example.com",
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
+		} as Request;
+		const model = function (body) {
+			this.body = body;
+			this.save = async () => {
+				throw new Error("Database error");
+			};
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
 		await postHandler(req, res, next);
-	});
 
-	it("putHandler", async () => {
-		const req = {} as Request;
-		req.params = { id: "id" };
-		req.body = { name: "test" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: (body: any) => {
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith({
+			error: "Database error",
+			code: 500,
+		});
+	});
+});
+
+describe("putHandler", () => {
+	it("should update a document and return it with a 200 status code", async () => {
+		// Mocking the Request and Response objects
+		const req = {
+			body: {
+				name: "Updated John",
+				email: "updatedjohn@example.com",
+			},
+			params: {
+				id: "12345",
+			},
+		} as unknown as Request;
+		const model = {
+			updateOne: async () => {
 				return {
-					findOneAndUpdate: async (body: any, data: any, op: any) => {
-						return { id: "some id" };
-					},
+					acknowledged: true,
+					modifiedCount: 1,
+					upsertedId: null,
+					upsertedCount: 0,
+					matchedCount: 1,
 				};
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", jest.fn());
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
 		await putHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.send).toHaveBeenCalledWith({
+			acknowledged: true,
+			modifiedCount: 1,
+			upsertedId: null,
+			upsertedCount: 0,
+			matchedCount: 1,
+		});
 	});
 
-	it("putHandler Exception", async () => {
-		const req = {} as Request;
-		req.params = { id: "id" };
-		req.body = { name: "test" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: (body: any) => {
+	it("should handle errors and return a 500 status code when an error occurs", async () => {
+		// Mocking the Request and Response objects
+		const req = {
+			body: {
+				name: "Updated John",
+				email: "updatedjohn@example.com",
+			},
+			params: {
+				id: "12345",
+			},
+		} as unknown as Request;
+		const model = {
+			updateOne: async () => {
+				throw new Error("Database error");
+			},
+		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", jest.fn());
+		const res = {
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
+		const next = {} as NextFunction;
+
+		await putHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith({
+			error: "Database error",
+			code: 500,
+		});
+	});
+});
+
+describe("removeByIdHandler", () => {
+	it("should remove a document and return a 200 status code", async () => {
+		const req = {
+			params: {
+				id: "123",
+			},
+		} as unknown as Request;
+
+		const model = {
+			deleteOne: async (id) => {
 				return {
-					findOneAndUpdate: async (body: any, data: any, op: any) => {
-						throw new Error("some error");
-					},
+					acknowledged: true,
+					deletedCount: 1,
 				};
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", jest.fn());
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
-		await putHandler(req, res, next);
+
+		await removeByIdHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.send).toHaveBeenCalledWith({
+			acknowledged: true,
+			deletedCount: 1,
+		});
 	});
 
-	it("removeByIdHandler", async () => {
-		const req = {} as Request;
-		req.params = { id: "id" };
-		req.query = { projection: "hello+world" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: {
-				findOneAndRemove: (id: string) => {
-					return {};
-				},
+	it("should handle errors and return a 500 status code when an error occurs", async () => {
+		// Mocking the Request and Response objects
+		const req = {
+			params: {
+				id: "123",
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
-		};
-		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
-		const next = {} as NextFunction;
-		await removeByIdHandler(req, res, next);
-	});
+		} as unknown as Request;
 
-	it("removeByIdHandler", async () => {
-		const req = {} as Request;
-		req.params = { id: "id" };
-		req.query = { projection: "hello+world" };
-		req.app = {} as Application;
-		req.app.locals = {
-			collection: {
-				findOneAndRemove: (id: string) => {
-					throw new Error("some error");
-				},
+		const model = {
+			deleteOne: async (id) => {
+				throw new Error("Database error");
 			},
-			febby: new Febby({
-				port: 5000,
-			}),
 		};
+
+		const mockMap = new Map();
+		mockMap.set("collection", model);
+		mockMap.set("febby", jest.fn());
 		const res = {
-			status: (code: number) => {
-				return res;
-			},
-			send: (some: any) => {},
-		} as Response;
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			app: mockMap,
+		} as unknown as Response;
 		const next = {} as NextFunction;
+
 		await removeByIdHandler(req, res, next);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith({
+			error: "Database error",
+			code: 500,
+		});
 	});
 });

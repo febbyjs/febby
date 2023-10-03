@@ -2,6 +2,25 @@
 
 Febby is a versatile a typescript based backend HTTP framework designed to streamline the development of production-ready RESTful APIs. It offers a rich set of features that make building API endpoints and managing data effortless. Whether you're working with MongoDB collections, integrating Redis caching, or utilizing the power of the OpenAPI Specification, Febby provides the tools you need to build robust and efficient APIs.
 
+## Appendix
+
+- [Installation](#installation)
+- [Features](#features)
+  - [1. MongoDB Integration](#1-mongodb-integration)
+  - [2. Redis Caching](#2-redis-caching)
+  - [3. Built on Express.js](#3-built-on-expressjs)
+  - [4. OpenAPI Specification Support](#4-openapi-specification-support)
+  - [5. Middleware Support](#5-middleware-support)
+  - [6. Model Registration](#6-model-registration)
+  - [7. Route Registration](#7-route-registration)
+  - [8. Easy Bootstrap](#8-easy-bootstrap)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Documentation](#documentation)
+- [Example](#example)
+- [License](#license)
+
+
 
 ## Installation
 
@@ -19,34 +38,6 @@ Install febby with npm
 ## Example
 [Simple Febby App](https://github.com/febbyjs/febby/blob/master/example/app.js)
 
-## Appendix
-
-- [Installation](#installation)
-- [Features](#features)
-  - [1. MongoDB Integration](#1-mongodb-integration)
-  - [2. Redis Caching](#2-redis-caching)
-  - [3. Built on Express.js](#3-built-on-expressjs)
-  - [4. OpenAPI Specification Support](#4-openapi-specification-support)
-  - [5. Middleware Support](#5-middleware-support)
-  - [6. Model Registration](#6-model-registration)
-  - [7. Route Registration](#7-route-registration)
-  - [8. Easy Bootstrap](#8-easy-bootstrap)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Documentation](#documentation)
-- [Example](#example)
-- [Febby App Configuration](#febby-app-configuration)
-- [Create a Router](#create-a-router)
-- [Register a Model on Febby](#register-a-model-on-febby)
-- [Register a Middleware on Febby](#register-a-middleware-on-febby)
-- [Register CRUD Operations on a Model](#register-crud-operations-on-a-model)
-- [Register a Route on Febby](#register-a-route-on-febby)
-- [Start Febby App](#start-febby-app)
-- [Build Status](#build-status)
-- [Dependencies](#dependencies)
-- [License](#license)
-
-
 
 ## Features
 
@@ -55,7 +46,7 @@ Install febby with npm
 Febby simplifies the process of creating REST endpoints on MongoDB collections. With minimal developer effort, you can effortlessly expose CRUD operations on your data, reducing boilerplate code.
 
 
-```js
+```typescript
 const { Febby } = require("febby");
 
 const config = {
@@ -79,7 +70,7 @@ const febby = new Febby(config);
 To enhance performance and reduce latency, Febby seamlessly integrates Redis caching into your API. Cache frequently requested data and minimize database calls, resulting in faster response times.
 
 
-```js
+```typescript
 const { Febby } = require("febby");
 
 const config = {
@@ -103,7 +94,7 @@ Febby is built on top of the widely adopted [Express.js](https://expressjs.com/)
 Febby simplifies API development with its support for the OpenAPI Specification (formerly known as Swagger). Load your OpenAPI YAML file, and Febby will automatically generate API routes, allowing you to focus on defining your API's behavior.
 
 
-```js
+```typescript
 const { Febby } = require("febby");
 
 const config = {
@@ -147,7 +138,7 @@ await febby
 Customize your API's behavior with ease by defining middleware functions. Febby lets you register middleware globally or for specific routes, providing fine-grained control over request processing.
 
 
-```js
+```typescript
 const api = febby.router("/api"); // api router
 
 function logActionOnUserCrud(req, res, next) {
@@ -155,18 +146,18 @@ function logActionOnUserCrud(req, res, next) {
   next();
 }
 // register middleware on main router
-febby.middleware(logActionOnUserCrud);
+await febby.middleware(logActionOnUserCrud);
 
 // register middleware on given router
-febby.middleware(logActionOnUserCrud, api);
+await febby.middleware(logActionOnUserCrud, api);
 ```
 
 ### 6. Model Registration
 
 Register your database models with Febby effortlessly. Define your models with schema information, and Febby takes care of the rest, making it easy to work with your data.
 
-```js
-const users = febby.model("users", {
+```typescript
+const users = await febby.model("users", {
   display_name: {
     type: String,
   },
@@ -180,11 +171,11 @@ const users = febby.model("users", {
 
 Create HTTP routes effortlessly with Febby. Define the routes and handlers, and let Febby handle the routing logic, making your code cleaner and more organized.
 
-```js
+```typescript
 const febby = new Febby(config);
-const api = febby.router("/api"); // api router
+const api = await febby.router("/api"); // api router
 
-febby.route({
+await febby.route({
   router: api,
   path: "/",
   method: "get",
@@ -202,7 +193,7 @@ febby.route({
 
 Febby simplifies the process of starting your server. Use the `start` instead of `bootstrap`(deprecated) function to initiate your Febby app and specify a callback function to run when the server starts.
 
-```js
+```typescript
 await febby.start()
 ```
 
@@ -228,11 +219,11 @@ const config = {
 // febby instance creation
 const febby = new Febby(config);
 
-const api = febby.router("/api");
+const api = await febby.router("/api");
 
-febby.loadDefaultMiddleware();
+await febby.loadDefaultMiddleware();
 
-const users = febby.model("users", {
+const users = await febby.model("users", {
   name: {
     type: String,
   },
@@ -241,7 +232,7 @@ const users = febby.model("users", {
   },
 });
 
-const books = febby.model("books", {
+const books = await febby.model("books", {
   name: {
     type: String,
   },
@@ -255,7 +246,7 @@ const logActionOnUserCrud = (req, res, next) => {
   next();
 };
 
-febby.middleware(logActionOnUserCrud, api);
+await febby.middleware(logActionOnUserCrud, api);
 
 await febby
   .loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
@@ -282,7 +273,7 @@ await febby
     },
   })
 
-febby.crud(
+await febby.crud(
   "/users",
   {
     crud: true,
@@ -292,7 +283,7 @@ febby.crud(
   api
 );
 
-febby.crud(
+await febby.crud(
   "/books",
   {
     crud: false,
@@ -305,7 +296,7 @@ febby.crud(
   api
 );
 
-febby.route({
+await febby.route({
   router: api,
   path: "/",
   method: "get",
@@ -325,6 +316,9 @@ await febby.start();
 ## Authors
 
 - [@VasuVanka](https://www.github.com/vasuvanka)
+
+## LICENSE
+[License](LICENSE.md)
 
 # Contributor Covenant Code of Conduct
 

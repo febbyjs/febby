@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildProjection = exports.getHandler = exports.putHandler = exports.postHandler = exports.removeByIdHandler = exports.getByIdHandler = exports.register = exports.validateAppConfig = void 0;
+exports.buildProjection = exports.getHandler = exports.putHandler = exports.postHandler = exports.removeByIdHandler = exports.getByIdHandler = exports.register = exports.buildRedisKey = exports.validateAppConfig = void 0;
 const types_1 = require("./types");
 const debug = __importStar(require("debug"));
 const assert_1 = __importDefault(require("assert"));
@@ -45,6 +45,7 @@ exports.validateAppConfig = validateAppConfig;
 function buildRedisKey(serviceName, functionName, key) {
     return `${serviceName}.${functionName}.${key}`;
 }
+exports.buildRedisKey = buildRedisKey;
 function register(router, method, path, middlewares, handler) {
     log(`Register route :: ${method} :: ${path}`);
     (0, assert_1.default)(method !== undefined, "method should be defined");
@@ -55,15 +56,18 @@ function register(router, method, path, middlewares, handler) {
 }
 exports.register = register;
 async function getByIdHandler(req, res, next) {
-    const id = req.params.id;
-    log(`getByIdHandler :: ${req.app.locals.collection.modelName} :: ${id}`);
-    const projection = req.query.projection
-        ? buildProjection(req.query.projection)
+    var _a, _b, _c;
+    const id = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
+    const model = res.app.get("collection");
+    const febby = res.app.get("febby");
+    log(`getByIdHandler :: ${model.modelName} :: ${id}`);
+    const projection = ((_b = req.query) === null || _b === void 0 ? void 0 : _b.projection)
+        ? buildProjection((_c = req.query) === null || _c === void 0 ? void 0 : _c.projection)
         : "";
     try {
         let doc = null;
-        if (req.app.locals.febby.redis) {
-            doc = await req.app.locals.febby.redis.get(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, id));
+        if (febby.redis) {
+            doc = await febby.redis.get(buildRedisKey(febby.appConfig.serviceName, model.modelName, id));
         }
         if (doc) {
             const parsedDoc = JSON.parse(doc);
@@ -84,16 +88,12 @@ async function getByIdHandler(req, res, next) {
         }
     }
     catch (error) {
-        const code = 500;
-        res.status(code).send({
-            error: error.message,
-            code,
-        });
+        log(`getByIdHandler redis ${error}`);
     }
     try {
-        const result = await req.app.locals.collection.findById(id, projection || {});
-        if (result && req.app.locals.febby.redis) {
-            await req.app.locals.febby.redis.set(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, id), JSON.stringify(result));
+        const result = await model.findById(id, projection || {});
+        if (result && febby.redis) {
+            await febby.redis.set(buildRedisKey(febby.appConfig.serviceName, model.modelName, id), JSON.stringify(result));
         }
         res.status(types_1.OK).send(result);
     }
@@ -107,22 +107,21 @@ async function getByIdHandler(req, res, next) {
 }
 exports.getByIdHandler = getByIdHandler;
 async function removeByIdHandler(req, res, next) {
-    const _id = req.params.id;
-    log(`removeByIdHandler :: ${req.app.locals.collection.modelName} :: ${_id}`);
-    try {
-        if (req.app.locals.febby.redis) {
-            await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+    var _a;
+    const model = res.app.get("collection");
+    const febby = res.app.get("febby");
+    const _id = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
+    log(`removeByIdHandler :: ${model.modelName} :: ${_id}`);
+    if (febby.redis) {
+        try {
+            await febby.redis.del(buildRedisKey(febby.appConfig.serviceName, model.modelName, _id));
+        }
+        catch (error) {
+            log(`removeByIdHandler redis ${error}`);
         }
     }
-    catch (error) {
-        const code = 500;
-        res.status(code).send({
-            error: error.message,
-            code,
-        });
-    }
     try {
-        const result = await req.app.locals.collection.deleteOne({
+        const result = await model.deleteOne({
             _id,
         });
         res.status(types_1.OK).send(result);
@@ -138,9 +137,13 @@ async function removeByIdHandler(req, res, next) {
 exports.removeByIdHandler = removeByIdHandler;
 async function postHandler(req, res, next) {
     const { body } = req;
+    log(`postHandler - ${JSON.stringify(body)}`);
+    const model = res.app.get("collection");
+    const febby = res.app.get("febby");
     let result;
     try {
-        const coll = new req.app.locals.collection(body);
+        const model = res.app.get("collection");
+        const coll = new model(body);
         result = await coll.save();
         res.status(types_1.CREATED).send(result);
     }
@@ -150,36 +153,37 @@ async function postHandler(req, res, next) {
             error: error.message,
             code,
         });
+        return;
     }
-    log(`postHandler :: ${req.app.locals.collection.modelName} :: ${result._id}`);
-    try {
-        if (req.app.locals.febby.redis) {
-            await req.app.locals.febby.redis.set(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, result._id), JSON.stringify(result));
+    log(`postHandler :: ${model.modelName} :: ${result._id}`);
+    if (febby.redis) {
+        try {
+            await febby.redis.set(buildRedisKey(febby.appConfig.serviceName, model.modelName, result._id), JSON.stringify(result));
         }
-    }
-    catch (error) {
-        log(`postHandler error:: ${error.message}`);
+        catch (error) {
+            log(`postHandler error:: ${error.message}`);
+        }
     }
 }
 exports.postHandler = postHandler;
 async function putHandler(req, res, next) {
+    var _a;
+    const model = res.app.get("collection");
+    const febby = res.app.get("febby");
     const { body } = req;
-    const _id = req.params.id;
-    log(`putHandler :: ${req.app.locals.collection.modelName} :: ${_id}`);
-    try {
-        if (req.app.locals.febby.redis) {
-            await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
+    log(`putHandler - ${JSON.stringify(body)}`);
+    const _id = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
+    log(`putHandler :: ${model.modelName} :: ${_id}`);
+    if (febby.redis) {
+        try {
+            await febby.redis.del(buildRedisKey(febby.appConfig.serviceName, model.modelName, _id));
+        }
+        catch (error) {
+            log(`putHandler redis error:: ${error}`);
         }
     }
-    catch (error) {
-        const code = 500;
-        res.status(code).send({
-            error: error.message,
-            code,
-        });
-    }
     try {
-        const result = await req.app.locals.collection.updateOne({
+        const result = await model.updateOne({
             _id,
         }, {
             $set: body,
@@ -187,9 +191,6 @@ async function putHandler(req, res, next) {
             new: false,
         });
         res.status(types_1.OK).send(result);
-        if (req.app.locals.febby.redis) {
-            await req.app.locals.febby.redis.del(buildRedisKey(req.app.locals.febby.appConfig.serviceName, req.app.locals.collection.modelName, _id));
-        }
     }
     catch (error) {
         const code = 500;
@@ -201,25 +202,27 @@ async function putHandler(req, res, next) {
 }
 exports.putHandler = putHandler;
 async function getHandler(req, res, next) {
-    const skip = req.query.skip ? parseInt(req.query.skip, 10) : 0;
-    const limit = req.query.limit
-        ? parseInt(req.query.limit, 10)
+    var _a, _b, _c, _d, _e, _f, _g, _h;
+    const model = res.app.get("collection");
+    const skip = ((_a = req.query) === null || _a === void 0 ? void 0 : _a.skip) ? parseInt((_b = req.query) === null || _b === void 0 ? void 0 : _b.skip, 10) : 0;
+    const limit = ((_c = req.query) === null || _c === void 0 ? void 0 : _c.limit)
+        ? parseInt((_d = req.query) === null || _d === void 0 ? void 0 : _d.limit, 10)
         : 10;
-    const projection = (req.query.projection || "").length > 0
-        ? buildProjection(req.query.projection)
+    const projection = (((_e = req.query) === null || _e === void 0 ? void 0 : _e.projection) || "").length > 0
+        ? buildProjection((_f = req.query) === null || _f === void 0 ? void 0 : _f.projection)
         : {};
     try {
-        const query = req.query.query ? JSON.parse(req.query.query) : {};
-        const results = await Promise.all([
-            req.app.locals.collection.find(query, { _id: 1 }),
-            await req.app.locals.collection.find(query, projection, {
+        const query = ((_g = req.query) === null || _g === void 0 ? void 0 : _g.query)
+            ? JSON.parse((_h = req.query) === null || _h === void 0 ? void 0 : _h.query)
+            : {};
+        const [countList, value = {}] = await Promise.all([
+            model.find(query, { _id: 1 }),
+            model.find(query, projection, {
                 skip,
                 limit,
             }),
         ]);
-        const count = (results[0] || []).length;
-        const value = results[1] || {};
-        res.status(200).send({ value, count });
+        res.status(200).send({ value, count: countList.length });
     }
     catch (error) {
         const code = 500;
