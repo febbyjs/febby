@@ -139,7 +139,7 @@ Customize your API's behavior with ease by defining middleware functions. Febby 
 
 
 ```typescript
-const api = febby.router("/api"); // api router
+const api = await febby.router("/api"); // api router
 
 function logActionOnUserCrud(req, res, next) {
   console.log(`${req.method}:${req.url}`);
