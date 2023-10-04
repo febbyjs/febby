@@ -90,8 +90,22 @@ Febby is built on top of the widely adopted [Express.js](https://expressjs.com/)
 
 ### 4. OpenAPI Specification Support
 
-Febby simplifies API development with its support for the OpenAPI Specification (formerly known as Swagger). Load your OpenAPI YAML file, and Febby will automatically generate API routes, allowing you to focus on defining your API's behavior.
+Febby simplifies API development with its support for the OpenAPI Specification (formerly known as Swagger). Load your OpenAPI YAML file, and Febby will automatically generate API routes, allowing you to focus on defining your API's behavior. provide `x-controller` and `x-middlewares` to register handler on path.
 
+```console
+paths:
+  /pet:
+    put:
+      tags:
+        - pet
+      summary: Update an existing pet
+      description: Update an existing pet by Id
+      operationId: updatePet
+      x-controller: updatePetController
+      x-middlewares:
+        - middleware1
+        - middleware2
+```
 
 ```typescript
 const { Febby } = require("febby");

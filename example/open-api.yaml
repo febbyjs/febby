@@ -47,7 +47,7 @@ paths:
       description: Update an existing pet by Id
       operationId: updatePet
       x-controller: updatePetController
-      x-middleware:
+      x-middlewares:
         - middleware1
         - middleware2
       requestBody:
