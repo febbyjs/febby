@@ -37,11 +37,11 @@ const bodyParser = __importStar(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const Redis = __importStar(require("ioredis"));
 const assert_1 = __importDefault(require("assert"));
 const fs_1 = require("fs");
 const promises_1 = require("fs/promises");
 const openapi_1 = require("./openapi");
+const ioredis_1 = require("ioredis");
 const log = (0, debug_1.debug)("febby:core");
 class Febby {
     constructor(config) {
@@ -62,12 +62,14 @@ class Febby {
         this.expressApp.use(this.appConfig.appBaseUrl, this.mainRouter);
         log("app main router set");
         Febby.instance = this;
-        if (this.appConfig.db) {
-            this.connectDatabase();
-        }
-        if (this.appConfig.redis) {
-            this.connectRedis();
-        }
+        (async () => {
+            if (this.appConfig.db) {
+                await this.connectDatabase();
+            }
+            if (config.redis) {
+                await this.connectRedis(config.redis);
+            }
+        })();
     }
     async connectDatabase() {
         var _a;
@@ -82,13 +84,9 @@ class Febby {
         await mongoose_1.default.connect(this.appConfig.db.url, options);
         log("db connection created");
     }
-    async connectRedis() {
+    async connectRedis(redisOpts) {
         log("redis connection init");
-        (0, assert_1.default)(this.appConfig.redis === undefined, "redis config should be defined");
-        const conf = this.appConfig.redis;
-        (0, assert_1.default)(conf.port === undefined, "redis port should be defined");
-        (0, assert_1.default)(conf.host === undefined, "redis host should be defined");
-        this.redis = new Redis.default(conf.port, conf.host, { ...conf });
+        this.redis = new ioredis_1.Redis(redisOpts);
         const monitor = await this.redis.monitor();
         monitor.on("monitor", function (time, args, source, database) {
             log(`time : ${time}, args : ${args}, source: ${source}, database: ${database}`);

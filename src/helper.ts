@@ -91,42 +91,33 @@ export async function getByIdHandler(
 		? buildProjection(req.query?.projection as string)
 		: "";
 
-	try {
-		let doc = null;
-		if (febby.redis) {
-			doc = await febby.redis.get(
-				buildRedisKey(febby.appConfig.serviceName, model.modelName, id)
-			);
-		}
-
-		if (doc) {
-			const parsedDoc = JSON.parse(doc);
-			const keys = projection ? (projection as string).split(" ") : [];
-			let result = {} as any;
-			if (keys.length > 0) {
-				for (const key of keys) {
-					if (parsedDoc[key]) {
-						result[key] = parsedDoc[key];
-					}
-				}
-			} else {
-				result = parsedDoc;
-			}
-			res.status(OK).send(result);
-			return;
-		}
-	} catch (error) {
-		log(`getByIdHandler redis ${error}`);
+	let doc = null;
+	if (febby.redis) {
+		doc = await febby.redis.get(
+			buildRedisKey(febby.appConfig.serviceName, model.modelName, id)
+		);
 	}
 
-	try {
-		const result = await model.findById(id, projection || {});
-		if (result && febby.redis) {
-			await febby.redis.set(
-				buildRedisKey(febby.appConfig.serviceName, model.modelName, id),
-				JSON.stringify(result)
-			);
+	if (doc) {
+		const parsedDoc = JSON.parse(doc);
+		const keys = projection ? (projection as string).split(" ") : [];
+		let result = {} as any;
+		if (keys.length > 0) {
+			for (const key of keys) {
+				if (parsedDoc[key]) {
+					result[key] = parsedDoc[key];
+				}
+			}
+		} else {
+			result = parsedDoc;
 		}
+		res.status(OK).send(result);
+		return;
+	}
+
+	let result;
+	try {
+		result = await model.findById(id, projection || {});
 		res.status(OK).send(result);
 	} catch (error: unknown) {
 		const code = 500;
@@ -134,6 +125,19 @@ export async function getByIdHandler(
 			error: (error as any).message,
 			code,
 		});
+	}
+
+	if (result && febby.redis) {
+		try {
+			await febby.redis.set(
+				buildRedisKey(febby.appConfig.serviceName, model.modelName, id),
+				JSON.stringify(result),
+				"EX",
+				600
+			);
+		} catch (error) {
+			console.error(`failed to store rec in redis, error is ${error}`);
+		}
 	}
 }
 
@@ -154,16 +158,6 @@ export async function removeByIdHandler(
 	const _id = req.params?.id;
 	log(`removeByIdHandler :: ${model.modelName} :: ${_id}`);
 
-	if (febby.redis) {
-		try {
-			await febby.redis.del(
-				buildRedisKey(febby.appConfig.serviceName, model.modelName, _id)
-			);
-		} catch (error: unknown) {
-			log(`removeByIdHandler redis ${error}`);
-		}
-	}
-
 	try {
 		const result = await model.deleteOne({
 			_id,
@@ -175,6 +169,15 @@ export async function removeByIdHandler(
 			error: (error as any).message,
 			code,
 		});
+	}
+	if (febby.redis) {
+		try {
+			await febby.redis.del(
+				buildRedisKey(febby.appConfig.serviceName, model.modelName, _id)
+			);
+		} catch (error: unknown) {
+			log(`removeByIdHandler redis error ${error}`);
+		}
 	}
 }
 
@@ -192,11 +195,8 @@ export async function postHandler(
 	const { body } = req;
 	log(`postHandler - ${JSON.stringify(body)}`);
 	const model = res.app.get("collection");
-	const febby = res.app.get("febby");
 	let result;
 	try {
-		const model = res.app.get("collection");
-
 		const coll = new model(body);
 		result = await coll.save();
 		res.status(CREATED).send(result);
@@ -207,22 +207,6 @@ export async function postHandler(
 			code,
 		});
 		return;
-	}
-	log(`postHandler :: ${model.modelName} :: ${result._id}`);
-
-	if (febby.redis) {
-		try {
-			await febby.redis.set(
-				buildRedisKey(
-					febby.appConfig.serviceName,
-					model.modelName,
-					result._id
-				),
-				JSON.stringify(result)
-			);
-		} catch (error) {
-			log(`postHandler error:: ${error.message}`);
-		}
 	}
 }
 
@@ -237,23 +221,13 @@ export async function putHandler(
 	res: Response,
 	next: NextFunction
 ): Promise<void> {
-	const model = res.app.get("collection");
-	const febby = res.app.get("febby");
-
 	const { body } = req;
 	log(`putHandler - ${JSON.stringify(body)}`);
 
+	const model = res.app.get("collection");
+	const febby = res.app.get("febby");
+
 	const _id = req.params?.id;
-	log(`putHandler :: ${model.modelName} :: ${_id}`);
-	if (febby.redis) {
-		try {
-			await febby.redis.del(
-				buildRedisKey(febby.appConfig.serviceName, model.modelName, _id)
-			);
-		} catch (error: unknown) {
-			log(`putHandler redis error:: ${error}`);
-		}
-	}
 
 	try {
 		const result = await model.updateOne(
@@ -274,6 +248,16 @@ export async function putHandler(
 			error: (error as any).message,
 			code,
 		});
+	}
+
+	if (febby.redis) {
+		try {
+			await febby.redis.del(
+				buildRedisKey(febby.appConfig.serviceName, model.modelName, _id)
+			);
+		} catch (error: unknown) {
+			log(`putHandler redis error:: ${error}`);
+		}
 	}
 }
 

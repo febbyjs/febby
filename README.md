@@ -1,6 +1,24 @@
 # Febby - A Typescript based backend Framework
 
-Febby is a versatile a typescript based backend HTTP framework designed to streamline the development of production-ready RESTful APIs. It offers a rich set of features that make building API endpoints and managing data effortless. Whether you're working with MongoDB collections, integrating Redis caching, or utilizing the power of the OpenAPI Specification, Febby provides the tools you need to build robust and efficient APIs.
+Febby is a versatile typescript based backend HTTP framework designed to streamline the development of production-ready RESTful APIs. It offers a rich set of features that make building API endpoints and managing data effortless. Whether you're working with MongoDB collections, integrating Redis caching, or utilizing the power of the OpenAPI Specification, Febby provides the tools you need to build robust and efficient APIs.
+
+## Appendix
+
+- [Installation](#installation)
+- [Features](#features)
+  - [1. MongoDB Integration](#1-mongodb-integration)
+  - [2. Redis Caching](#2-redis-caching)
+  - [3. Built on Express.js](#3-built-on-expressjs)
+  - [4. OpenAPI Specification Support](#4-openapi-specification-support)
+  - [5. Middleware Support](#5-middleware-support)
+  - [6. Model Registration](#6-model-registration)
+  - [7. Route Registration](#7-route-registration)
+  - [8. Easy Bootstrap](#8-easy-bootstrap)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Documentation](#documentation)
+- [Example](#example)
+
 
 ## Appendix
 
@@ -91,8 +109,22 @@ Febby is built on top of the widely adopted [Express.js](https://expressjs.com/)
 
 ### 4. OpenAPI Specification Support
 
-Febby simplifies API development with its support for the OpenAPI Specification (formerly known as Swagger). Load your OpenAPI YAML file, and Febby will automatically generate API routes, allowing you to focus on defining your API's behavior.
+Febby simplifies API development with its support for the OpenAPI Specification (formerly known as Swagger). Load your OpenAPI YAML file, and Febby will automatically generate API routes, allowing you to focus on defining your API's behavior. provide `x-controller` and `x-middlewares` to register handler on path.
 
+```console
+paths:
+  /pet:
+    put:
+      tags:
+        - pet
+      summary: Update an existing pet
+      description: Update an existing pet by Id
+      operationId: updatePet
+      x-controller: updatePetController
+      x-middlewares:
+        - middleware1
+        - middleware2
+```
 
 ```typescript
 const { Febby } = require("febby");

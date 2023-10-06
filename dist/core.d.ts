@@ -3,13 +3,14 @@ import { Router, NextFunction, RouterOptions, Handler } from "express";
 import { IAppConfig, IRouteConfig, ICrudConfig, IFebby, IOpenApiOptions } from "./types";
 import { Server } from "http";
 import { Model, Document, Schema } from "mongoose";
+import { Redis } from "ioredis";
 export declare class Febby implements IFebby {
-    private static instance;
+    protected static instance: Febby;
     expressApp: import("express-serve-static-core").Express;
-    private appConfig;
+    protected appConfig: IAppConfig;
     server: Server;
-    private mainRouter;
-    private redis;
+    protected mainRouter: import("express-serve-static-core").Router;
+    protected redis: Redis;
     constructor(config: IAppConfig);
     private connectDatabase;
     private connectRedis;
