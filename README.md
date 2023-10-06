@@ -110,6 +110,7 @@ Febby is built on top of the widely adopted [Express.js](https://expressjs.com/)
 ### 4. OpenAPI Specification Support
 
 Febby simplifies API development with its support for the OpenAPI Specification (formerly known as Swagger). Load your OpenAPI YAML file, and Febby will automatically generate API routes, allowing you to focus on defining your API's behavior. provide `x-controller` and `x-middlewares` to register handler on path.
+There two ways to register controllers and middlewares. one is by passing array of controllers and middlewares to openAPI options and other one is by passing path instead of array.
 
 ```console
 paths:
@@ -162,6 +163,21 @@ await febby
       validateResponses: true,
     },
   })
+
+// or 
+
+await febby
+  .loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
+    middlewares: path.join(__dirname,"middlewares"),
+    controllers: path.join(__dirname, "controllers"),
+    openApiValidatorOptions: {
+      validateApiSpec: true,
+      validateRequests: false,
+      validateResponses: true,
+    },
+  })
+
+  // you can register middlewares and controllers by passing directory path
 
 ```
 

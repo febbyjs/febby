@@ -47,23 +47,42 @@ const febby = new Febby(config);
   await febby.middleware(logActionOnUserCrud, api);
 
   await febby.loadDefaultMiddlewares();
+
+  const controllers = [
+    {
+      name: "updatePetController",
+      func: (req, res) => res.json({ message: "hello world!" }),
+    },
+  ];
+
+  const middlewares = [
+    {
+      name: "middleware1",
+      func: (req, res, next) => next(),
+    },
+    {
+      name: "middleware2",
+      func: (req, res, next) => next(),
+    },
+  ];
+
+  // option 1
+
   await febby.loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
-    middlewares: [
-      {
-        name: "middleware1",
-        func: (req, res, next) => next(),
-      },
-      {
-        name: "middleware2",
-        func: (req, res, next) => next(),
-      },
-    ],
-    controllers: [
-      {
-        name: "updatePetController",
-        func: (req, res) => res.json({ message: "hello world!" }),
-      },
-    ],
+    middlewares: path.join(__dirname, "middlewares"),
+    controllers: path.join(__dirname, "controllers"),
+    openApiValidatorOptions: {
+      validateApiSpec: true,
+      validateRequests: false,
+      validateResponses: true,
+    },
+  });
+
+  // option 2
+
+  await febby.loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
+    middlewares,
+    controllers,
     openApiValidatorOptions: {
       validateApiSpec: true,
       validateRequests: false,

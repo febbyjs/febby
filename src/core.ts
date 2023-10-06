@@ -210,6 +210,7 @@ export class Febby implements IFebby {
 	 * Load OpenAPI configuration from a YAML file and register routes based on the specification.
 	 *
 	 * This method is used when you want to create your application using an OpenAPI specification in YAML format. It reads the YAML file, parses it, and generates routes and controllers based on the specification.
+	 * include x-controller,x-middlewares in each route definition for mapping.
 	 *
 	 * @param {string} path - The path to the OpenAPI YAML spec file.
 	 * @param {IOpenApiOptions} options - An optional configuration object that holds controller, middleware definitions, and validation settings.
@@ -229,6 +230,19 @@ export class Febby implements IFebby {
 	 *   middleware: [
 	 *     (req, res, next) => { /* Custom middleware logic * / },
 	 *   ],
+	 *    openApiValidatorOptions: {
+	 *     validateApiSpec: true,
+	 *     validateResponses: true,
+	 *     validateRequests: true,
+	 *   }
+	 * };
+	 * await loadOpenAPIConfigYAML("/path/to/openapi.yaml", customOptions);
+	 *
+	 * @example
+	 * // Load OpenAPI configuration from a YAML file and provide controller and middleware options.
+	 * const customOptions = {
+	 *   controllers: path.join(__dirname, 'controllers'), // path to controller directory
+	 *   middleware: path.join(__dirname, 'middlewares'), // path to middleware directory
 	 *    openApiValidatorOptions: {
 	 *     validateApiSpec: true,
 	 *     validateResponses: true,

@@ -395,15 +395,27 @@ export interface IOpenApiValidatorOptions {
  */
 export interface IOpenApiOptions {
 	/**
-	 * An array of middleware functions to apply.
+	 * An array of middleware functions to apply or provide middlewares directory path
 	 */
-	middlewares: IMiddleware[];
+	middlewares: IMiddleware[] | string;
 	/**
-	 * An array of controller functions to apply.
+	 * An array of controller functions to apply or provide controllers directory path
 	 */
-	controllers: IController[];
+	controllers: IController[] | string;
 	/**
 	 * Options for OpenAPI validation.
 	 */
 	openApiValidatorOptions: IOpenApiValidatorOptions;
+	/**
+	 * finalErrorHandler will be configured after routes registered so you can customize errors and response structure.
+	 * default to below handler
+	 * @example
+	 * router.use((err, req, res, next) => {
+	 *  		res.status(err.status || 500).json({
+	 * 	 	message: err.message,
+	 *	 	errors: err.errors,
+	 *	 });
+	 * });
+	 */
+	finalErrorHandler?: Handler;
 }

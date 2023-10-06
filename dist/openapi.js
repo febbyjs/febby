@@ -34,8 +34,49 @@ const OpenApiValidator = __importStar(require("express-openapi-validator"));
 const helper_1 = require("./helper");
 const debug_1 = __importDefault(require("debug"));
 const url_1 = require("url");
+const fs_1 = require("fs");
+const promises_1 = require("fs/promises");
+const path_1 = require("path");
 const log = debug_1.default.debug("febby:openapi");
-function buildOpenApiRoutes(openApiJson, router, options) {
+async function fetchControllersFromDirectory(dirpath) {
+    if (!(0, fs_1.existsSync)(dirpath)) {
+        throw new Error(`
+			controllers directory not found at "${dirpath}". provide valid controllers directory path
+		`);
+    }
+    const controllerList = [];
+    const list = await (0, promises_1.readdir)(dirpath);
+    for (const filePath of list) {
+        const file = await Promise.resolve(`${(0, path_1.join)(dirpath, filePath)}`).then(s => __importStar(require(s)));
+        for (const name of Object.keys(file.default)) {
+            controllerList.push({
+                name,
+                func: file.default[name],
+            });
+        }
+    }
+    return controllerList;
+}
+async function fetchMiddlewaresFromDirectory(dirpath) {
+    if (!(0, fs_1.existsSync)(dirpath)) {
+        throw new Error(`
+			middlewares directory not found at "${dirpath}". provide valid middlewares directory path
+		`);
+    }
+    const middlewareList = [];
+    const list = await (0, promises_1.readdir)(dirpath);
+    for (const filePath of list) {
+        const file = await Promise.resolve(`${(0, path_1.join)(dirpath, filePath)}`).then(s => __importStar(require(s)));
+        for (const name of Object.keys(file.default)) {
+            middlewareList.push({
+                name,
+                func: file.default[name],
+            });
+        }
+    }
+    return middlewareList;
+}
+async function buildOpenApiRoutes(openApiJson, router, options) {
     var _a, _b, _c;
     const paths = openApiJson.paths;
     if (!paths) {
@@ -43,13 +84,29 @@ function buildOpenApiRoutes(openApiJson, router, options) {
     }
     const middlewareMap = new Map();
     const controllerMap = new Map();
-    const middlewares = options.middlewares || [];
-    for (const middleware of middlewares) {
-        middlewareMap.set(middleware.name, middleware.func);
+    if (Array.isArray(options.middlewares)) {
+        const middlewares = options.middlewares || [];
+        for (const middleware of middlewares) {
+            middlewareMap.set(middleware.name, middleware.func);
+        }
     }
-    const controllers = options.controllers || [];
-    for (const controller of controllers) {
-        controllerMap.set(controller.name, controller.func);
+    if (Array.isArray(options.controllers)) {
+        const controllers = options.controllers || [];
+        for (const controller of controllers) {
+            controllerMap.set(controller.name, controller.func);
+        }
+    }
+    if (typeof options.controllers === "string") {
+        const controllers = await fetchControllersFromDirectory(options.controllers);
+        for (const controller of controllers) {
+            controllerMap.set(controller.name, controller.func);
+        }
+    }
+    if (typeof options.middlewares === "string") {
+        const middlewares = await fetchMiddlewaresFromDirectory(options.middlewares);
+        for (const middleware of middlewares) {
+            middlewareMap.set(middleware.name, middleware.func);
+        }
     }
     router.use(OpenApiValidator.middleware({
         apiSpec: openApiJson,
@@ -134,7 +191,7 @@ function buildOpenApiRoutes(openApiJson, router, options) {
 async function processOpenApiSpecFile(openApiJson, options) {
     log("processOpenApiSpecFile start");
     const router = (0, express_1.Router)();
-    buildOpenApiRoutes(openApiJson, router, options);
+    await buildOpenApiRoutes(openApiJson, router, options);
     if (!openApiJson.servers ||
         (Array.isArray(openApiJson.servers) && !openApiJson.servers.length)) {
         return { pathnames: ["/"], router };
@@ -142,12 +199,16 @@ async function processOpenApiSpecFile(openApiJson, options) {
     const pathnames = openApiJson.servers
         .map((serviceUrl) => new url_1.URL(serviceUrl.url).pathname)
         .filter((value) => !!value);
-    router.use((err, req, res, next) => {
+    let errHandler = (err, req, res, next) => {
         res.status(err.status || 500).json({
             message: err.message,
             errors: err.errors,
         });
-    });
+    };
+    if (options.finalErrorHandler) {
+        errHandler = options.finalErrorHandler;
+    }
+    router.use(errHandler);
     log("processOpenApiSpecFile end");
     return { pathnames, router };
 }
