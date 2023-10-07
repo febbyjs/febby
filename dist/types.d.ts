@@ -81,7 +81,8 @@ export interface IOpenApiValidatorOptions {
     validateRequests?: boolean;
 }
 export interface IOpenApiOptions {
-    middlewares: IMiddleware[];
-    controllers: IController[];
+    middlewares: IMiddleware[] | string;
+    controllers: IController[] | string;
     openApiValidatorOptions: IOpenApiValidatorOptions;
+    finalErrorHandler?: Handler;
 }
