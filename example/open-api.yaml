@@ -90,7 +90,7 @@ paths:
       description: Add a new pet to the store
       operationId: addPet
       x-controller: updatePetController
-      x-middleware:
+      x-middlewares:
         - middleware1
         - middleware2
       requestBody:

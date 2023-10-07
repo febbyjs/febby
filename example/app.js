@@ -73,22 +73,22 @@ const febby = new Febby(config);
     controllers: path.join(__dirname, "controllers"),
     openApiValidatorOptions: {
       validateApiSpec: true,
-      validateRequests: false,
-      validateResponses: true,
+      validateRequests: true,
+      validateResponses: false,
     },
   });
 
   // option 2
 
-  await febby.loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
-    middlewares,
-    controllers,
-    openApiValidatorOptions: {
-      validateApiSpec: true,
-      validateRequests: false,
-      validateResponses: true,
-    },
-  });
+  // await febby.loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
+  //   middlewares,
+  //   controllers,
+  //   openApiValidatorOptions: {
+  //     validateApiSpec: true,
+  //     validateRequests: false,
+  //     validateResponses: true,
+  //   },
+  // });
 
   await febby.crud(
     "/users",
