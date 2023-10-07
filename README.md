@@ -19,27 +19,6 @@ Febby is a versatile typescript based backend HTTP framework designed to streaml
   - [Documentation](#documentation)
 - [Example](#example)
 
-
-## Appendix
-
-- [Installation](#installation)
-- [Features](#features)
-  - [1. MongoDB Integration](#1-mongodb-integration)
-  - [2. Redis Caching](#2-redis-caching)
-  - [3. Built on Express.js](#3-built-on-expressjs)
-  - [4. OpenAPI Specification Support](#4-openapi-specification-support)
-  - [5. Middleware Support](#5-middleware-support)
-  - [6. Model Registration](#6-model-registration)
-  - [7. Route Registration](#7-route-registration)
-  - [8. Easy Bootstrap](#8-easy-bootstrap)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Documentation](#documentation)
-- [Example](#example)
-- [License](#license)
-
-
-
 ## Installation
 
 Install febby with npm
