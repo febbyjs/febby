@@ -4,7 +4,7 @@ module.exports = {
     next();
   },
   middleware2: (req, res, next) => {
-    console.log("middleware 1");
+    console.log("middleware 2");
     next();
   },
 };

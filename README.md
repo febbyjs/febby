@@ -19,27 +19,6 @@ Febby is a versatile typescript based backend HTTP framework designed to streaml
   - [Documentation](#documentation)
 - [Example](#example)
 
-
-## Appendix
-
-- [Installation](#installation)
-- [Features](#features)
-  - [1. MongoDB Integration](#1-mongodb-integration)
-  - [2. Redis Caching](#2-redis-caching)
-  - [3. Built on Express.js](#3-built-on-expressjs)
-  - [4. OpenAPI Specification Support](#4-openapi-specification-support)
-  - [5. Middleware Support](#5-middleware-support)
-  - [6. Model Registration](#6-model-registration)
-  - [7. Route Registration](#7-route-registration)
-  - [8. Easy Bootstrap](#8-easy-bootstrap)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Documentation](#documentation)
-- [Example](#example)
-- [License](#license)
-
-
-
 ## Installation
 
 Install febby with npm
@@ -110,7 +89,7 @@ Febby is built on top of the widely adopted [Express.js](https://expressjs.com/)
 ### 4. OpenAPI Specification Support
 
 Febby simplifies API development with its support for the OpenAPI Specification (formerly known as Swagger). Load your OpenAPI YAML file, and Febby will automatically generate API routes, allowing you to focus on defining your API's behavior. provide `x-controller` and `x-middlewares` to register handler on path.
-There two ways to register controllers and middlewares. one is by passing array of controllers and middlewares to openAPI options and other one is by passing path instead of array.
+There are two ways to register controllers and middlewares. one is by passing array of controllers and middlewares to openAPI options and other one is by passing directory path.
 
 ```console
 paths:
@@ -138,11 +117,17 @@ const febby = new Febby(config);
 const middlewareList =  [
     {
         name: "middleware1",
-        func: (req, res, next) => next(),
+        func: (req, res, next) => {
+          console.log('middleware 1 logger')
+          next()
+        },
     },
     {
         name: "middleware2",
-        func: (req, res, next) => next(),
+        func: (req, res, next) => {
+          console.log('middleware 2 logger')
+          next()
+        },
     },
 ];
 
@@ -166,16 +151,18 @@ await febby
 
 // or 
 
-await febby
-  .loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
-    middlewares: path.join(__dirname,"middlewares"),
-    controllers: path.join(__dirname, "controllers"),
-    openApiValidatorOptions: {
-      validateApiSpec: true,
-      validateRequests: false,
-      validateResponses: true,
-    },
-  })
+// New feature:
+// You can now provide a directory path for middlewares and controllers.
+// Alternatively, you can provide an array of middleware and controller interfaces.
+await febby.loadOpenAPIConfigYAML(path.join(__dirname, "open-api.yaml"), {
+  middlewares: path.join(__dirname,"middlewares"),
+  controllers: path.join(__dirname, "controllers"),
+  openApiValidatorOptions: {
+    validateApiSpec: true,
+    validateRequests: true,
+    validateResponses: false,
+  },
+});
 
   // you can register middlewares and controllers by passing directory path
 
